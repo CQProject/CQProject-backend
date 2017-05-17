@@ -23,8 +23,8 @@ namespace CQPROJ.Database.Models
         public string Observations { get; set; }
 
         [Required]
-        [ForeignKey("Schedule")]
-        public Tbl_Schedule Schedule { get; set; }
-        public int ScheduleFK { get; set; }
+        [ForeignKey("Lesson_Schedule")]
+        public Tbl_Lesson_Schedule Lesson_Schedule { get; set; }
+        public int Lesson_ScheduleFK { get; set; }
     }
 }
