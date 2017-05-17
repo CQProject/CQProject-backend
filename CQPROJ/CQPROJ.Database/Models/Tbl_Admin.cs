@@ -11,7 +11,7 @@ namespace CQPROJ.Database.Models
     // Refers to administrator that will costumize 
     //  layout pages, school descriptions, working hours...
     //  and supervise all activity by other users
-    public class Admin
+    public class Admin 
     {
         [Key]
         public int ID { get; set; }
