@@ -112,7 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\Tbl_Class.cs" />
-    <Compile Include="Models\Tbl_Authorization.cs" />
+    <Compile Include="Models\Tbl_Validation.cs" />
     <Compile Include="Models\Tbl_Lesson.cs" />
     <Compile Include="Models\Tbl_Lesson_Student.cs" />
     <Compile Include="Models\Tbl_Notification.cs" />
@@ -120,7 +120,7 @@
     <Compile Include="Models\Tbl_Task.cs" />
     <Compile Include="Presentation\Tbl_School.cs" />
     <Compile Include="Context\DBContext.cs" />
-    <Compile Include="Logs\Tbl_Action.cs" />
+    <Compile Include="Models\Tbl_Action.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Tbl_Guardian.cs" />
     <Compile Include="Models\Tbl_Secretary.cs" />
@@ -130,6 +130,9 @@
     <Compile Include="Models\Tbl_Teacher.cs" />
     <Compile Include="Models\Tbl_User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

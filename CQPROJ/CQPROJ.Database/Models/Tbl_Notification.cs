@@ -12,7 +12,7 @@ namespace CQPROJ.Database.Models
     //Refers to the Notification sent to the Guardians
     public class Tbl_Notification
     {
-
+        [Key]
         public int ID { get; set; }
 
         [Required]
@@ -25,10 +25,10 @@ namespace CQPROJ.Database.Models
         public Boolean Urgency { get; set; }
 
 
-        //*************************FOREIGN KEY**********************************
-        [ForeignKey("Authorization")]
-        public Tbl_Authorization Authorization { get; set; }
-        [DefaultValue(null)]
-        public int AuthorizationFK { get; set; }
+        //*********************  FOREIGN KEY(S)  ********************************
+        public virtual Tbl_User Sender { get; set; }
+        [ForeignKey("Sender")]
+        public int SenderFK { get; set; }
+        //********************* END FOREIGN KEY(S)  *****************************
     }
 }

@@ -10,6 +10,12 @@ namespace CQPROJ.Database.Models
     //Refers to the Classes that have Professors and Students
     public class Tbl_Class
     {
+        public Tbl_Class()
+        {
+            Schedules = new HashSet<Tbl_Schedule>();
+            Students = new HashSet<Tbl_Student>();
+        }
+
         [Key]
         public int ID { get; set; }
 
@@ -23,6 +29,9 @@ namespace CQPROJ.Database.Models
 
         public string ClassDesc { get; set; }
 
-
+        //***********************  RELATIONSHIP(S)  *****************************
+        public ICollection<Tbl_Schedule> Schedules { get; set; }
+        public ICollection<Tbl_Student> Students { get; set; }
+        //********************* END RELATIONSHIP(S)  ****************************
     }
 }

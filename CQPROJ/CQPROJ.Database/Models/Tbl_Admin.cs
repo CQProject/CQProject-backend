@@ -11,20 +11,16 @@ namespace CQPROJ.Database.Models
     // Refers to administrator that will costumize 
     //  layout pages, school descriptions, working hours...
     //  and supervise all activity by other users
-    public class Admin 
+    public class Tbl_Admin 
     {
         [Key]
         public int ID { get; set; }
 
-        //****************************************************************
-        // FOREIGN KEYS
-
-        // Foreign key to User
-        public Tbl_User User { get; set; }
+        //*********************  FOREIGN KEY(S)  ********************************
+        public virtual Tbl_User User { get; set; }
         [Required]
         [ForeignKey("User")]
         public String UserFK { get; set; }
-
-        //****************************************************************
+        //*********************  FOREIGN KEY(S)  ********************************
     }
 }

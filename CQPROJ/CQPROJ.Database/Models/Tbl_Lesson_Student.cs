@@ -12,15 +12,17 @@ namespace CQPROJ.Database.Models
     //Refers to the relationship between a Lesson and a Schedule
     public class Tbl_Lesson_Student
     {
+        //*********************  FOREIGN KEY(S)  ********************************
         [Required]
-        [ForeignKey("Lesson")]
-        public Tbl_Lesson Lesson { get; set; }
+        [Column(Order = 0), Key, ForeignKey("Lesson")]
+        public virtual Tbl_Lesson Lesson { get; set; }
         public int LessonFK { get; set; }
 
         [Required]
-        [ForeignKey("Student")]
-        public Tbl_Student Student { get; set; }
+        [Column(Order = 1), Key, ForeignKey("Student")]
+        public virtual Tbl_Student Student { get; set; }
         public int StudentFK { get; set; }
+        //********************* END FOREIGN KEY(S)  *****************************
 
         [Required]
         [DefaultValue(false)]

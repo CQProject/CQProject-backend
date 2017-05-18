@@ -11,6 +11,12 @@ namespace CQPROJ.Database.Models
     //Refers to one Class Lesson
     public class Tbl_Lesson
     {
+        public Tbl_Lesson()
+        {
+            Students = new HashSet<Tbl_Lesson_Student>();
+        }
+
+        [Key]
         public int ID { get; set; }
 
         [Required]
@@ -22,9 +28,15 @@ namespace CQPROJ.Database.Models
         [Required]
         public string Observations { get; set; }
 
+        //*********************  FOREIGN KEY(S)  ********************************
         [Required]
         [ForeignKey("Schedule")]
-        public Tbl_Schedule Schedule { get; set; }
+        public virtual Tbl_Schedule Schedule { get; set; }
         public int ScheduleFK { get; set; }
+        //********************* END FOREIGN KEY(S)  *****************************
+
+        //***********************  RELATIONSHIP(S)  *****************************
+        public ICollection<Tbl_Lesson_Student> Students { get; set; }
+        //********************* END RELATIONSHIP(S)  ****************************
     }
 }

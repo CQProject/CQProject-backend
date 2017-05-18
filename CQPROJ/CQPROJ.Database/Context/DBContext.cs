@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using CQPROJ.Database.Models;
+using CQPROJ.Database.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace CQPROJ.Database.Context
 {
@@ -21,7 +23,22 @@ namespace CQPROJ.Database.Context
          ***************************************************************************************************************************/
         public DBContext(): base("Connection", throwIfV1Schema: false) { }
 
-
+        public virtual DbSet<Tbl_User> User { get; set; }
+        public virtual DbSet<Tbl_Admin> Admin { get; set; }
+        public virtual DbSet<Tbl_Secretary> Secretary { get; set; }
+        public virtual DbSet<Tbl_Functionary> unctionary { get; set; }
+        public virtual DbSet<Tbl_Task> Task { get; set; }
+        public virtual DbSet<Tbl_Teacher> eacher { get; set; }
+        public virtual DbSet<Tbl_Class> Class { get; set; }
+        public virtual DbSet<Tbl_Schedule> Schedule { get; set; }
+        public virtual DbSet<Tbl_Guardian> Guardian { get; set; }
+        public virtual DbSet<Tbl_Student> Student { get; set; }
+        public virtual DbSet<Tbl_Lesson> Lesson { get; set; }
+        public virtual DbSet<Tbl_Lesson_Student> Lesson_Student { get; set; }
+        public virtual DbSet<Tbl_Notification> Notification { get; set; }
+        public virtual DbSet<Tbl_Validation> Validation { get; set; }
+        public virtual DbSet<Tbl_Action> Action { get; set; }
+        public virtual DbSet<Tbl_School> School { get; set; }
 
 
         public static DBContext Create()

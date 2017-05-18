@@ -12,15 +12,11 @@ namespace CQPROJ.Database.Models
         [Key]
         public int ID { get; set; }
 
-        //****************************************************************
-        // FOREIGN KEYS
-
-        // Foreign key to User
-        public Tbl_User User { get; set; }
+        //*********************  FOREIGN KEY(S)  ********************************
+        public virtual Tbl_User User { get; set; }
         [Required]
         [ForeignKey("User")]
         public String UserFK { get; set; }
-
-        //****************************************************************
+        //********************* END FOREIGN KEY(S)  *****************************
     }
 }
