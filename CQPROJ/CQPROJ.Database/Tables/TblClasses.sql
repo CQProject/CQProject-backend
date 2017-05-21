@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[TblClasses]
+(
+	[ID]			INT NOT NULL IDENTITY(1,1),
+	[SchoolYear]	NVARCHAR(MAX),
+	[Year]			NVARCHAR(MAX),
+	[ClassDesc]		NVARCHAR(MAX),
+	CONSTRAINT [PK_CLassID] PRIMARY KEY CLUSTERED ([ID] ASC)
+)

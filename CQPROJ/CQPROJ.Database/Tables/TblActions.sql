@@ -1,0 +1,9 @@
+﻿CREATE TABLE [dbo].[TblActions]
+(
+	[ID]			INT				NOT NULL IDENTITY(1,1),
+    [Hour]			DATETIME		NOT NULL, 
+    [Description]	NVARCHAR(MAX)	NOT NULL, 
+    [UserFK]		INT				NULL,
+	CONSTRAINT [PK_ActionID] PRIMARY KEY CLUSTERED ([ID] ASC),
+	CONSTRAINT [FK_TblAction_UserID]	FOREIGN KEY([UserFK])	REFERENCES [dbo].[TblUsers]([ID]) ON DELETE CASCADE
+)
