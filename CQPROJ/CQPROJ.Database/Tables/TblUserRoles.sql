@@ -3,6 +3,6 @@
 	[UserID] INT NOT NULL,
     [RoleID] INT NOT NULL,
     CONSTRAINT [PK_UserRoles] PRIMARY KEY CLUSTERED ([UserID] ASC, [RoleID] ASC),
-    CONSTRAINT [FK_TblUserRoles_UserId] FOREIGN KEY ([UserID]) REFERENCES [dbo].[TblUsers] ([ID]) ON DELETE CASCADE,
-    CONSTRAINT [FK_TblUserRoles_RoleId] FOREIGN KEY ([RoleID]) REFERENCES [dbo].[TblRoles] ([ID]) ON DELETE CASCADE
+    CONSTRAINT [FK_TblUserRoles_UserId] FOREIGN KEY ([UserID]) REFERENCES [dbo].[TblUsers] ([ID]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_TblUserRoles_RoleId] FOREIGN KEY ([RoleID]) REFERENCES [dbo].[TblRoles] ([ID]) ON DELETE NO ACTION
 )

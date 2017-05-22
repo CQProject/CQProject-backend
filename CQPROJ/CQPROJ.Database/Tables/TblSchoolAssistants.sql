@@ -1,8 +1,0 @@
-﻿CREATE TABLE [dbo].[TblSchAssistants]
-(
-	[ID]			INT		 NOT NULL IDENTITY(1,1), 
-    [StartWorkTime] DATETIME NULL, 
-    [EndWorkTime]	DATETIME NULL,
-	CONSTRAINT [PK_SchAssistantID] PRIMARY KEY CLUSTERED ([ID] ASC),
-	CONSTRAINT [FK_TblSchAssistant_UserID] FOREIGN KEY([ID]) REFERENCES [dbo].[TblUsers]([ID]) ON DELETE CASCADE,
-)

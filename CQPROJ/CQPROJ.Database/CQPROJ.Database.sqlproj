@@ -70,11 +70,7 @@
     <Build Include="Tables\TblUserRoles.sql" />
     <Build Include="Tables\TblClasses.sql" />
     <Build Include="Tables\TblStudents.sql" />
-    <Build Include="Tables\TblGuardians.sql" />
     <Build Include="Tables\TblClassStudents.sql" />
-    <Build Include="Tables\TblTeachers.sql" />
-    <Build Include="Tables\TblSecretaries.sql" />
-    <Build Include="Tables\TblSchoolAssistants.sql" />
     <Build Include="Tables\TblTasks.sql" />
     <Build Include="Tables\TblSchedules.sql" />
     <Build Include="Tables\TblLessons.sql" />
@@ -83,6 +79,10 @@
     <Build Include="Tables\TblEvaluations.sql" />
     <Build Include="Tables\TblEvaluationStudents.sql" />
     <Build Include="ConfTables\TblSchoolLayout.sql" />
+    <Build Include="Tables\TblGuardians.sql" />
+    <Build Include="Tables\TblTeachers.sql" />
+    <Build Include="Tables\TblSecretaries.sql" />
+    <Build Include="Tables\TblSchAssistants.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="CQPROJ.Database.refactorlog" />

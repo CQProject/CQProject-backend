@@ -4,28 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{82AD63C3-ABEB-4365-AC38-009D5EC6418D}</ProjectGuid>
+    <ProjectGuid>{30684F18-9223-4298-B10D-3FF62AD2B272}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CQPROJ.Data.AD</RootNamespace>
-    <AssemblyName>CQPROJ.Data.AD</AssemblyName>
+    <RootNamespace>CQPROJ.Data.BD</RootNamespace>
+    <AssemblyName>CQPROJ.Data.BD</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,7 +39,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,24 +49,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CQPROJ_NET.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\C__RefactorLog.cs" />
+    <Compile Include="Models\Models.cs" />
+    <Compile Include="Models\TblActions.cs" />
+    <Compile Include="Models\TblClasses.cs" />
+    <Compile Include="Models\TblDocuments.cs" />
+    <Compile Include="Models\TblEvaluations.cs" />
+    <Compile Include="Models\TblEvaluationStudents.cs" />
+    <Compile Include="Models\TblGuardians.cs" />
+    <Compile Include="Models\TblLessons.cs" />
+    <Compile Include="Models\TblLessonStudents.cs" />
+    <Compile Include="Models\TblNotifications.cs" />
+    <Compile Include="Models\TblRoles.cs" />
+    <Compile Include="Models\TblSchAssistants.cs" />
+    <Compile Include="Models\TblSchedules.cs" />
+    <Compile Include="Models\TblSchoolLayout.cs" />
+    <Compile Include="Models\TblSecretaries.cs" />
+    <Compile Include="Models\TblStudents.cs" />
+    <Compile Include="Models\TblTasks.cs" />
+    <Compile Include="Models\TblTeachers.cs" />
+    <Compile Include="Models\TblUsers.cs" />
+    <Compile Include="Models\TblValidations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 e x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
