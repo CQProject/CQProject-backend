@@ -44,6 +44,14 @@ namespace CQPROJ.Data.BD.Migrations
             students.ForEach(ss => context.TblStudents.AddOrUpdate(s => s.ID, ss));
             context.SaveChanges();
 
+            var secretary = new List<TblSecretaries>
+            {
+                new TblSecretaries {Id=1, Address="secretary1@ipt.pt",CitizenCard="j32i9ejd2dnuodw", Curriculum="nane", UserFK=3},
+                new TblSecretaries {Id=2, Address="secretary2@ipt.pt",CitizenCard="j32i9ejaadnuodw", Curriculum="nane", UserFK=4}
+            };
+            secretary.ForEach(ss => context.TblSecretaries.AddOrUpdate(s => s.Id, ss));
+            context.SaveChanges();
+
             var schools = new List<TblSchoolLayout>
             {
                 new TblSchoolLayout {ID=1, Acronym="Escola Teste", Logo="AnyLogo", Name="NameSchool", ProfilePicture="ProfileTeste", OpeningTime=DateTime.Now, ClosingTime=DateTime.Now},

@@ -14,20 +14,29 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET school/home
+        // GET school/Home
         [HttpGet]
         public Object Home()
         {
-            var school = new School().GetSchool();
+            var school = new School().GetSchoolHome();
             return school;
         }
 
+        // GET school/About
+        [HttpGet]
+        public Object About()
+        {
+            var school = new School().GetSchoolAbout();
+            return school;
+        }
+
+        /*
         [HttpPost]
         public Object getPost([FromBody]ITeste test)
         {
             var user = test.ID;
             var name = test.Name;
             return name;
-        }
+        }*/
     }
 }

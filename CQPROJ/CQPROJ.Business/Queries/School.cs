@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using CQPROJ.Data.BD.Models;
+using System;
 
 namespace CQPROJ.Business.Queries
 {
@@ -8,10 +9,16 @@ namespace CQPROJ.Business.Queries
     {
         private ModelsDbContext db = new ModelsDbContext();
 
-        public IEnumerable<TblSchoolLayout> GetSchool()
+        public Object GetSchoolHome()
         {
-            var school = from oneSchool in db.TblSchoolLayout select oneSchool;
-            return school;
+            var schoolHome = db.TblSchoolLayout.Select(s => new { s.Name, s.Logo, s.ProfilePicture, s.Acronym }).FirstOrDefault();
+            return schoolHome;
+        }
+
+        public Object GetSchoolAbout()
+        {
+            var schoolAbout = db.TblSchoolLayout.FirstOrDefault();
+            return schoolAbout;
         }
     }
 }
