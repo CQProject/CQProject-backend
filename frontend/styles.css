@@ -1,0 +1,51 @@
+body{
+    /* background: url('assets/img/politecnico-tomar-fachada.jpg') no-repeat fixed; */
+    background-size: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.navbar {
+        margin-bottom: 0;
+        border-radius: 0;
+        padding-left: 15%;
+        padding-right:15%;
+}
+
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    .text-left{
+        background-color: #FFFFFF;
+        padding: 20px;
+        /*height: 100%;*/
+    }
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      position:fixed; bottom:0px; width: 100%;
+      padding: 10px;
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 850px) {
+    .sidenav {
+        height: auto;
+        padding: 15px;
+        padding-top: 0px;
+    }
+    .row.content {height:auto;} 
+
+}
+
+@media screen and (max-width: 1060px) {
+    h4 {font-size: 2.8vmin;}
+}
+
