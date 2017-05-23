@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using CQPROJ.Business;
-using Newtonsoft.Json;
 using CQPROJ.Presentation.WebAPI.Interfaces;
-using System.Data.Entity.Infrastructure;
-using System.Web.Helpers;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
 {
@@ -29,12 +23,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         [HttpPost]
-        public Object Post([FromBody]string[] values)
+        [Route("school")]
+        public Object getPost([FromBody]ITeste test)
         {
-            var jsonReceived = Json.parse(Json.stringfy());
-            
-            return username;
+            var user = test.ID;
+            var name = test.Name;
+            return name;
         }
-
     }
 }
