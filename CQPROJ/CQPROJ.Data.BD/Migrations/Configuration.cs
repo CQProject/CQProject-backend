@@ -1,18 +1,20 @@
 namespace CQPROJ.Data.BD.Migrations
 {
+    using Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<CQPROJ.Data.BD.Models.Models>
+    internal sealed class Configuration : DbMigrationsConfiguration<CQPROJ.Data.BD.Models.ModelsDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(CQPROJ.Data.BD.Models.Models context)
+        protected override void Seed(CQPROJ.Data.BD.Models.ModelsDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -26,6 +28,14 @@ namespace CQPROJ.Data.BD.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+            var schools = new List<TblSchoolLayout>
+            {
+                new TblSchoolLayout {ID=1, Acronym="Escola Teste", Logo="AnyLogo", Name="NameSchool", ProfilePicture="ProfileTeste", OpeningTime=DateTime.Now, ClosingTime=DateTime.Now}
+            };
+            schools.ForEach(dd => context.TblSchoolLayout.AddOrUpdate(d => d.ID, dd));
+            context.SaveChanges();
+
         }
     }
 }

@@ -5,12 +5,9 @@ namespace CQPROJ.Data.BD.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class Models : DbContext
+    public partial class ModelsDbContext : DbContext
     {
-        public Models()
-            : base("name=Models")
-        {
-        }
+        public ModelsDbContext() : base("name=ModelsDbContext") {}
 
         public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<TblActions> TblActions { get; set; }
