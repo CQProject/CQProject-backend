@@ -182,7 +182,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Scructures\" />
+    <Folder Include="Structures\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

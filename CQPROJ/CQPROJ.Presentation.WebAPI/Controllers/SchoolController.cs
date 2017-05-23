@@ -32,7 +32,6 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         /*
         [HttpPost]
-        [Route("school")]
         public Object getPost([FromBody]ITeste test)
         {
             var user = test.ID;
