@@ -31,7 +31,8 @@ namespace CQPROJ.Data.BD.Migrations
 
             var schools = new List<TblSchoolLayout>
             {
-                new TblSchoolLayout {ID=1, Acronym="Escola Teste", Logo="AnyLogo", Name="NameSchool", ProfilePicture="ProfileTeste", OpeningTime=DateTime.Now, ClosingTime=DateTime.Now}
+                new TblSchoolLayout {ID=1, Acronym="Escola Teste", Logo="AnyLogo", Name="NameSchool", ProfilePicture="ProfileTeste", OpeningTime=DateTime.Now, ClosingTime=DateTime.Now},
+                new TblSchoolLayout {ID=2, Acronym="Escola Teste2", Logo="AnyLogo2", Name="NameSchool2", ProfilePicture="ProfileTeste2", OpeningTime=DateTime.Now, ClosingTime=DateTime.Now}
             };
             schools.ForEach(dd => context.TblSchoolLayout.AddOrUpdate(d => d.ID, dd));
             context.SaveChanges();

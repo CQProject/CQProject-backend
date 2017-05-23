@@ -5,7 +5,10 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CQPROJ.Business;
-using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using CQPROJ.Presentation.WebAPI.Interfaces;
+using System.Data.Entity.Infrastructure;
+using System.Web.Helpers;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
 {
@@ -22,8 +25,15 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         public Object Home()
         {
             var school = new School().GetSchool();
-            var json = new JavaScriptSerializer().Serialize(school);
-            return json;
+            return school;
+        }
+
+        [HttpPost]
+        public Object Post([FromBody]string[] values)
+        {
+            var jsonReceived = Json.parse(Json.stringfy());
+            
+            return username;
         }
 
     }
