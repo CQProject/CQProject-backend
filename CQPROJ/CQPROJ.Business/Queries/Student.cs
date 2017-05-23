@@ -10,9 +10,9 @@ namespace CQPROJ.Business.Queries
 
         public Object GetStudent(int id)
         {
-            var stud = db.TblStudents.Select(x=>x).Where( x=> x.ID.Equals(id));
-            var student = stud.Select(x => new { x.Photo,x.DataOfBirth});
-            return student;
+            var student = db.TblStudents.Where(x => x.ID.Equals(id)).FirstOrDefault();
+            var user = db.TblUsers.Select(x => new { x.ID, x.Name, x.Email, student.Photo, student.GuardianFK }).Where(x => x.ID == student.UserFK).FirstOrDefault();
+            return user;
         }
     }
 }
