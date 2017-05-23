@@ -3,9 +3,7 @@ namespace CQPROJ.Data.BD.Migrations
     using Models;
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<CQPROJ.Data.BD.Models.ModelsDbContext>
     {
@@ -28,6 +26,23 @@ namespace CQPROJ.Data.BD.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+            var users = new List<TblUsers>
+            {
+                new TblUsers {ID=1,CreatedDate=DateTime.Now,Email="mandostestes@ipt.pt",Name="Student1",Password="123qwe" },
+                new TblUsers {ID=1,CreatedDate=DateTime.Now,Email="mandostestes@ipt.pt",Name="Student2",Password="123qwe" },
+                new TblUsers {ID=1,CreatedDate=DateTime.Now,Email="mandostestes@ipt.pt",Name="Secretary1",Password="123qwe" },
+                new TblUsers {ID=1,CreatedDate=DateTime.Now,Email="mandostestes@ipt.pt",Name="Secretary2",Password="123qwe" }
+            };
+            users.ForEach(uu => context.TblUsers.AddOrUpdate(u => u.ID, uu));
+            context.SaveChanges();
+
+            var students = new List<TblStudents>
+            {
+                new TblStudents {ID=1,DataOfBirth=DateTime.Now,Photo="Kappa",UserFK=1 },
+                new TblStudents {ID=2,DataOfBirth=DateTime.Now,Photo="Pride",UserFK=2 }
+            };
+            students.ForEach(ss => context.TblStudents.AddOrUpdate(s => s.ID, ss));
+            context.SaveChanges();
 
             var schools = new List<TblSchoolLayout>
             {

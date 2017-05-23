@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using CQPROJ.Business;
 using CQPROJ.Presentation.WebAPI.Interfaces;
+using CQPROJ.Business.Queries;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
 {

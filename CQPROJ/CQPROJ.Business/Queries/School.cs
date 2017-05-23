@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CQPROJ.Data.BD.Models;
 
-namespace CQPROJ.Business
+namespace CQPROJ.Business.Queries
 {
     public class School
     {
