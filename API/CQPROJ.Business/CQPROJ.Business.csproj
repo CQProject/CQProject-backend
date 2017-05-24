@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\CreateSecretary.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Exemple.cs" />
     <Compile Include="Queries\Secretary.cs" />
