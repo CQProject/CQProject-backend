@@ -17,7 +17,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [HttpGet]
         public Object Home()
         {
-            var school = new School().GetSchoolHome();
+            var school = new BSchool().GetSchoolHome();
             return school;
         }
 
@@ -25,7 +25,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [HttpGet]
         public Object About()
         {
-            var school = new School().GetSchoolAbout();
+            var school = new BSchool().GetSchoolAbout();
             return school;
         }
 

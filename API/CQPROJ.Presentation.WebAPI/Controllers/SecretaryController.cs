@@ -1,4 +1,5 @@
 ﻿using CQPROJ.Business.Entities;
+using CQPROJ.Business.Entities.ESecretary;
 using CQPROJ.Business.Queries;
 using Newtonsoft.Json;
 using System;
@@ -18,24 +19,25 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("secretary")]
         public Object Get()
         {
-            var secretaries = new Secretary().GetSecretaries();
+            var secretaries = new BSecretary().GetSecretaries();
             return secretaries;
         }
 
         // GET secretary/:id
         [HttpGet]
         [Route("secretary/{id}")]
-        public Object Get(int? id)
+        public Object Get(int id)
         {
-            var secretary = new Secretary().GetSecretary(5);
+            var secretary = new BSecretary().GetSecretary(id);
             return secretary;
         }
 
         //POST secretary/ tem de ser void
         [HttpPost]
-        public void Post([FromBody]CreateSecretary secretary)
+        [Route("secretary")]
+        public void Post([FromBody]Secretary secretary)
         {
-            
+            new BSecretary().CreateSecretary(secretary);
         }
 
         // PUT api/<controller>/5
