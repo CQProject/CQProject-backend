@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,9 +19,9 @@ namespace CQPROJ.Business.Entities.EStudent
         [Required]
         public string Password { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
-
         public string Photo { get; set; }
+
+        public string DateOfBirth { get; set; }
 
         public string GuardianName { get; set; }
 

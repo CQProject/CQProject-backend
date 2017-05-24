@@ -29,7 +29,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("student")]
         public void Post([FromBody]Student cs)
         {
-            new BStudent().PostStudent(cs);
+            new BStudent().CreateStudent(cs);
         }
 
         // PUT student/:id

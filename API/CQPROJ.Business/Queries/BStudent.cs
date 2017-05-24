@@ -19,18 +19,19 @@ namespace CQPROJ.Business.Queries
             return student;
         }
 
-        public void PostStudent(Student cs) {
+        public void CreateStudent(Student cs)
+        {
             var pass = new PasswordHasher();
-            var password = pass.HashPassword(cs.Password);
+            var passHashed = pass.HashPassword(cs.Password);
+            var date = DateTime.Now;
+            var dOfBirth = Convert.ToDateTime(cs.DateOfBirth);
 
             var guardianFK = db.TblGuardians.Select(x => x).Where(x => x.TblUsers.Name.Equals(cs.GuardianName)).Where(x => x.PhoneNumber == cs.PhoneNumber).FirstOrDefault();
 
-            TblUsers user = new TblUsers { Name = cs.Name, Email = cs.Email, CreatedDate = DateTime.Now, IsActive = true, Password = password };
+            TblUsers user = new TblUsers { Name = cs.Name, Email = cs.Email, Password = passHashed, CreatedDate = date, IsActive = true };
             db.TblUsers.Add(user);
 
-            
-
-            TblStudents student = new TblStudents { DataOfBirth = cs.DateOfBirth, Photo = cs.Photo, UserFK = user.ID, GuardianFK = guardianFK.Id };
+            TblStudents student = new TblStudents { DataOfBirth = dOfBirth, Photo = cs.Photo, UserFK = user.ID, GuardianFK = guardianFK.Id };
             db.TblStudents.Add(student);
             db.SaveChanges();
         }

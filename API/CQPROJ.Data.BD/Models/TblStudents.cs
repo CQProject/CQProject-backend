@@ -20,6 +20,7 @@ namespace CQPROJ.Data.BD.Models
 
         public string Photo { get; set; }
 
+        [Column(TypeName = "date")]
         public DateTime? DataOfBirth { get; set; }
 
         public int? UserFK { get; set; }
