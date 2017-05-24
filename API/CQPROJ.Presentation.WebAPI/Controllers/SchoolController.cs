@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Http;
-using CQPROJ.Presentation.WebAPI.Interfaces;
 using CQPROJ.Business.Queries;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
@@ -32,6 +31,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         /*
         [HttpPost]
+        [Route("school")]
         public Object getPost([FromBody]ITeste test)
         {
             var user = test.ID;
