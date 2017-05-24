@@ -79,7 +79,8 @@
     <Compile Include="Entities\User.cs" />
     <Compile Include="Exemple.cs" />
     <Compile Include="Queries\BSecretary.cs" />
-    <Compile Include="Queries\Student.cs" />
+    <Compile Include="Entities\EStudent.cs" />
+    <Compile Include="Queries\BStudent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\BSchool.cs" />
   </ItemGroup>
