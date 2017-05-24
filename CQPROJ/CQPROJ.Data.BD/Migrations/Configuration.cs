@@ -26,40 +26,54 @@ namespace CQPROJ.Data.BD.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+            
             var users = new List<TblUsers>
             {
-                new TblUsers {ID=1,CreatedDate=DateTime.Now,Email="mandostestes@ipt.pt",Name="Student1",Password="123qwe" },
-                new TblUsers {ID=1,CreatedDate=DateTime.Now,Email="mandostestes@ipt.pt",Name="Student2",Password="123qwe" },
-                new TblUsers {ID=1,CreatedDate=DateTime.Now,Email="mandostestes@ipt.pt",Name="Secretary1",Password="123qwe" },
-                new TblUsers {ID=1,CreatedDate=DateTime.Now,Email="mandostestes@ipt.pt",Name="Secretary2",Password="123qwe" }
+                new TblUsers {CreatedDate=DateTime.Now,Email="mandostestes@ipt.pt",Name="Student1",Password="123qwe" },
+                new TblUsers {CreatedDate=DateTime.Now,Email="mandostestes@ipt.pt",Name="Student2",Password="123qwe" },
+                new TblUsers {CreatedDate=DateTime.Now,Email="mandostestes@ipt.pt",Name="Secretary1",Password="123qwe" },
+                new TblUsers {CreatedDate=DateTime.Now,Email="mandostestes@ipt.pt",Name="Secretary2",Password="123qwe" },
+                new TblUsers {CreatedDate=DateTime.Now,Email="mandostestes@ipt.pt",Name="Guardian1",Password="123qwe" },
+                new TblUsers {CreatedDate=DateTime.Now,Email="mandostestes@ipt.pt",Name="Guardian2",Password="123qwe" }
+
             };
             users.ForEach(uu => context.TblUsers.AddOrUpdate(u => u.ID, uu));
             context.SaveChanges();
 
+            var secretary = new List<TblSecretaries>
+            {
+                new TblSecretaries {Address="secretary1@ipt.pt", FiscalNumber="123456789", CitizenCard="123456789", Curriculum="nane", PhoneNumber = "123456789", Photo =
+                "asda", UserFK=users[2].ID},
+                new TblSecretaries {Address="secretary2@ipt.pt",FiscalNumber = "123456789", CitizenCard="123456789", Curriculum="nane", PhoneNumber = "092139102", Photo = "asdasda" ,UserFK=users[3].ID}
+            };
+            secretary.ForEach(se => context.TblSecretaries.AddOrUpdate(sec => sec.Id, se));
+            context.SaveChanges();
+
+            var guardians = new List<TblGuardians>
+            {
+                new TblGuardians { Address = "asdasd", CitizenCard="jasidasd", FiscalNumber="jasdjasd", NotContactHours="asdasd", PhoneNumber="jasdjasd",
+                StartWorkTime=DateTime.Now, UserFK = users[4].ID},
+                new TblGuardians { Address = "asdasd2", CitizenCard="jasidasd", FiscalNumber="jasdjasd", NotContactHours="asdasd", PhoneNumber="jasdjasd",
+                StartWorkTime=DateTime.Now, UserFK = users[5].ID}
+            };
+            guardians.ForEach(gg => context.TblGuardians.AddOrUpdate(g => g.Id, gg));
+            context.SaveChanges();
+
             var students = new List<TblStudents>
             {
-                new TblStudents {ID=1,DataOfBirth=DateTime.Now,Photo="Kappa",UserFK=1 },
-                new TblStudents {ID=2,DataOfBirth=DateTime.Now,Photo="Pride",UserFK=2 }
+                new TblStudents {DataOfBirth=DateTime.Now,Photo="Kappa",UserFK=users[0].ID },
+                new TblStudents {DataOfBirth=DateTime.Now,Photo="Pride",UserFK=users[1].ID }
             };
             students.ForEach(ss => context.TblStudents.AddOrUpdate(s => s.ID, ss));
             context.SaveChanges();
 
-            var secretary = new List<TblSecretaries>
-            {
-                new TblSecretaries {Id=1, Address="secretary1@ipt.pt",CitizenCard="j32i9ejd2dnuodw", Curriculum="nane", UserFK=3},
-                new TblSecretaries {Id=2, Address="secretary2@ipt.pt",CitizenCard="j32i9ejaadnuodw", Curriculum="nane", UserFK=4}
-            };
-            secretary.ForEach(ss => context.TblSecretaries.AddOrUpdate(s => s.Id, ss));
-            context.SaveChanges();
-
             var schools = new List<TblSchoolLayout>
             {
-                new TblSchoolLayout {ID=1, Acronym="Escola Teste", Logo="AnyLogo", Name="NameSchool", ProfilePicture="ProfileTeste", OpeningTime=DateTime.Now, ClosingTime=DateTime.Now},
-                new TblSchoolLayout {ID=2, Acronym="Escola Teste2", Logo="AnyLogo2", Name="NameSchool2", ProfilePicture="ProfileTeste2", OpeningTime=DateTime.Now, ClosingTime=DateTime.Now}
+                new TblSchoolLayout {Acronym="Escola Teste", Logo="AnyLogo", Name="NameSchool", ProfilePicture="ProfileTeste", OpeningTime=DateTime.Now, ClosingTime=DateTime.Now}
             };
             schools.ForEach(dd => context.TblSchoolLayout.AddOrUpdate(d => d.ID, dd));
             context.SaveChanges();
-
+            
         }
     }
 }
