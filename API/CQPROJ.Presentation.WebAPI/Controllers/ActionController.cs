@@ -21,12 +21,31 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return actions;
         }
 
-        // GET action/Secretary/:id    {action} -> type of user)
+        // GET action/:id
+        [HttpGet]
+        [Route("action/{id}")]
+        public Object Get(int id)
+        {
+            var action = new BAction().GetAction(id);
+            return action;
+        }
+
+
+        // GET action/secretary/:id    {action} -> type of user)
         [HttpGet]
         [Route("action/secretary/{id}")]
         public Object secretary(int id)
         {
             var action = new BAction().GetActionSecretary(id);
+            return action;
+        }
+
+        // GET action/student/:id    {action} -> type of user)
+        [HttpGet]
+        [Route("action/student/{id}")]
+        public Object student(int id)
+        {
+            var action = new BAction().GetActionStudent(id);
             return action;
         }
     }
