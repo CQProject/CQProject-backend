@@ -14,8 +14,18 @@ namespace CQPROJ.Business.Queries
 
         public Object GetStudent(int id)
         {
-            var stud = db.TblStudents.Select(x => x).Where(x => x.ID.Equals(id));
-            var student = stud.Select(x => new { x.Photo, x.DataOfBirth });
+            var student = db.TblStudents
+                    .Select(x => new {
+                        Photo = x.Photo,
+                        DataOfBirth = x.DataOfBirth,
+                        ID =x.ID,
+                        TblActions = x.TblUsers.TblActions
+                            .Select(y=>new {
+                                Desc =y.Description,
+                                hour = y.Hour
+                            })
+                    })
+                    .Where(x => x.ID.Equals(id));
             return student;
         }
 
