@@ -75,9 +75,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\EAction.cs" />
+    <Compile Include="Entities\EAssistant.cs" />
     <Compile Include="Entities\ESecretary.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Exemple.cs" />
+    <Compile Include="Queries\BAction.cs" />
+    <Compile Include="Queries\BAssistant.cs" />
+    <Compile Include="Queries\BClass.cs" />
     <Compile Include="Queries\BSecretary.cs" />
     <Compile Include="Entities\EStudent.cs" />
     <Compile Include="Queries\BStudent.cs" />

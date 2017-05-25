@@ -18,6 +18,8 @@ namespace CQPROJ.Data.BD.Models
 
         public DateTime? Hour { get; set; }
 
+        public string Subject { get; set; }
+
         public string Description { get; set; }
 
         public bool? Urgency { get; set; }

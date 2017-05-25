@@ -37,6 +37,8 @@ namespace CQPROJ.Data.BD.Models
 
         public bool? IsActive { get; set; }
 
+        public string Function { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TblActions> TblActions { get; set; }
 
