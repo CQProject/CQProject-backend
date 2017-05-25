@@ -40,14 +40,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             new BSecretary().CreateSecretary(secretary);
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        // PUT secretary/id
+        [HttpPut]
+        [Route("secretary/{id}")]
+        public Object Put(int id, [FromBody]Secretary secretary)
         {
-        }
-
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
+            return new BSecretary().EditSecretary(id, secretary);
         }
     }
 }

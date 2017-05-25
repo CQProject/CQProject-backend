@@ -6,5 +6,6 @@
 	[Password]		NVARCHAR(MAX)	NOT NULL, 
     [CreatedDate]	DATETIME		NOT NULL, 
     [IsActive]		BIT				NULL,
+	[Function]		NVARCHAR(MAX)	NULL,
     CONSTRAINT [PK_UserID] PRIMARY KEY CLUSTERED ([ID] ASC)
 )
