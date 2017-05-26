@@ -7,9 +7,8 @@
     [Address]		NVARCHAR(MAX)	NULL,
     [Photo]			NVARCHAR(MAX)	NULL,
     [Curriculum]	NVARCHAR(MAX)	NULL,
-	[StartWorkTime] DATETIME		NULL,
-    [EndWorkTime]	DATETIME		NULL,
+	[StartWorkTime] TIME(0)			NULL,
+    [EndWorkTime]	TIME(0)			NULL,
     [UserFK]		INT				NOT NULL,
 	CONSTRAINT [PK_SchAssistantID] PRIMARY KEY CLUSTERED ([ID] ASC),
-	CONSTRAINT [FK_TblSchAssistant_UserID]	FOREIGN KEY([UserFK]) REFERENCES [dbo].[TblUsers]([ID]) ON DELETE NO ACTION
 )

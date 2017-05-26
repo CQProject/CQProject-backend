@@ -6,5 +6,4 @@
     [Observations]	NVARCHAR(MAX)	NULL, 
     [ScheduleFK]	INT				NULL,
 	CONSTRAINT [PK_LessonID] PRIMARY KEY CLUSTERED ([ID] ASC),
-	CONSTRAINT [FK_TblLesson_ScheduleID] FOREIGN KEY([ScheduleFK]) REFERENCES [dbo].[TblSchedules]([ID]) ON DELETE NO ACTION
 )

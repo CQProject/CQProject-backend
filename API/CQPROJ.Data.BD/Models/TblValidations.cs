@@ -1,10 +1,7 @@
 namespace CQPROJ.Data.BD.Models
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class TblValidations
     {
@@ -21,9 +18,5 @@ namespace CQPROJ.Data.BD.Models
         public bool? Accepted { get; set; }
 
         public bool? Readed { get; set; }
-
-        public virtual TblNotifications TblNotifications { get; set; }
-
-        public virtual TblUsers TblUsers { get; set; }
     }
 }

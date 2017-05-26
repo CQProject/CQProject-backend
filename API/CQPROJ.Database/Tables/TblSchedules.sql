@@ -2,11 +2,10 @@
 (
 	[ID]			INT				NOT NULL IDENTITY(1,1), 
     [Subject]		NVARCHAR(MAX)	NULL, 
-    [StartingTime]	DATETIME		NULL, 
-    [EndingTime]	DATETIME		NULL, 
+    [StartingTime]	TIME(0)			NULL, 
+    [EndingTime]	TIME(0)			NULL, 
+	[DayOfTheWeek]	NVARCHAR(MAX)	NULL, 
     [TeacherFK]		INT				NULL, 
     [ClassFK]		INT				NULL,
-	CONSTRAINT [PK_ScheduleID] PRIMARY KEY CLUSTERED ([ID] ASC),
-	CONSTRAINT [FK_TblSchedule_TeacherID]	FOREIGN KEY([TeacherFK])	REFERENCES [dbo].[TblTeachers]([ID])	ON DELETE NO ACTION,
-	CONSTRAINT [FK_TblSchedule_ClassID]		FOREIGN KEY([ClassFK])		REFERENCES [dbo].[TblClasses]([ID])		ON DELETE NO ACTION
+    CONSTRAINT [PK_ScheduleID] PRIMARY KEY CLUSTERED ([ID] ASC),
 )

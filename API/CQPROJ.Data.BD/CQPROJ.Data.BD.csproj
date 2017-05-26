@@ -45,6 +45,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.IdentityModel" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -64,15 +65,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201705241135049_Initial.cs" />
-    <Compile Include="Migrations\201705241135049_Initial.Designer.cs">
-      <DependentUpon>201705241135049_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201705261624039_Initial.cs" />
+    <Compile Include="Migrations\201705261624039_Initial.Designer.cs">
+      <DependentUpon>201705261624039_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\C__RefactorLog.cs" />
-    <Compile Include="Models\Models.cs" />
+    <Compile Include="Models\DBContextModel.cs" />
     <Compile Include="Models\TblActions.cs" />
     <Compile Include="Models\TblClasses.cs" />
+    <Compile Include="Models\TblClassStudents.cs" />
     <Compile Include="Models\TblDocuments.cs" />
     <Compile Include="Models\TblEvaluations.cs" />
     <Compile Include="Models\TblEvaluationStudents.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="Models\TblLessons.cs" />
     <Compile Include="Models\TblLessonStudents.cs" />
     <Compile Include="Models\TblNotifications.cs" />
+    <Compile Include="Models\TblPictures.cs" />
     <Compile Include="Models\TblRoles.cs" />
     <Compile Include="Models\TblSchAssistants.cs" />
     <Compile Include="Models\TblSchedules.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="Models\TblStudents.cs" />
     <Compile Include="Models\TblTasks.cs" />
     <Compile Include="Models\TblTeachers.cs" />
+    <Compile Include="Models\TblUserRoles.cs" />
     <Compile Include="Models\TblUsers.cs" />
     <Compile Include="Models\TblValidations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,8 +103,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201705241135049_Initial.resx">
-      <DependentUpon>201705241135049_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201705261624039_Initial.resx">
+      <DependentUpon>201705261624039_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

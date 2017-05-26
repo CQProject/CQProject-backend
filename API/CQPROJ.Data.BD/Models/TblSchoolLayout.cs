@@ -1,10 +1,8 @@
 namespace CQPROJ.Data.BD.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("TblSchoolLayout")]
     public partial class TblSchoolLayout
@@ -16,13 +14,13 @@ namespace CQPROJ.Data.BD.Models
 
         public string Logo { get; set; }
 
-        public string ProfilePicture { get; set; }
+        public string BackgroundPicture { get; set; }
 
         [StringLength(50)]
         public string Acronym { get; set; }
 
-        public DateTime? OpeningTime { get; set; }
+        public TimeSpan? OpeningTime { get; set; }
 
-        public DateTime? ClosingTime { get; set; }
+        public TimeSpan? ClosingTime { get; set; }
     }
 }

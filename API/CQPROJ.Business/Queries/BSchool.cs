@@ -7,18 +7,18 @@ namespace CQPROJ.Business.Queries
 {
     public class BSchool
     {
-        private ModelsDbContext db = new ModelsDbContext();
+        private DBContextModel db = new DBContextModel();
 
-        public Object GetSchoolHome()
-        {
-            var schoolHome = db.TblSchoolLayout.Select(s => new { s.Name, s.Logo, s.ProfilePicture, s.Acronym }).FirstOrDefault();
-            return schoolHome;
-        }
+        //public Object GetSchoolHome()
+        //{
+        //    var schoolHome = db.TblSchoolLayout.Select(s => new { s.Name, s.Logo, s.ProfilePicture, s.Acronym }).FirstOrDefault();
+        //    return schoolHome;
+        //}
 
-        public Object GetSchoolAbout()
-        {
-            var schoolAbout = db.TblSchoolLayout.FirstOrDefault();
-            return schoolAbout;
-        }
+        //public Object GetSchoolAbout()
+        //{
+        //    var schoolAbout = db.TblSchoolLayout.FirstOrDefault();
+        //    return schoolAbout;
+        //}
     }
 }

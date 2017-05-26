@@ -1,20 +1,11 @@
 namespace CQPROJ.Data.BD.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class TblSecretaries
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TblSecretaries()
-        {
-            TblTasks = new HashSet<TblTasks>();
-        }
-
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [StringLength(9)]
         public string FiscalNumber { get; set; }
@@ -31,15 +22,10 @@ namespace CQPROJ.Data.BD.Models
 
         public string Curriculum { get; set; }
 
-        public DateTime? StartWorkTime { get; set; }
+        public TimeSpan? StartWorkTime { get; set; }
 
-        public DateTime? EndWorkTime { get; set; }
+        public TimeSpan? EndWorkTime { get; set; }
 
         public int UserFK { get; set; }
-
-        public virtual TblUsers TblUsers { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TblTasks> TblTasks { get; set; }
     }
 }

@@ -9,5 +9,4 @@
     [Curriculum]	NVARCHAR(MAX)	NULL, 
     [UserFK]		INT				NOT NULL,
 	CONSTRAINT [PK_TeacherID] PRIMARY KEY CLUSTERED ([ID] ASC),
-	CONSTRAINT [FK_TblTeacher_UserID] FOREIGN KEY([UserFK])	REFERENCES [dbo].[TblUsers]([ID]) ON DELETE NO ACTION,
 )

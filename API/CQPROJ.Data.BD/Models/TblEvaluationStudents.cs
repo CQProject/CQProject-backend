@@ -1,10 +1,7 @@
 namespace CQPROJ.Data.BD.Models
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class TblEvaluationStudents
     {
@@ -19,9 +16,5 @@ namespace CQPROJ.Data.BD.Models
         public int StudentFK { get; set; }
 
         public double? Value { get; set; }
-
-        public virtual TblEvaluations TblEvaluations { get; set; }
-
-        public virtual TblStudents TblStudents { get; set; }
     }
 }

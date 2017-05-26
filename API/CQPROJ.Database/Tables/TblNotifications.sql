@@ -7,5 +7,4 @@
     [Urgency]		BIT				NULL, 
     [UserFK]		INT				NULL ,
 	CONSTRAINT [PK_NotificationID] PRIMARY KEY CLUSTERED ([ID] ASC),
-	CONSTRAINT [FK_TblNotification_UserID]	FOREIGN KEY([UserFK])	REFERENCES [dbo].[TblUsers]([ID]) ON DELETE NO ACTION
 )

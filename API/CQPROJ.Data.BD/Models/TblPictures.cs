@@ -1,15 +1,16 @@
 namespace CQPROJ.Data.BD.Models
 {
-    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public partial class TblRoles
+    public partial class TblPictures
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
-        [Required]
-        [StringLength(256)]
+        public bool? IsVisible { get; set; }
+
         public string Name { get; set; }
+
+        public byte? Type { get; set; }
     }
 }
