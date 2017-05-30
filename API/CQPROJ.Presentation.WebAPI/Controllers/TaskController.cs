@@ -8,24 +8,24 @@ using CQPROJ.Business.Queries;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
 {
-    public class ClassController : ApiController
+    public class TaskController : ApiController
     {
-        // GET class/
+        // GET task/
         [HttpGet]
-        [Route("class")]
+        [Route("task")]
         public Object Get()
         {
-            var classes = new BClass().GetClasses();
-            return classes;
+            var tasks = new BTask().GetTasks();
+            return tasks;
         }
 
-        // GET secretary/:id
+        // GET task/:id
         [HttpGet]
-        [Route("class/{id}")]
+        [Route("task/{id}")]
         public Object Get(int id)
         {
-            var classByID = new BClass().GetClass(id);
-            return classByID;
+            var task = new BTask().GetTask(id);
+            return task;
         }
     }
 }
