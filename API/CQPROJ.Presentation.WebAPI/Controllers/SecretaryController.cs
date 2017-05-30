@@ -32,20 +32,20 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return secretary;
         }
 
-        ////POST secretary/ tem de ser void
-        //[HttpPost]
-        //[Route("secretary")]
-        //public void Post([FromBody]Secretary secretary)
-        //{
-        //    new BSecretary().CreateSecretary(secretary);
-        //}
+        //POST secretary/ tem de ser void
+        [HttpPost]
+        [Route("secretary")]
+        public void Post([FromBody]Secretary secretary)
+        {
+            new BSecretary().CreateSecretary(secretary);
+        }
 
-        //// PUT secretary/id
-        //[HttpPut]
-        //[Route("secretary/{id}")]
-        //public Object Put(int id, [FromBody]Secretary secretary)
-        //{
-        //    return new BSecretary().EditSecretary(id, secretary);
-        //}
+        // PUT secretary/id
+        [HttpPut]
+        [Route("secretary/{id}")]
+        public Object Put(int id, [FromBody]Secretary secretary)
+        {
+            return new BSecretary().EditSecretary(id, secretary);
+        }
     }
 }
