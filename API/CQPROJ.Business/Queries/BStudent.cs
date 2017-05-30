@@ -3,6 +3,7 @@ using CQPROJ.Business.Entities.EStudent;
 using CQPROJ.Data.DB.Models;
 using Microsoft.AspNet.Identity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 
@@ -11,6 +12,28 @@ namespace CQPROJ.Business.Queries
     public class BStudent
     {
         private DBContextModel db = new DBContextModel();
+
+        public List<Object> GetStudents()
+        {
+            var students = db.TblStudents
+                .Select(x => new { x.ID, x.Photo, x.UserFK });
+            var toSend = new List<Object>();
+            foreach (var sec in students)
+            {
+                var user = db.TblUsers
+                    .Select(x => new { x.ID, x.Name, x.Email })
+                    .Where(x => x.ID == sec.UserFK)
+                    .FirstOrDefault();
+                toSend.Add(new
+                {
+                    ID = sec.ID,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Photo = sec.Photo
+                });
+            }
+            return toSend;
+        }
 
         public Object GetStudent(int id)
         {
@@ -36,21 +59,21 @@ namespace CQPROJ.Business.Queries
             };
         }
 
-        //public void CreateStudent(Student cs)
-        //{
-        //    var pass = new PasswordHasher();
-        //    var passHashed = pass.HashPassword(cs.Password);
-        //    var date = DateTime.Now;
-        //    var dOfBirth = Convert.ToDateTime(cs.DateOfBirth);
+        /*public void CreateStudent(Student cs)
+        {
+            var pass = new PasswordHasher();
+            var passHashed = pass.HashPassword(cs.Password);
+            var date = DateTime.Now;
+            var dOfBirth = Convert.ToDateTime(cs.DateOfBirth);
 
-        //    var guardianFK = db.TblGuardians.Select(x => x).Where(x => x.TblUsers.Name.Equals(cs.GuardianName)).Where(x => x.PhoneNumber == cs.PhoneNumber).FirstOrDefault();
+            var guardianFK = db.TblGuardians.Select(x => x).Where(x => x.TblUsers.Name.Equals(cs.GuardianName)).Where(x => x.PhoneNumber == cs.PhoneNumber).FirstOrDefault();
 
-        //    TblUsers user = new TblUsers { Name = cs.Name, Email = cs.Email, Password = passHashed, CreatedDate = date, IsActive = true };
-        //    db.TblUsers.Add(user);
+            TblUsers user = new TblUsers { Name = cs.Name, Email = cs.Email, Password = passHashed, CreatedDate = date, IsActive = true };
+            db.TblUsers.Add(user);
 
-        //    TblStudents student = new TblStudents { DataOfBirth = dOfBirth, Photo = cs.Photo, UserFK = user.ID, GuardianFK = guardianFK.Id };
-        //    db.TblStudents.Add(student);
-        //    db.SaveChanges();
-        //}
+            TblStudents student = new TblStudents { DataOfBirth = dOfBirth, Photo = cs.Photo, UserFK = user.ID, GuardianFK = guardianFK.Id };
+            db.TblStudents.Add(student);
+            db.SaveChanges();
+        }*/
     }
 }
