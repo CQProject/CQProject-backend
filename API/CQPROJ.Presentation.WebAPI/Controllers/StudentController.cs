@@ -9,20 +9,15 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class StudentController : ApiController
     {
-        //// GET student
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
 
-        //// GET student/:id
-        //[HttpGet]
-        //[Route("student/{id}")]
-        //public Object GetStudent(int id)
-        //{
-        //    var student = new BStudent().GetStudent(id);
-        //    return student;
-        //}
+        // GET student/:id
+        [HttpGet]
+        [Route("student/{id}")]
+        public Object GetStudent(int id)
+        {
+            var student = new BStudent().GetStudent(id);
+            return student;
+        }
     
         //// POST student
         //[HttpPost]
