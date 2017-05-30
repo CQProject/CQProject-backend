@@ -10,22 +10,22 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class ClassController : ApiController
     {
-        //// GET class/
-        //[HttpGet]
-        //[Route("class")]
-        //public Object Get()
-        //{
-        //    var classes = new BClass().GetClasses();
-        //    return classes;
-        //}
+        // GET class/
+        [HttpGet]
+        [Route("class")]
+        public Object Get()
+        {
+            var classes = new BClass().GetClasses();
+            return classes;
+        }
 
-        //// GET secretary/:id
-        //[HttpGet]
-        //[Route("class/{id}")]
-        //public Object Get(int id)
-        //{
-        //    var classByID = new BClass().GetClass(id);
-        //    return classByID;
-        //}
+        // GET secretary/:id
+        [HttpGet]
+        [Route("class/{id}")]
+        public Object Get(int id)
+        {
+            var classByID = new BClass().GetClass(id);
+            return classByID;
+        }
     }
 }

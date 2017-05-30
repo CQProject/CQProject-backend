@@ -4,36 +4,45 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using CQPROJ.Business.Queries;
+using CQPROJ.Business.Entities.EAssistant;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class AssistantController : ApiController
-    {
-        //// GET api/<controller>
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+    {/*
+        // GET assistant/
+        [HttpGet]
+        [Route("assistant")]
+        public Object Get()
+        {
+            var assistant = new BAssistant().GetAssistants();
+            return assistant;
+        }
 
-        //// GET api/<controller>/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        // GET assistant/:id
+        [HttpGet]
+        [Route("assistant/{id}")]
+        public Object Get(int id)
+        {
+            var assistant = new BAssistant().GetAssistant(id);
+            return assistant;
+        }
+        
+        //POST assistant/
+        [HttpPost]
+        [Route("assistant")]
+        public void Post([FromBody]Assistant assistant)
+        {
+            new BAssistant().CreateAssistant(assistant);
+        }
 
-        //// POST api/<controller>
-        //public void Post([FromBody]string value)
-        //{
-        //}
-
-        //// PUT api/<controller>/5
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE api/<controller>/5
-        //public void Delete(int id)
-        //{
-        //}
+        // PUT assistant/id
+        [HttpPut]
+        [Route("assistant/{id}")]
+        public Object Put(int id, [FromBody]Assistant assistant)
+        {
+            return new BAssistant().EditAssistant(id, assistant);
+        }*/
     }
 }
