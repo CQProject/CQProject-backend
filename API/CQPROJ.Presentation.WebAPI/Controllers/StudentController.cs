@@ -9,6 +9,14 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class StudentController : ApiController
     {
+        // GET student/
+        [HttpGet]
+        [Route("student")]
+        public Object Get()
+        {
+            var students = new BStudent().GetStudents();
+            return students;
+        }
 
         // GET student/:id
         [HttpGet]
