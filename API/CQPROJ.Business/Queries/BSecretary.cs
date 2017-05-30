@@ -65,25 +65,28 @@ namespace CQPROJ.Business.Queries
             };
         }
 
-        public void CreateSecretary(Secretary secretary)
+        public Object CreateSecretary(Secretary secretary)
         {
             var pass = new PasswordHasher();
             var passHashed = pass.HashPassword(secretary.Password);
             var date = DateTime.Now;
 
-            TblUsers user = new TblUsers { Name = secretary.Name, Email = secretary.Email, Password = passHashed, CreatedDate = date, IsActive = true };
+            TblUsers user = new TblUsers { Name = secretary.Name, Email = secretary.Email, Password = passHashed, CreatedDate = date, IsActive = true, Function = "Secretary" };
             db.TblUsers.Add(user);
+            db.SaveChanges();
             TblSecretaries sec = new TblSecretaries { UserFK = user.ID, Address = secretary.Address, CitizenCard = secretary.CitizenCard, Curriculum = secretary.Curriculum, FiscalNumber = secretary.FiscalNumber, Photo = secretary.Photo, PhoneNumber = secretary.PhoneNumber, StartWorkTime = secretary.StartWorkTime, EndWorkTime = secretary.EndWorkTime };
             db.TblSecretaries.Add(sec);
             db.SaveChanges();
+
+            return new { Result = "Success"};
         }
 
         public Object EditSecretary(int id, Secretary secretary)
         {
-            var sec = db.TblSecretaries.Select(x => x).Where(x => x.ID == id).FirstOrDefault();
-            var user = db.TblUsers.Select(x => x).Where(x => x.ID == sec.UserFK).FirstOrDefault();
             try
             {
+                var sec = db.TblSecretaries.Select(x => x).Where(x => x.ID == id).FirstOrDefault();
+                var user = db.TblUsers.Select(x => x).Where(x => x.ID == sec.UserFK).FirstOrDefault();
                 user.Name = secretary.Name;
                 user.Email = secretary.Email;
                 sec.FiscalNumber = secretary.FiscalNumber;

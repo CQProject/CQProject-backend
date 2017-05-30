@@ -35,9 +35,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         //POST secretary/ tem de ser void
         [HttpPost]
         [Route("secretary")]
-        public void Post([FromBody]Secretary secretary)
+        public Object Post([FromBody]Secretary secretary)
         {
-            new BSecretary().CreateSecretary(secretary);
+            return new BSecretary().CreateSecretary(secretary);
         }
 
         // PUT secretary/id
