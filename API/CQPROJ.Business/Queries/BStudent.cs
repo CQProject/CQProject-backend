@@ -1,6 +1,5 @@
 ﻿using CQPROJ.Business.Entities;
 using CQPROJ.Business.Entities.EStudent;
-using CQPROJ.Data.BD.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Linq;
@@ -10,7 +9,7 @@ namespace CQPROJ.Business.Queries
 {
     public class BStudent
     {
-        private DBContextModel db = new DBContextModel();
+        //private DBContextModel db = new DBContextModel();
 
         //public Object GetStudent(int id)
         //{

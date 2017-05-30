@@ -1,4 +1,4 @@
-﻿using CQPROJ.Data.BD.Models;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace CQPROJ.Business.Queries
 {
     public class BClass
     {
-        private DBContextModel db = new DBContextModel();
+        //private DBContextModel db = new DBContextModel();
 
         //public Object GetClasses()
         //{

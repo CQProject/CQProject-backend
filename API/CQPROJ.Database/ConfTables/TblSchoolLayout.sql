@@ -5,6 +5,6 @@
     [Logo] NVARCHAR(MAX) NULL, 
     [BackgroundPicture] NVARCHAR(MAX) NULL, 
     [Acronym] NVARCHAR(50) NULL, 
-    [OpeningTime] TIME(0) NULL, 
-    [ClosingTime] TIME(0) NULL
+    [OpeningTime] DATETIME NULL, 
+    [ClosingTime] DATETIME NULL
 )

@@ -183,7 +183,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Service1.svc" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -199,10 +201,6 @@
     <ProjectReference Include="..\CQPROJ.Business\CQPROJ.Business.csproj">
       <Project>{0eb08608-7fd5-4221-871c-08efc107839c}</Project>
       <Name>CQPROJ.Business</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CQPROJ.Data.BD\CQPROJ.Data.BD.csproj">
-      <Project>{30684F18-9223-4298-B10D-3FF62AD2B272}</Project>
-      <Name>CQPROJ.Data.BD</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -1,6 +1,6 @@
 ﻿using CQPROJ.Business.Entities;
 using CQPROJ.Business.Entities.ESecretary;
-using CQPROJ.Data.BD.Models;
+using CQPROJ.Data.DB.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -15,17 +15,55 @@ namespace CQPROJ.Business.Queries
     {
         private DBContextModel db = new DBContextModel();
 
-        //public Object GetSecretaries()
-        //{
-        //    var sec = db.TblSecretaries.Select(x=> new {x.Id, x.Photo, x.TblUsers.Name, x.TblUsers.Email });
-        //    return sec;
-        //}
+        public List<Object> GetSecretaries()
+        {
+            var secs = db.TblSecretaries
+                .Select(x => new { x.ID, x.Photo, x.UserFK });
+            var toSend = new List<Object>();
+            foreach (var sec in secs)
+            {
+                var user = db.TblUsers
+                    .Select(x => new { x.ID, x.Name, x.Email })
+                    .Where(x => x.ID == sec.UserFK)
+                    .FirstOrDefault();
+                toSend.Add(new
+                {
+                    ID = sec.ID,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Photo = sec.Photo
+                });
+            }
+            return toSend;
+        }
 
-        //public Object GetSecretary(int id)
-        //{
-        //    var sec = db.TblSecretaries.Select(x => new { x.Id, x.TblUsers.Name, x.TblUsers.Email, x.Photo, x.StartWorkTime, x.EndWorkTime, x.FiscalNumber, x.CitizenCard, x.PhoneNumber, x.Address, x.TblUsers.CreatedDate, x.TblUsers.IsActive }).Where(x=>x.Id==id);
-        //    return sec;
-        //}
+        public Object GetSecretary(int id)
+        {
+            var sec = db.TblSecretaries
+                .Select(x => new { x.ID, x.Photo, x.StartWorkTime, x.EndWorkTime, x.FiscalNumber, x.CitizenCard, x.PhoneNumber, x.Address, x.Curriculum, x.UserFK })
+                .Where(x => x.ID == id)
+                .FirstOrDefault();
+            var user = db.TblUsers
+                .Select(x => new { x.ID, x.Name, x.Email, x.CreatedDate, x.IsActive })
+                .Where(x => x.ID == sec.UserFK)
+                .FirstOrDefault();
+            return new
+            {
+                Id = sec.ID,
+                Name = user.Name,
+                Email = user.Email,
+                Photo = sec.Photo,
+                StartWorkTime = sec.StartWorkTime,
+                EndWorkTime = sec.EndWorkTime,
+                FiscalNumber = sec.FiscalNumber,
+                CitizenCard = sec.CitizenCard,
+                Phone = sec.Photo,
+                Address = sec.Address,
+                CreatedDate = user.CreatedDate,
+                IsActive = user.IsActive,
+                Curriculum = sec.Curriculum
+            };
+        }
 
         //public void CreateSecretary(Secretary secretary)
         //{
@@ -33,9 +71,9 @@ namespace CQPROJ.Business.Queries
         //    var passHashed = pass.HashPassword(secretary.Password);
         //    var date = DateTime.Now;
 
-        //    TblUsers user = new TblUsers { Name = secretary.Name, Email=secretary.Email, Password=passHashed, CreatedDate=date, IsActive=true };
+        //    TblUsers user = new TblUsers { Name = secretary.Name, Email = secretary.Email, Password = passHashed, CreatedDate = date, IsActive = true };
         //    db.TblUsers.Add(user);
-        //    TblSecretaries sec = new TblSecretaries { UserFK = user.ID, Address=secretary.Address, CitizenCard=secretary.CitizenCard, Curriculum=secretary.Curriculum, FiscalNumber=secretary.FiscalNumber, Photo = secretary.Photo, PhoneNumber=secretary.PhoneNumber, StartWorkTime=secretary.StartWorkTime, EndWorkTime=secretary.EndWorkTime };
+        //    TblSecretaries sec = new TblSecretaries { UserFK = user.ID, Address = secretary.Address, CitizenCard = secretary.CitizenCard, Curriculum = secretary.Curriculum, FiscalNumber = secretary.FiscalNumber, Photo = secretary.Photo, PhoneNumber = secretary.PhoneNumber, StartWorkTime = secretary.StartWorkTime, EndWorkTime = secretary.EndWorkTime };
         //    db.TblSecretaries.Add(sec);
         //    db.SaveChanges();
         //}

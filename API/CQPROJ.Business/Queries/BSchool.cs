@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CQPROJ.Data.BD.Models;
 using System;
 
 namespace CQPROJ.Business.Queries
 {
     public class BSchool
     {
-        private DBContextModel db = new DBContextModel();
+        //private DBContextModel db = new DBContextModel();
 
         //public Object GetSchoolHome()
         //{

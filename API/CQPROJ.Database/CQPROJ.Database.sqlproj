@@ -83,6 +83,7 @@
     <Build Include="Tables\TblTeachers.sql" />
     <Build Include="Tables\TblSecretaries.sql" />
     <Build Include="Tables\TblSchAssistants.sql" />
+    <Build Include="ConfTables\TblPictures.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="CQPROJ.Database.refactorlog" />

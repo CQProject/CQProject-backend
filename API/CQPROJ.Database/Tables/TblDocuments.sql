@@ -4,5 +4,6 @@
     [Document]	NVARCHAR(MAX)	NULL, 
     [IsVisible] BIT				NULL,
 	[ClassFK]	INT				NULL, 
-	CONSTRAINT [PK_DocumentID] PRIMARY KEY CLUSTERED ([ID] ASC),
+	[SubmitedIn] DATETIME		NULL, 
+    CONSTRAINT [PK_DocumentID] PRIMARY KEY CLUSTERED ([ID] ASC),
 )

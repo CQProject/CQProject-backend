@@ -1,4 +1,4 @@
-﻿using CQPROJ.Data.BD.Models;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace CQPROJ.Business.Queries
 {
     class BAssistant
     {
-        private DBContextModel db = new DBContextModel();
+        //private DBContextModel db = new DBContextModel();
         
         //public Object GetAssistants()
         //{

@@ -2,6 +2,6 @@
 (
 	[Id] INT NOT NULL PRIMARY KEY, 
     [IsVisible] BIT NULL, 
-    [Name] VARCHAR(MAX) NULL, 
+    [Name] NVARCHAR(MAX) NULL, 
     [Type] TINYINT NULL
 )

@@ -14,23 +14,23 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class SecretaryController : ApiController
     {
 
-        //// GET secretary/
-        //[HttpGet]
-        //[Route("secretary")]
-        //public Object Get()
-        //{
-        //    var secretaries = new BSecretary().GetSecretaries();
-        //    return secretaries;
-        //}
+        // GET secretary/
+        [HttpGet]
+        [Route("secretary")]
+        public Object Get()
+        {
+            var secretaries = new BSecretary().GetSecretaries();
+            return secretaries;
+        }
 
-        //// GET secretary/:id
-        //[HttpGet]
-        //[Route("secretary/{id}")]
-        //public Object Get(int id)
-        //{
-        //    var secretary = new BSecretary().GetSecretary(id);
-        //    return secretary;
-        //}
+        // GET secretary/:id
+        [HttpGet]
+        [Route("secretary/{id}")]
+        public Object Get(int id)
+        {
+            var secretary = new BSecretary().GetSecretary(id);
+            return secretary;
+        }
 
         ////POST secretary/ tem de ser void
         //[HttpPost]

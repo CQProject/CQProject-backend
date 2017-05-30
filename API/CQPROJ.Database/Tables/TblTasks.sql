@@ -2,7 +2,7 @@
 (
 	[ID]			 INT			NOT NULL IDENTITY(1,1), 
     [DayOfWeek]		 NVARCHAR(MAX)	NULL, 
-    [Hour]			 TIME(0)		NULL, 
+    [Hour]			 DATETIME		NULL, 
     [Weekly]		 BIT			NULL, 
 	[Description]	 NVARCHAR(MAX)	NULL,
     [SecretaryFK]	 INT			NULL, 

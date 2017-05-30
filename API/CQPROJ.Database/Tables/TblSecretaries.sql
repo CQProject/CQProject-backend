@@ -7,8 +7,8 @@
     [Address]		NVARCHAR(MAX)	NULL, 
     [Photo]			NVARCHAR(MAX)	NULL, 
     [Curriculum]	NVARCHAR(MAX)	NULL,     
-	[StartWorkTime] TIME(0)			NULL, 
-    [EndWorkTime]	TIME(0)			NULL, 
+	[StartWorkTime] DATETIME			NULL, 
+    [EndWorkTime]	DATETIME			NULL, 
     [UserFK]		INT				NOT NULL,
 	CONSTRAINT [PK_SecretaryID] PRIMARY KEY CLUSTERED ([ID] ASC),
 )
