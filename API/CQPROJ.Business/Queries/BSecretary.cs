@@ -39,30 +39,38 @@ namespace CQPROJ.Business.Queries
 
         public Object GetSecretary(int id)
         {
-            var sec = db.TblSecretaries
-                .Select(x => new { x.ID, x.Photo, x.StartWorkTime, x.EndWorkTime, x.FiscalNumber, x.CitizenCard, x.PhoneNumber, x.Address, x.Curriculum, x.UserFK })
-                .Where(x => x.ID == id)
-                .FirstOrDefault();
-            var user = db.TblUsers
-                .Select(x => new { x.ID, x.Name, x.Email, x.CreatedDate, x.IsActive })
-                .Where(x => x.ID == sec.UserFK)
-                .FirstOrDefault();
-            return new
+            try
             {
-                Id = sec.ID,
-                Name = user.Name,
-                Email = user.Email,
-                Photo = sec.Photo,
-                StartWorkTime = sec.StartWorkTime,
-                EndWorkTime = sec.EndWorkTime,
-                FiscalNumber = sec.FiscalNumber,
-                CitizenCard = sec.CitizenCard,
-                Phone = sec.PhoneNumber,
-                Address = sec.Address,
-                CreatedDate = user.CreatedDate,
-                IsActive = user.IsActive,
-                Curriculum = sec.Curriculum
-            };
+                var sec = db.TblSecretaries
+                    .Select(x => new { x.ID, x.Photo, x.StartWorkTime, x.EndWorkTime, x.FiscalNumber, x.CitizenCard, x.PhoneNumber, x.Address, x.Curriculum, x.UserFK })
+                    .Where(x => x.ID == id)
+                    .FirstOrDefault();
+                var user = db.TblUsers
+                    .Select(x => new { x.ID, x.Name, x.Email, x.CreatedDate, x.IsActive })
+                    .Where(x => x.ID == sec.UserFK)
+                    .FirstOrDefault();
+                return new
+                {
+                    Id = sec.ID,
+                    UserId = user.ID,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Photo = sec.Photo,
+                    StartWorkTime = sec.StartWorkTime,
+                    EndWorkTime = sec.EndWorkTime,
+                    FiscalNumber = sec.FiscalNumber,
+                    CitizenCard = sec.CitizenCard,
+                    Phone = sec.PhoneNumber,
+                    Address = sec.Address,
+                    CreatedDate = user.CreatedDate,
+                    IsActive = user.IsActive,
+                    Curriculum = sec.Curriculum
+                };
+            }
+            catch (Exception)
+            {
+                return new { };
+            }
         }
 
         public Object CreateSecretary(Secretary secretary)

@@ -20,7 +20,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             var actions = new BAction().GetActions();
             return actions;
         }
-        /*
+        
         // GET action/:id
         [HttpGet]
         [Route("action/{id}")]
@@ -29,34 +29,5 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             var action = new BAction().GetAction(id);
             return action;
         }
-
-
-        // GET action/secretary/:id
-        [HttpGet]
-        [Route("action/secretary/{id}")]
-        public Object secretary(int id)
-        {
-            var action = new BAction().GetActionSecretary(id);
-            return action;
-        }
-
-        // GET action/student/:id
-        [HttpGet]
-        [Route("action/student/{id}")]
-        public Object student(int id)
-        {
-            var action = new BAction().GetActionStudent(id);
-            return action;
-        }
-
-        /*
-        // GET action/assistant/:id
-        [HttpGet]
-        [Route("action/assistant/{id}")]
-        public Object assistant(int id)
-        {
-            var action = new BAction().GetActionAssistant(id);
-            return action;
-        }*/
     }
 }

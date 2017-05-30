@@ -18,75 +18,23 @@ namespace CQPROJ.Business.Queries
             return actions;
         }
 
-        /*
         public Object GetAction(int id)
         {
-            var action = db.TblActions.Select(x => new { x.ID, x.Hour, x.Description, x.UserFK, x.TblUsers.Name, x.TblUsers.Email, x.TblUsers.Function }).Where(x => x.ID == id).FirstOrDefault();
-            return action;
-        }
-
-        public Object GetActionSecretary(int id)
-        {
             try
             {
-                var secID = db.TblSecretaries.Select(x => x).Where(x => x.Id == id).FirstOrDefault();
-                var sec = db.TblActions.Select(x => new { x.ID, x.Hour, x.Description, x.UserFK, x.TblUsers.Name, x.TblUsers.Email }).Where(x => x.UserFK == secID.UserFK).FirstOrDefault();
-                if (sec != null)
+                var action = db.TblActions.Select(x => new { x.ID, x.Hour, x.Description, x.UserFK }).Where(x => x.ID == id).FirstOrDefault();
+                var user = db.TblUsers.Select(y => new { y.ID, y.Name, y.Email, y.Function }).Where(x => x.ID == action.ID).FirstOrDefault();
+                return new
                 {
-                    return sec;
-                }
-                else
-                {
-                    return "[]";
-                }
+                    Id = action.ID,
+                    ExecutionHour = action.Hour,
+                    Description = action.Description,
+                };
             }
             catch (Exception)
             {
-                return "[]";
+                return new {  };
             }
         }
-
-        public Object GetActionStudent(int id)
-        {
-            try
-            {
-                var studID = db.TblStudents.Select(x => x).Where(x => x.ID == id).FirstOrDefault();
-                var stud = db.TblActions.Select(x => new { x.ID, x.Hour, x.Description, x.UserFK, x.TblUsers.Name, x.TblUsers.Email }).Where(x => x.UserFK == studID.UserFK).FirstOrDefault();
-                if (stud != null)
-                {
-                    return stud;
-                }
-                else
-                {
-                    return "[]";
-                }
-
-            }
-            catch (Exception)
-            {
-                return "[]";
-            }
-        }
-
-        /*public Object GetActionAssistant(int id)
-        {
-            try
-            {
-                var assistID = db.TblSchAssistants.Select(x => x).Where(x => x.Id == id).FirstOrDefault();
-                var assist = db.TblActions.Select(x => new { x.ID, x.Hour, x.Description, x.UserFK, x.TblUsers.Name, x.TblUsers.Email }).Where(x => x.UserFK == assistID.UserFK).FirstOrDefault();
-                if (assist != null)
-                {
-                    return assist;
-                }else
-                {
-                    return "[]";
-                }
-
-            }
-            catch (Exception)
-            {
-                return "[]";
-            }
-        }*/
     }
 }
