@@ -25,6 +25,6 @@ namespace CQPROJ.Business.Entities.EStudent
 
         public string GuardianName { get; set; }
 
-        public string PhoneNumber { get; set; }
+        public string GuardianEmail { get; set; }
     }
 }
