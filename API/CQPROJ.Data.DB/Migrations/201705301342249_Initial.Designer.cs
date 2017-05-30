@@ -13,7 +13,7 @@ namespace CQPROJ.Data.DB.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201705300740219_Initial"; }
+            get { return "201705301342249_Initial"; }
         }
         
         string IMigrationMetadata.Source

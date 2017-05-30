@@ -5,5 +5,6 @@
     [Homework]		NVARCHAR(MAX)	NULL, 
     [Observations]	NVARCHAR(MAX)	NULL, 
     [ScheduleFK]	INT				NULL,
-	CONSTRAINT [PK_LessonID] PRIMARY KEY CLUSTERED ([ID] ASC),
+	[Day]		SMALLDATETIME	NULL, 
+    CONSTRAINT [PK_LessonID] PRIMARY KEY CLUSTERED ([ID] ASC),
 )

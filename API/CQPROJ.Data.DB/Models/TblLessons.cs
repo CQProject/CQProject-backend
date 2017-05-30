@@ -17,5 +17,8 @@ namespace CQPROJ.Data.DB.Models
         public string Observations { get; set; }
 
         public int? ScheduleFK { get; set; }
+
+        [Column(TypeName = "smalldatetime")]
+        public DateTime? Day { get; set; }
     }
 }
