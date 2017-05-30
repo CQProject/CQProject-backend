@@ -1,5 +1,6 @@
 ﻿using CQPROJ.Business.Entities;
 using CQPROJ.Business.Entities.EStudent;
+using CQPROJ.Data.DB.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Linq;
@@ -9,24 +10,31 @@ namespace CQPROJ.Business.Queries
 {
     public class BStudent
     {
-        //private DBContextModel db = new DBContextModel();
+        private DBContextModel db = new DBContextModel();
 
-        //public Object GetStudent(int id)
-        //{
-        //    var student = db.TblStudents
-        //            .Select(x => new {
-        //                Photo = x.Photo,
-        //                DataOfBirth = x.DataOfBirth,
-        //                ID =x.ID,
-        //                TblActions = x.TblUsers.TblActions
-        //                    .Select(y=>new {
-        //                        Desc =y.Description,
-        //                        hour = y.Hour
-        //                    })
-        //            })
-        //            .Where(x => x.ID.Equals(id));
-        //    return student;
-        //}
+        public Object GetStudent(int id)
+        {
+            var student = db.TblStudents
+                        .Select(x => new { x.DataOfBirth, x.ID, x.GuardianFK, x.Photo, x.UserFK })
+                        .Where(x => x.ID == id)
+                        .FirstOrDefault();
+            var user = db.TblUsers
+                .Select(x => new { x.ID, x.Name, x.Email, x.CreatedDate, x.IsActive })
+                .Where(x => x.ID == student.UserFK)
+                .FirstOrDefault();
+            return new
+            {
+                Id = student.ID,
+                DateOfBirth = student.DataOfBirth,
+                GuardianFK = student.GuardianFK,
+                Photo = student.Photo,
+                UserFK = student.UserFK,
+                Name= user.Name,
+                Email=user.Email,
+                CreatedDate = user.CreatedDate,
+                IsActive = user.IsActive,
+            };
+        }
 
         //public void CreateStudent(Student cs)
         //{
