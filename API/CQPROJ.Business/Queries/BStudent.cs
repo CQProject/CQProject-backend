@@ -59,21 +59,29 @@ namespace CQPROJ.Business.Queries
             };
         }
 
-        /*public void CreateStudent(Student cs)
+        public void CreateStudent(Student cs)
         {
             var pass = new PasswordHasher();
             var passHashed = pass.HashPassword(cs.Password);
             var date = DateTime.Now;
             var dOfBirth = Convert.ToDateTime(cs.DateOfBirth);
 
-            var guardianFK = db.TblGuardians.Select(x => x).Where(x => x.TblUsers.Name.Equals(cs.GuardianName)).Where(x => x.PhoneNumber == cs.PhoneNumber).FirstOrDefault();
+            var guardianFK = db.TblUsers
+                            .Select(x => new { x.Name, x.ID, x.Email })
+                            .Where(x => x.Name.Equals(cs.GuardianName))
+                            .Where(x=> x.Email.Equals(cs.GuardianEmail))
+                            .FirstOrDefault();
+            var guardian = db.TblGuardians
+                            .Select(x => new { x.UserFK, x.ID })
+                            .Where(x => x.UserFK == guardianFK.ID)
+                            .FirstOrDefault();
 
             TblUsers user = new TblUsers { Name = cs.Name, Email = cs.Email, Password = passHashed, CreatedDate = date, IsActive = true };
             db.TblUsers.Add(user);
-
-            TblStudents student = new TblStudents { DataOfBirth = dOfBirth, Photo = cs.Photo, UserFK = user.ID, GuardianFK = guardianFK.Id };
+            db.SaveChanges();
+            TblStudents student = new TblStudents { DataOfBirth = dOfBirth, Photo = cs.Photo, UserFK = user.ID, GuardianFK = guardian.ID };
             db.TblStudents.Add(student);
             db.SaveChanges();
-        }*/
+        }
     }
 }
