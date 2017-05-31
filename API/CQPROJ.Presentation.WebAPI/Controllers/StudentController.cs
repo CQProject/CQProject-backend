@@ -35,12 +35,13 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             new BStudent().CreateStudent(cs);
         }
 
-        //// PUT student/:id
-        //[HttpPut]
-        //[Route("student/{id}")]
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
+        // PUT student/:id
+        [HttpPut]
+        [Route("student/{id}")]
+        public Object Put(int id, [FromBody]Student student) //----!!!!!!!!!!! Por Testar
+        {
+            return new BStudent().EditStudent(id, student);
+        }
 
         //// DELETE api/<controller>/5
         //public void Delete(int id)
