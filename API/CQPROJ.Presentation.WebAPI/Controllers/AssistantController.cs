@@ -10,7 +10,7 @@ using CQPROJ.Business.Entities.EAssistant;
 namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class AssistantController : ApiController
-    {/*
+    {
         // GET assistant/
         [HttpGet]
         [Route("assistant")]
@@ -43,6 +43,6 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         public Object Put(int id, [FromBody]Assistant assistant)
         {
             return new BAssistant().EditAssistant(id, assistant);
-        }*/
+        }
     }
 }
