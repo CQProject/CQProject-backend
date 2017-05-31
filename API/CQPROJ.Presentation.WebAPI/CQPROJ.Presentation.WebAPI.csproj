@@ -164,6 +164,7 @@
     <Compile Include="Controllers\ActionController.cs" />
     <Compile Include="Controllers\AssistantController.cs" />
     <Compile Include="Controllers\ClassController.cs" />
+    <Compile Include="Controllers\ScheduleController.cs" />
     <Compile Include="Controllers\SchoolController.cs" />
     <Compile Include="Controllers\SecretaryController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
