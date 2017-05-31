@@ -5,20 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using CQPROJ.Business.Entities.EAssistant;
 using Microsoft.AspNet.Identity;
+using CQPROJ.Data.DB.Models;
 
 namespace CQPROJ.Business.Queries
 {
     public class BAssistant
     {
-        /*
-        private ModelsDbContext db = new ModelsDbContext();
-        
+
+        private DBContextModel db = new DBContextModel();
+
         public Object GetAssistants()
         {
-            var assistant = db.TblSchAssistants.Select(x => new { x.Id, x.Photo, x.TblUsers.Name, x.TblUsers.Email });
+            var assistant = db.TblSchAssistants.Select(x => new { x.ID, x.Photo, x.UserFK });
             return assistant;
         }
-
+        /*
         public Object GetAssistant(int id)
         {
             var assistant = db.TblSchAssistants.Select(x => new { x.Id, x.TblUsers.Name, x.TblUsers.Email, x.Photo, x.StartWorkTime, x.EndWorkTime, x.FiscalNumber, x.CitizenCard, x.PhoneNumber, x.Address, x.TblUsers.CreatedDate, x.TblUsers.IsActive }).Where(x => x.Id == id);
