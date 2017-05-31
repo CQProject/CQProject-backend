@@ -7,36 +7,20 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class SchoolController : ApiController
     {
-        //// GET school
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        // GET school/Home
+        [HttpGet]
+        public Object Home()
+        {
+            var school = new BSchool().GetSchoolHome();
+            return school;
+        }
 
-        //// GET school/Home
-        //[HttpGet]
-        //public Object Home()
-        //{
-        //    var school = new BSchool().GetSchoolHome();
-        //    return school;
-        //}
-
-        //// GET school/About
-        //[HttpGet]
-        //public Object About()
-        //{
-        //    var school = new BSchool().GetSchoolAbout();
-        //    return school;
-        //}
-
-        ///*
-        //[HttpPost]
-        //[Route("school")]
-        //public Object getPost([FromBody]ITeste test)
-        //{
-        //    var user = test.ID;
-        //    var name = test.Name;
-        //    return name;
-        //}*/
+        // GET school/About
+        [HttpGet]
+        public Object About()
+        {
+            var school = new BSchool().GetSchoolAbout();
+            return school;
+        }
     }
 }

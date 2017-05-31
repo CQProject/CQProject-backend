@@ -78,6 +78,7 @@
     <Compile Include="Entities\EAction.cs" />
     <Compile Include="Entities\EAssistant.cs" />
     <Compile Include="Entities\ESecretary.cs" />
+    <Compile Include="Entities\ETeacher.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Exemple.cs" />
     <Compile Include="Queries\BAction.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Queries\BStudent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\BSchool.cs" />
+    <Compile Include="Queries\BTeacher.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CQPROJ.Data.AD\CQPROJ.Data.AD.csproj">

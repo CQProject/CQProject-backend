@@ -32,7 +32,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return secretary;
         }
 
-        //POST secretary/ tem de ser void
+        //POST secretary/
         [HttpPost]
         [Route("secretary")]
         public Object Post([FromBody]Secretary secretary)

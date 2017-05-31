@@ -14,6 +14,10 @@ namespace CQPROJ.Business.Queries
 
         private DBContextModel db = new DBContextModel();
 
+        public Object GetAssistants()
+        {
+            var assistant = db.TblSchAssistants.Select(x => new { x.ID, x.Photo, x.UserFK });
+            return assistant;
 
         public Object GetAssistants()
         {
