@@ -17,11 +17,6 @@ namespace CQPROJ.Business.Queries
         public Object GetAssistants()
         {
             var assistant = db.TblSchAssistants.Select(x => new { x.ID, x.Photo, x.UserFK });
-            return assistant;
-
-        public Object GetAssistants()
-        {
-            var assistant = db.TblSchAssistants.Select(x => new { x.ID, x.Photo, x.UserFK });
             var toSend = new List<Object>();
             foreach (var assist in assistant)
             {
