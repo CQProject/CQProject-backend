@@ -18,18 +18,18 @@ namespace CQPROJ.Business.Queries
             var students = db.TblStudents
                 .Select(x => new { x.ID, x.Photo, x.UserFK });
             var toSend = new List<Object>();
-            foreach (var sec in students)
+            foreach (var stud in students)
             {
                 var user = db.TblUsers
                     .Select(x => new { x.ID, x.Name, x.Email })
-                    .Where(x => x.ID == sec.UserFK)
+                    .Where(x => x.ID == stud.UserFK)
                     .FirstOrDefault();
                 toSend.Add(new
                 {
-                    ID = sec.ID,
+                    ID = stud.ID,
                     Name = user.Name,
                     Email = user.Email,
-                    Photo = sec.Photo
+                    Photo = stud.Photo
                 });
             }
             return toSend;
@@ -55,7 +55,7 @@ namespace CQPROJ.Business.Queries
                 Name= user.Name,
                 Email=user.Email,
                 CreatedDate = user.CreatedDate,
-                IsActive = user.IsActive,
+                IsActive = user.IsActive
             };
         }
 
@@ -76,12 +76,43 @@ namespace CQPROJ.Business.Queries
                             .Where(x => x.UserFK == guardianFK.ID)
                             .FirstOrDefault();
 
-            TblUsers user = new TblUsers { Name = cs.Name, Email = cs.Email, Password = passHashed, CreatedDate = date, IsActive = true };
+            TblUsers user = new TblUsers { Name = cs.Name, Email = cs.Email, Password = passHashed, CreatedDate = date, IsActive = true, Function = "Student" };
             db.TblUsers.Add(user);
             db.SaveChanges();
             TblStudents student = new TblStudents { DataOfBirth = dOfBirth, Photo = cs.Photo, UserFK = user.ID, GuardianFK = guardian.ID };
             db.TblStudents.Add(student);
             db.SaveChanges();
         }
+
+        public Object EditStudent(int id, Student student)
+        {
+            try
+            {
+                var stud = db.TblStudents.Select(x => x).Where(x => x.ID == id).FirstOrDefault();
+                var user = db.TblUsers.Select(x => x).Where(x => x.ID == stud.UserFK).FirstOrDefault();
+                user.Name = student.Name;
+                user.Email = student.Email;
+                var dOfBirth = Convert.ToDateTime(student.DateOfBirth);
+                stud.DataOfBirth = dOfBirth;
+                stud.Photo = student.Photo;
+                var guardianFK = db.TblUsers
+                            .Select(x => new { x.Name, x.ID, x.Email })
+                            .Where(x => x.Name.Equals(student.GuardianName))
+                            .Where(x => x.Email.Equals(student.GuardianEmail))
+                            .FirstOrDefault();
+                var guardian = db.TblGuardians
+                                .Select(x => new { x.UserFK, x.ID })
+                                .Where(x => x.UserFK == guardianFK.ID)
+                                .FirstOrDefault();
+                stud.GuardianFK = guardian.ID;
+                db.SaveChanges();
+                return new { Result = "Success" };
+            }
+            catch (Exception)
+            {
+                return new { Result = "Failed" };
+            }
+        }
+
     }
 }

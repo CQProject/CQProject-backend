@@ -18,12 +18,53 @@ namespace CQPROJ.Business.Queries
         {
             var assistant = db.TblSchAssistants.Select(x => new { x.ID, x.Photo, x.UserFK });
             return assistant;
+
+        public Object GetAssistants()
+        {
+            var assistant = db.TblSchAssistants.Select(x => new { x.ID, x.Photo, x.UserFK });
+            var toSend = new List<Object>();
+            foreach (var assist in assistant)
+            {
+                var user = db.TblUsers
+                    .Select(x => new { x.ID, x.Name, x.Email })
+                    .Where(x => x.ID == assist.UserFK)
+                    .FirstOrDefault();
+                toSend.Add(new
+                {
+                    ID = assist.ID,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Photo = assist.Photo
+                });
+            }
+            return toSend;
         }
-        /*
+
         public Object GetAssistant(int id)
         {
-            var assistant = db.TblSchAssistants.Select(x => new { x.Id, x.TblUsers.Name, x.TblUsers.Email, x.Photo, x.StartWorkTime, x.EndWorkTime, x.FiscalNumber, x.CitizenCard, x.PhoneNumber, x.Address, x.TblUsers.CreatedDate, x.TblUsers.IsActive }).Where(x => x.Id == id);
-            return assistant;
+            var assistant = db.TblSchAssistants
+                            .Select(x => new { x.ID, x.UserFK, x.Photo, x.StartWorkTime, x.EndWorkTime, x.FiscalNumber, x.CitizenCard, x.PhoneNumber, x.Address })
+                            .Where(x => x.ID == id)
+                            .FirstOrDefault();
+            var user = db.TblUsers
+                        .Select(x => new { x.ID, x.Name, x.Email, x.IsActive })
+                        .Where(x => x.ID.Equals(assistant.UserFK))
+                        .FirstOrDefault();
+
+            return new
+            {
+                Id = assistant.ID,
+                Photo = assistant.Photo,
+                StartWorkTime = assistant.StartWorkTime,
+                EndWorkTime = assistant.EndWorkTime,
+                FiscalNumber = assistant.FiscalNumber,
+                CitizenCard = assistant.CitizenCard,
+                PhoneNumber = assistant.PhoneNumber,
+                Address = assistant.Address,
+                Name = user.Name,
+                Email = user.Email,
+                IsActive = user.IsActive
+            };
         }
 
         public void CreateAssistant(Assistant assistant)
@@ -32,8 +73,9 @@ namespace CQPROJ.Business.Queries
             var passHashed = pass.HashPassword(assistant.Password);
             var date = DateTime.Now;
 
-            TblUsers user = new TblUsers { Name = assistant.Name, Email = assistant.Email, Password = passHashed, CreatedDate = date, IsActive = true };
+            TblUsers user = new TblUsers { Name = assistant.Name, Email = assistant.Email, Password = passHashed, CreatedDate = date, IsActive = true, Function = "Assistant" };
             db.TblUsers.Add(user);
+            db.SaveChanges();
             TblSchAssistants assist = new TblSchAssistants { UserFK = user.ID, Address = assistant.Address, CitizenCard = assistant.CitizenCard, Curriculum = assistant.Curriculum, FiscalNumber = assistant.FiscalNumber, Photo = assistant.Photo, PhoneNumber = assistant.PhoneNumber, StartWorkTime = assistant.StartWorkTime, EndWorkTime = assistant.EndWorkTime };
             db.TblSchAssistants.Add(assist);
             db.SaveChanges();
@@ -41,17 +83,19 @@ namespace CQPROJ.Business.Queries
 
         public Object EditAssistant(int id, Assistant assistant)
         {
-            var assist = db.TblSchAssistants.Select(x => x).Where(x => x.Id == id).FirstOrDefault();
             try
             {
-                assist.TblUsers.Name = assistant.Name;
-                assist.TblUsers.Email = assistant.Email;
-                assist.FiscalNumber = assistant.FiscalNumber;
-                assist.CitizenCard = assistant.CitizenCard;
-                assist.PhoneNumber = assistant.PhoneNumber;
+                var assist = db.TblSchAssistants.Select(x => x).Where(x => x.ID == id).FirstOrDefault();
+                var user = db.TblUsers.Select(x => x).Where(x => x.ID == assist.UserFK).FirstOrDefault();
+                user.Name = assistant.Name;
+                user.Email = assistant.Email;
                 assist.Address = assistant.Address;
-                assist.Photo = assistant.Photo;
+                assist.CitizenCard = assistant.CitizenCard;
                 assist.Curriculum = assistant.Curriculum;
+                assist.EndWorkTime = assistant.EndWorkTime;
+                assist.FiscalNumber = assistant.FiscalNumber;
+                assist.PhoneNumber = assistant.PhoneNumber;
+                assist.Photo = assistant.Photo;
                 assist.StartWorkTime = assistant.StartWorkTime;
                 db.SaveChanges();
                 return new { Result = "Success" };
@@ -60,6 +104,6 @@ namespace CQPROJ.Business.Queries
             {
                 return new { Result = "Failed" };
             }
-        }*/
+        }
     }
 }
