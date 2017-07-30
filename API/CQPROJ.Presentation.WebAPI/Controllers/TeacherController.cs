@@ -11,39 +11,39 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class TeacherController : ApiController
     {
-        // GET teacher/
-        [HttpGet]
-        [Route("teacher")]
-        public Object Get()
-        {
-            var teachers = new BTeacher().GetTeachers();
-            return teachers;
-        }
+        //// GET teacher/
+        //[HttpGet]
+        //[Route("teacher")]
+        //public Object Get()
+        //{
+        //    var teachers = new BTeacher().GetTeachers();
+        //    return teachers;
+        //}
 
-        // GET teacher/:id
-        [HttpGet]
-        [Route("teacher/{id}")]
-        public Object Get(int id)
-        {
-            var teacher = new BTeacher().GetTeacher(id);
-            return teacher;
-        }
+        //// GET teacher/:id
+        //[HttpGet]
+        //[Route("teacher/{id}")]
+        //public Object Get(int id)
+        //{
+        //    var teacher = new BTeacher().GetTeacher(id);
+        //    return teacher;
+        //}
 
-        // POST teacher/
-        [HttpPost]
-        [Route("teacher")]
-        public Object Post([FromBody]Teacher teacher)
-        {
-            var teach = new BTeacher().CreateTeacher(teacher);
-            return teach;
-        }
+        //// POST teacher/
+        //[HttpPost]
+        //[Route("teacher")]
+        //public Object Post([FromBody]Teacher teacher)
+        //{
+        //    var teach = new BTeacher().CreateTeacher(teacher);
+        //    return teach;
+        //}
 
-        // PUT teacher/id
-        [HttpPut]
-        [Route("teacher/{id}")]
-        public Object Put(int id, [FromBody]Teacher teacher)
-        {
-            return new BTeacher().EditTeacher(id, teacher);
-        }
+        //// PUT teacher/id
+        //[HttpPut]
+        //[Route("teacher/{id}")]
+        //public Object Put(int id, [FromBody]Teacher teacher)
+        //{
+        //    return new BTeacher().EditTeacher(id, teacher);
+        //}
     }
 }

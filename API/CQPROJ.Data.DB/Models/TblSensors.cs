@@ -6,16 +6,18 @@ namespace CQPROJ.Data.DB.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class TblDocuments
+    public partial class TblSensors
     {
         public int ID { get; set; }
 
-        public string File { get; set; }
+        public DateTime? Hour { get; set; }
 
-        public bool? IsVisible { get; set; }
+        public int? Temperature { get; set; }
 
-        public DateTime? SubmitedIn { get; set; }
+        public int? Luminosity { get; set; }
 
-        public int? ClassFK { get; set; }
+        public int? Energy { get; set; }
+
+        public int? RoomFK { get; set; }
     }
 }

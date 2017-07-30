@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[TblRooms]
+(
+	[ID]		INT				NOT NULL IDENTITY(1,1),
+	[Name]		NVARCHAR(MAX)	NULL,
+	[SchoolFK]	INT				NULL,
+	CONSTRAINT [PK_RoomID] PRIMARY KEY CLUSTERED ([ID] ASC)
+)

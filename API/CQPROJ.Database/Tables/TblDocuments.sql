@@ -1,9 +1,9 @@
 ﻿CREATE TABLE [dbo].[TblDocuments]
 (
-	[ID]		INT				NOT NULL IDENTITY(1,1), 
-    [Document]	NVARCHAR(MAX)	NULL, 
-    [IsVisible] BIT				NULL,
-	[ClassFK]	INT				NULL, 
-	[SubmitedIn] DATETIME		NULL, 
+	[ID]			INT				NOT NULL IDENTITY(1,1), 
+    [File]			NVARCHAR(MAX)	NULL, 
+    [IsVisible]		BIT				NULL,
+	[SubmitedIn]	DATETIME		NULL, 
+	[ClassFK]		INT				NULL, 
     CONSTRAINT [PK_DocumentID] PRIMARY KEY CLUSTERED ([ID] ASC),
 )

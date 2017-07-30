@@ -5,5 +5,5 @@
     [Presence]	BIT NULL, 
     [Material]	BIT NULL, 
     [Behavior]	INT NULL,
-	CONSTRAINT [PK_LessonStudent] PRIMARY KEY CLUSTERED ([LessonFK] ASC, [StudentFK] ASC),
+	CONSTRAINT [PK_LessonStudent] PRIMARY KEY CLUSTERED ([LessonFK] ASC, [StudentFK] ASC)
 )

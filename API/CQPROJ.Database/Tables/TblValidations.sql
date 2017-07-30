@@ -4,5 +4,5 @@
 	[NotificationFK]	INT NOT NULL,
 	[Accepted]			BIT NULL ,
 	[Readed]			BIT NULL ,
-	CONSTRAINT [PK_ValidationID] PRIMARY KEY CLUSTERED ([UserFK] ASC, [NotificationFK] ASC),
+	CONSTRAINT [PK_ValidationID] PRIMARY KEY CLUSTERED ([UserFK] ASC, [NotificationFK] ASC)
 )

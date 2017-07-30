@@ -15,5 +15,9 @@ namespace CQPROJ.Data.DB.Models
         public string Year { get; set; }
 
         public string ClassDesc { get; set; }
+
+        public int? SchoolFK { get; set; }
+
+        public int? TeacherFK { get; set; }
     }
 }

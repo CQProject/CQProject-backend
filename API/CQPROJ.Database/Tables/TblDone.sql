@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[TblDone]
+(
+	[ID]			INT				NOT NULL IDENTITY(1,1), 
+    [Hour]			DATETIME		NULL, 
+	[TaskFK]		INT				NULL, 
+	CONSTRAINT [PK_DoneID] PRIMARY KEY CLUSTERED ([ID] ASC)
+)

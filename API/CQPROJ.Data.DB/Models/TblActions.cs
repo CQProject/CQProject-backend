@@ -10,9 +10,8 @@ namespace CQPROJ.Data.DB.Models
     {
         public int ID { get; set; }
 
-        public DateTime Hour { get; set; }
+        public DateTime? Hour { get; set; }
 
-        [Required]
         public string Description { get; set; }
 
         public int? UserFK { get; set; }

@@ -3,5 +3,5 @@
 	[EvaluationFK]	INT		NOT NULL, 
 	[StudentFK]		INT		NOT NULL,
     [Value]			FLOAT	NULL,
-	CONSTRAINT [PK_EvaluatStudent] PRIMARY KEY CLUSTERED ([EvaluationFK] ASC, [StudentFK] ASC),
+	CONSTRAINT [PK_EvaluationStudent] PRIMARY KEY CLUSTERED ([EvaluationFK] ASC, [StudentFK] ASC)
 )

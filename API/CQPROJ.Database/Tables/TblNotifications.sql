@@ -6,5 +6,5 @@
     [Description]	NVARCHAR(MAX)	NULL, 
     [Urgency]		BIT				NULL, 
     [UserFK]		INT				NULL ,
-	CONSTRAINT [PK_NotificationID] PRIMARY KEY CLUSTERED ([ID] ASC),
+	CONSTRAINT [PK_NotificationID] PRIMARY KEY CLUSTERED ([ID] ASC)
 )

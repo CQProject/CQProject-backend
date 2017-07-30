@@ -12,21 +12,21 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class ScheduleController : ApiController
     {
 
-        // GET schedule
-        [HttpGet]
-        [Route("schedule/{id}")]
-        public Object Get(int id)
-        {
-            return new BSchedule().GetSchedule(id);
-        }
+        //// GET schedule
+        //[HttpGet]
+        //[Route("schedule/{id}")]
+        //public Object Get(int id)
+        //{
+        //    return new BSchedule().GetSchedule(id);
+        //}
 
-        // PUT secretary/id
-        [HttpPut]
-        [Route("schedule/{id}")]
-        public Object Put(int id, [FromBody]Schedule schedule)
-        {
-            return new BSchedule().EditSchedule(id, schedule);
-        }
+        //// PUT secretary/id
+        //[HttpPut]
+        //[Route("schedule/{id}")]
+        //public Object Put(int id, [FromBody]Schedule schedule)
+        //{
+        //    return new BSchedule().EditSchedule(id, schedule);
+        //}
 
     }
 }

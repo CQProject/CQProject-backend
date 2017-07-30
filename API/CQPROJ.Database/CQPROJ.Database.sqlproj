@@ -59,8 +59,6 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
-    <Folder Include="ConfTables" />
-    <Folder Include="Models" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\TblUsers.sql" />
@@ -70,7 +68,6 @@
     <Build Include="Tables\TblRoles.sql" />
     <Build Include="Tables\TblUserRoles.sql" />
     <Build Include="Tables\TblClasses.sql" />
-    <Build Include="Tables\TblStudents.sql" />
     <Build Include="Tables\TblClassStudents.sql" />
     <Build Include="Tables\TblTasks.sql" />
     <Build Include="Tables\TblSchedules.sql" />
@@ -79,12 +76,11 @@
     <Build Include="Tables\TblDocuments.sql" />
     <Build Include="Tables\TblEvaluations.sql" />
     <Build Include="Tables\TblEvaluationStudents.sql" />
-    <Build Include="ConfTables\TblSchoolLayout.sql" />
-    <Build Include="Tables\TblGuardians.sql" />
-    <Build Include="Tables\TblTeachers.sql" />
-    <Build Include="Tables\TblSecretaries.sql" />
-    <Build Include="Tables\TblSchAssistants.sql" />
-    <Build Include="ConfTables\TblPictures.sql" />
+    <Build Include="Tables\TblSchools.sql" />
+    <Build Include="Tables\TblRooms.sql" />
+    <Build Include="Tables\TblSensors.sql" />
+    <Build Include="Tables\TblParenting.sql" />
+    <Build Include="Tables\TblDone.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="notas.sql" />

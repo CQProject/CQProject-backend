@@ -12,16 +12,16 @@ namespace CQPROJ.Data.DB.Models
 
         public string Subject { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime? StartingTime { get; set; }
+        public int? StartingTime { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime? EndingTime { get; set; }
+        public int? Duration { get; set; }
 
-        public string DayOfTheWeek { get; set; }
+        public int? DayOfWeek { get; set; }
 
         public int? TeacherFK { get; set; }
 
         public int? ClassFK { get; set; }
+
+        public int? RoomFK { get; set; }
     }
 }

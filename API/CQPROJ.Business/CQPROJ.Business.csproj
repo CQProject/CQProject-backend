@@ -98,10 +98,6 @@
       <Project>{82ad63c3-abeb-4365-ac38-009d5ec6418d}</Project>
       <Name>CQPROJ.Data.AD</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CQPROJ.Data.DB\CQPROJ.Data.DB.csproj">
-      <Project>{355f2dac-27ed-433a-aa38-44421076e9d3}</Project>
-      <Name>CQPROJ.Data.DB</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

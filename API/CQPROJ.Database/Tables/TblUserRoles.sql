@@ -2,5 +2,5 @@
 (
 	[UserFK] INT NOT NULL,
     [RoleFK] INT NOT NULL,
-    CONSTRAINT [PK_UserRoles] PRIMARY KEY CLUSTERED ([UserFK] ASC, [RoleFK] ASC),
+    CONSTRAINT [PK_UserRoles] PRIMARY KEY CLUSTERED ([UserFK] ASC, [RoleFK] ASC)
 )

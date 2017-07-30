@@ -10,16 +10,12 @@ namespace CQPROJ.Data.DB.Models
     {
         public int ID { get; set; }
 
-        public string DayOfWeek { get; set; }
-
-        public DateTime? Hour { get; set; }
+        public DateTime? Day { get; set; }
 
         public bool? Weekly { get; set; }
 
         public string Description { get; set; }
 
-        public int? SecretaryFK { get; set; }
-
-        public int? SchAssistantFK { get; set; }
+        public int? UserFK { get; set; }
     }
 }

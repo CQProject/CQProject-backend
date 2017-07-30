@@ -6,16 +6,13 @@ namespace CQPROJ.Data.DB.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class TblDocuments
+    [Table("TblDone")]
+    public partial class TblDone
     {
         public int ID { get; set; }
 
-        public string File { get; set; }
+        public DateTime? Hour { get; set; }
 
-        public bool? IsVisible { get; set; }
-
-        public DateTime? SubmitedIn { get; set; }
-
-        public int? ClassFK { get; set; }
+        public int? TaskFK { get; set; }
     }
 }

@@ -4,5 +4,5 @@
     [Purport]		 NVARCHAR(MAX)	NULL,
     [EvaluationDate] DATETIME		NULL, 
     [ScheduleFK]	 INT			NULL,
-	CONSTRAINT [PK_EvaluationID] PRIMARY KEY CLUSTERED ([ID] ASC),
+	CONSTRAINT [PK_EvaluationID] PRIMARY KEY CLUSTERED ([ID] ASC)
 )
