@@ -1,5 +1,5 @@
 ﻿using CQPROJ.Business.Entities;
-using CQPROJ.Business.Entities.EStudent;
+using CQPROJ.Business.Entities.IUser;
 using CQPROJ.Business.Queries;
 using System;
 using System.Collections.Generic;

@@ -75,19 +75,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\EAction.cs" />
-    <Compile Include="Entities\EAssistant.cs" />
-    <Compile Include="Entities\ESchedule.cs" />
-    <Compile Include="Entities\ESecretary.cs" />
-    <Compile Include="Entities\ETeacher.cs" />
-    <Compile Include="Entities\User.cs" />
-    <Compile Include="Exemple.cs" />
+    <Compile Include="Entities\IAction.cs" />
+    <Compile Include="Entities\ISchedule.cs" />
+    <Compile Include="Entities\IUser.cs" />
     <Compile Include="Queries\BAction.cs" />
     <Compile Include="Queries\BAssistant.cs" />
     <Compile Include="Queries\BClass.cs" />
     <Compile Include="Queries\BSchedule.cs" />
     <Compile Include="Queries\BSecretary.cs" />
-    <Compile Include="Entities\EStudent.cs" />
     <Compile Include="Queries\BStudent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Queries\BSchool.cs" />
@@ -97,6 +92,10 @@
     <ProjectReference Include="..\CQPROJ.Data.AD\CQPROJ.Data.AD.csproj">
       <Project>{82ad63c3-abeb-4365-ac38-009d5ec6418d}</Project>
       <Name>CQPROJ.Data.AD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CQPROJ.Data.DB\CQPROJ.Data.DB.csproj">
+      <Project>{7dcf14f4-03e7-4a9f-a7e8-2556d4c0d695}</Project>
+      <Name>CQPROJ.Data.DB</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

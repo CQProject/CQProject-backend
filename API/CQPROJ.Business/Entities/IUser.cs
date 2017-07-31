@@ -1,30 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CQPROJ.Business.Entities.ETeacher
+namespace CQPROJ.Business.Entities.IUser
 {
-    public class Teacher
+    public class User
     {
-        [Required]
+        public int ID { get; set; }
+
         public string Name { get; set; }
 
-        [Required]
         public string Email { get; set; }
 
-        [Required]
-        public string Password { get; set; }
-
-        [StringLength(9)]
         public string FiscalNumber { get; set; }
 
-        [StringLength(9)]
         public string CitizenCard { get; set; }
 
-        [StringLength(13)]
         public string PhoneNumber { get; set; }
 
         public string Address { get; set; }
@@ -32,5 +25,15 @@ namespace CQPROJ.Business.Entities.ETeacher
         public string Photo { get; set; }
 
         public string Curriculum { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
+
+        public string Password { get; set; }
+
+        public DateTime? RegisterDate { get; set; }
+
+        public bool? IsActive { get; set; }
+
+        public string Function { get; set; }
     }
 }

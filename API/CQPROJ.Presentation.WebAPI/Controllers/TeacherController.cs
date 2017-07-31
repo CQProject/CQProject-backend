@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CQPROJ.Business.Queries;
-using CQPROJ.Business.Entities.ETeacher;
+using CQPROJ.Business.Entities.IUser;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
 {

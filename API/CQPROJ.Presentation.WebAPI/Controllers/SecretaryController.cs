@@ -1,5 +1,5 @@
 ﻿using CQPROJ.Business.Entities;
-using CQPROJ.Business.Entities.ESecretary;
+using CQPROJ.Business.Entities.IUser;
 using CQPROJ.Business.Queries;
 using Newtonsoft.Json;
 using System;
