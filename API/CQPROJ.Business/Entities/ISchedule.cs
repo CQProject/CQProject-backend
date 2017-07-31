@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CQPROJ.Business.Entities
+namespace CQPROJ.Business.Entities.ISchedule
 {
     public class Schedule
     {

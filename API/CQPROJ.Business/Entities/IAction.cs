@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CQPROJ.Business.Entities.EAction
+namespace CQPROJ.Business.Entities.IAction
 {
     class RegistAction
     {

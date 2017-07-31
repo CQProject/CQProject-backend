@@ -1,6 +1,8 @@
 namespace CQPROJ.Data.DB.Migrations
 {
+    using CQPROJ.Data.DB.Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -9,7 +11,7 @@ namespace CQPROJ.Data.DB.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(CQPROJ.Data.DB.Models.DBContextModel context)
@@ -26,14 +28,17 @@ namespace CQPROJ.Data.DB.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-        }
 
-        DateTime RandomDay()
-        {
-            Random gen = new Random();
-            DateTime start = new DateTime(2017, 1, 1);
-            int range = (DateTime.Today - start).Days;
-            return start.AddDays(gen.Next(range));
+            var roles = new List<TblRoles>{
+                new TblRoles { ID=1, Name="student"},
+                new TblRoles { ID=2, Name="teacher"},
+                new TblRoles { ID=3,Name="secretary"},
+                new TblRoles { ID=4,Name="assistant"},
+                new TblRoles { ID=5,Name="guardian"},
+                new TblRoles { ID=6,Name="admin"},
+            };
+            roles.ForEach(rr => context.TblRoles.AddOrUpdate(r => r.ID, rr));
+            context.SaveChanges();
         }
     }
 }

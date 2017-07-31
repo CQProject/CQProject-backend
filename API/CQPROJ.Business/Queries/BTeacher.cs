@@ -1,4 +1,4 @@
-﻿using CQPROJ.Business.Entities.ETeacher;
+﻿using CQPROJ.Business.Entities.IUser;
 //using CQPROJ.Data.DB.Models;
 using Microsoft.AspNet.Identity;
 using System;
