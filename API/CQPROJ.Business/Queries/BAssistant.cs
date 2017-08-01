@@ -119,6 +119,8 @@ namespace CQPROJ.Business.Queries
             user.FiscalNumber = assistant.FiscalNumber;
             user.PhoneNumber = assistant.PhoneNumber;
             user.Photo = assistant.Photo;
+            user.Function = assistant.Function;
+            user.DateOfBirth = assistant.DateOfBirth;
 
             db.SaveChanges();
 
