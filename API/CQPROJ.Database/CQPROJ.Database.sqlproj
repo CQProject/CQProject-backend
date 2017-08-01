@@ -85,4 +85,7 @@
   <ItemGroup>
     <None Include="notas.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="CQPROJ.Database.refactorlog" />
+  </ItemGroup>
 </Project>

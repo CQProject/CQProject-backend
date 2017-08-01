@@ -1,6 +1,6 @@
 ﻿using CQPROJ.Business.Entities;
 using CQPROJ.Business.Entities.IUser;
-//using CQPROJ.Data.DB.Models;
+using CQPROJ.Data.DB.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -11,108 +11,114 @@ namespace CQPROJ.Business.Queries
 {
     public class BStudent
     {
-        //    private DBContextModel db = new DBContextModel();
+        private DBContextModel db = new DBContextModel();
 
-        //    public List<Object> GetStudents()
-        //    {
-        //        var students = db.TblStudents
-        //            .Select(x => new { x.ID, x.Photo, x.UserFK });
-        //        var toSend = new List<Object>();
-        //        foreach (var stud in students)
-        //        {
-        //            var user = db.TblUsers
-        //                .Select(x => new { x.ID, x.Name, x.Email })
-        //                .Where(x => x.ID == stud.UserFK)
-        //                .FirstOrDefault();
-        //            toSend.Add(new
-        //            {
-        //                ID = stud.ID,
-        //                Name = user.Name,
-        //                Email = user.Email,
-        //                Photo = stud.Photo
-        //            });
-        //        }
-        //        return toSend;
-        //    }
+        public List<Object> GetStudents(int id)
+        {
 
-        //    public Object GetStudent(int id)
-        //    {
-        //        var student = db.TblStudents
-        //                    .Select(x => new { x.DataOfBirth, x.ID, x.GuardianFK, x.Photo, x.UserFK })
-        //                    .Where(x => x.ID == id)
-        //                    .FirstOrDefault();
-        //        var user = db.TblUsers
-        //            .Select(x => new { x.ID, x.Name, x.Email, x.CreatedDate, x.IsActive })
-        //            .Where(x => x.ID == student.UserFK)
-        //            .FirstOrDefault();
-        //        return new
-        //        {
-        //            Id = student.ID,
-        //            DateOfBirth = student.DataOfBirth,
-        //            GuardianFK = student.GuardianFK,
-        //            Photo = student.Photo,
-        //            UserFK = student.UserFK,
-        //            Name= user.Name,
-        //            Email=user.Email,
-        //            CreatedDate = user.CreatedDate,
-        //            IsActive = user.IsActive
-        //        };
-        //    }
+            var student = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 1);
 
-        //    public void CreateStudent(Student cs)
-        //    {
-        //        var pass = new PasswordHasher();
-        //        var passHashed = pass.HashPassword(cs.Password);
-        //        var date = DateTime.Now;
-        //        var dOfBirth = Convert.ToDateTime(cs.DateOfBirth);
+            var toSend = new List<Object>();
+            int max = id * 50 + 50;
+            for(var i = id*50; i < max; i++) { 
 
-        //        var guardianFK = db.TblUsers
-        //                        .Select(x => new { x.Name, x.ID, x.Email })
-        //                        .Where(x => x.Name.Equals(cs.GuardianName))
-        //                        .Where(x=> x.Email.Equals(cs.GuardianEmail))
-        //                        .FirstOrDefault();
-        //        var guardian = db.TblGuardians
-        //                        .Select(x => new { x.UserFK, x.ID })
-        //                        .Where(x => x.UserFK == guardianFK.ID)
-        //                        .FirstOrDefault();
+                var user = db.TblUsers.Find(i+1);
 
-        //        TblUsers user = new TblUsers { Name = cs.Name, Email = cs.Email, Password = passHashed, CreatedDate = date, IsActive = true, Function = "Student" };
-        //        db.TblUsers.Add(user);
-        //        db.SaveChanges();
-        //        TblStudents student = new TblStudents { DataOfBirth = dOfBirth, Photo = cs.Photo, UserFK = user.ID, GuardianFK = guardian.ID };
-        //        db.TblStudents.Add(student);
-        //        db.SaveChanges();
-        //    }
+                toSend.Add(new
+                {
+                    ID = user.ID,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Photo = user.Photo
+                });
+            }
+            return toSend;
+        }
 
-        //    public Object EditStudent(int id, Student student)
-        //    {
-        //        try
-        //        {
-        //            var stud = db.TblStudents.Select(x => x).Where(x => x.ID == id).FirstOrDefault();
-        //            var user = db.TblUsers.Select(x => x).Where(x => x.ID == stud.UserFK).FirstOrDefault();
-        //            user.Name = student.Name;
-        //            user.Email = student.Email;
-        //            var dOfBirth = Convert.ToDateTime(student.DateOfBirth);
-        //            stud.DataOfBirth = dOfBirth;
-        //            stud.Photo = student.Photo;
-        //            var guardianFK = db.TblUsers
-        //                        .Select(x => new { x.Name, x.ID, x.Email })
-        //                        .Where(x => x.Name.Equals(student.GuardianName))
-        //                        .Where(x => x.Email.Equals(student.GuardianEmail))
-        //                        .FirstOrDefault();
-        //            var guardian = db.TblGuardians
-        //                            .Select(x => new { x.UserFK, x.ID })
-        //                            .Where(x => x.UserFK == guardianFK.ID)
-        //                            .FirstOrDefault();
-        //            stud.GuardianFK = guardian.ID;
-        //            db.SaveChanges();
-        //            return new { Result = "Success" };
-        //        }
-        //        catch (Exception)
-        //        {
-        //            return new { Result = "Failed" };
-        //        }
-        //    }
+        public Object GetStudent(int id)
+        {
+
+            var student = db.TblUserRoles.Find(id, 1);
+
+            if (student == null)
+            {
+                return new { Result = "Failed" };
+            }
+
+
+            var user = db.TblUsers.Find(id);
+            var guardian = db.TblParenting.Select(x => x).Where(x => x.StudentFK == id);
+
+            return new
+            {
+                Id = user.ID,
+                DateOfBirth = user.DateOfBirth,
+                GuardianFK = guardian.Select(x=>x.GuardianFK),
+                Photo = user.Photo,
+                Name = user.Name,
+                Email = user.Email,
+                RegisterDate = user.RegisterDate,
+                IsActive = user.IsActive
+            };
+        }
+
+        public int CreateStudent(User student)
+        {
+            var pass = new PasswordHasher();
+            var passHashed = pass.HashPassword(student.Password);
+            var date = DateTime.Now;
+
+            TblUsers user = new TblUsers
+            {
+                CitizenCard = student.CitizenCard,
+                Email = student.Email,
+                FiscalNumber = student.FiscalNumber,
+                Name = student.Name,
+                Password = passHashed,
+                Photo = student.Photo,
+                IsActive = true,
+                Function = student.Function,
+                DateOfBirth = student.DateOfBirth,
+                RegisterDate = date
+
+            };
+
+            db.TblUsers.Add(user);
+            db.SaveChanges();
+
+            TblUserRoles userRoles = new TblUserRoles
+            {
+                UserFK = user.ID,
+                RoleFK = 1
+            };
+            db.TblUserRoles.Add(userRoles);
+            db.SaveChanges();
+
+            return user.ID;
+        }
+
+        public Object EditStudent(int id, User student)
+        {
+            var stud = db.TblUserRoles.Find(id, 4);
+
+            if (stud == null | student == null)
+            {
+                return new { Result = "Failed" };
+            }
+
+            TblUsers user = db.TblUsers.Find(id);
+
+            user.CitizenCard = student.CitizenCard;
+            user.Email = student.Email;
+            user.FiscalNumber = student.FiscalNumber;
+            user.Name = student.Name;
+            user.Photo = student.Photo;
+            user.DateOfBirth = student.DateOfBirth;
+
+            db.SaveChanges();
+
+            return new { Result = "Success" };
+        }
 
     }
 }

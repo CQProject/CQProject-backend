@@ -5,5 +5,6 @@
     [IsVisible]		BIT				NULL,
 	[SubmitedIn]	DATETIME		NULL, 
 	[ClassFK]		INT				NULL, 
+    [UserFK]		INT				NULL, 
     CONSTRAINT [PK_DocumentID] PRIMARY KEY CLUSTERED ([ID] ASC),
 )

@@ -16,6 +16,7 @@ namespace CQPROJ.Business.Queries
 
         public Object GetAssistants()
         {
+
             var assistant = db.TblUserRoles.Select(x=>x).Where(x=>x.RoleFK==4);      
 
             var toSend = new List<Object>();
@@ -44,8 +45,7 @@ namespace CQPROJ.Business.Queries
                 return new { Result = "Failed" };
             }
 
-            var user = db.TblUsers
-            .Find(id);
+            var user = db.TblUsers.Find(id);
 
             return new
             {

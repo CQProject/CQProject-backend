@@ -17,5 +17,7 @@ namespace CQPROJ.Data.DB.Models
         public string ProfilePicture { get; set; }
 
         public string Acronym { get; set; }
+
+        public string About { get; set; }
     }
 }

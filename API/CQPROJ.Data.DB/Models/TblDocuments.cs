@@ -17,5 +17,7 @@ namespace CQPROJ.Data.DB.Models
         public DateTime? SubmitedIn { get; set; }
 
         public int? ClassFK { get; set; }
+
+        public int? UserFK { get; set; }
     }
 }

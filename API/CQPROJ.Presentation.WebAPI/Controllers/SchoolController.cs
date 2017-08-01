@@ -14,13 +14,5 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             var school = new BSchool().GetSchoolHome();
             return school;
         }
-
-        // GET school/About
-        [HttpGet]
-        public Object About()
-        {
-            var school = new BSchool().GetSchoolAbout();
-            return school;
-        }
     }
 }

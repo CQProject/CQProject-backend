@@ -20,6 +20,6 @@ namespace CQPROJ.Data.DB.Models
 
         public bool? Accepted { get; set; }
 
-        public bool? Readed { get; set; }
+        public bool? Read { get; set; }
     }
 }

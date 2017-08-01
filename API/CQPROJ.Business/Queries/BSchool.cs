@@ -3,7 +3,6 @@ using System.Linq;
 using System;
 using CQPROJ.Data.DB.Models;
 
-
 namespace CQPROJ.Business.Queries
 {
     public class BSchool
