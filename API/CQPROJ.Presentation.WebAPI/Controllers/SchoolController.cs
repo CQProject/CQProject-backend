@@ -7,20 +7,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class SchoolController : ApiController
     {
-        //// GET school/Home
-        //[HttpGet]
-        //public Object Home()
-        //{
-        //    var school = new BSchool().GetSchoolHome();
-        //    return school;
-        //}
-
-        //// GET school/About
-        //[HttpGet]
-        //public Object About()
-        //{
-        //    var school = new BSchool().GetSchoolAbout();
-        //    return school;
-        //}
+        // GET school/Home
+        [HttpGet]
+        public Object Home()
+        {
+            var school = new BSchool().GetSchoolHome();
+            return school;
+        }
     }
 }

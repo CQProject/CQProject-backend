@@ -12,6 +12,7 @@ namespace CQPROJ.Data.DB.Models
         {
         }
 
+        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
         public virtual DbSet<TblActions> TblActions { get; set; }
         public virtual DbSet<TblClasses> TblClasses { get; set; }
         public virtual DbSet<TblClassStudents> TblClassStudents { get; set; }
