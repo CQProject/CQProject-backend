@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.14
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQPROJ.Presentation.WebAPI", "CQPROJ.Presentation.WebAPI\CQPROJ.Presentation.WebAPI.csproj", "{7D25A065-798A-4428-9B99-3227DD5C585A}"
 EndProject
@@ -12,9 +12,6 @@ EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CQPROJ.Database", "CQPROJ.Database\CQPROJ.Database.sqlproj", "{FAD7904C-EA1B-4612-8781-50EA476952EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQPROJ.Data.DB", "CQPROJ.Data.DB\CQPROJ.Data.DB.csproj", "{7DCF14F4-03E7-4A9F-A7E8-2556D4C0D695}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FAD7904C-EA1B-4612-8781-50EA476952EC} = {FAD7904C-EA1B-4612-8781-50EA476952EC}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

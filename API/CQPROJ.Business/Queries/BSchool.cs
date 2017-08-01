@@ -11,7 +11,7 @@ namespace CQPROJ.Business.Queries
 
         public Object GetSchoolHome()
         {
-            var schoolHome = db.TblSchools.Select(s => new { s.Name, s.Logo, s.ProfilePicture, s.Acronym }).FirstOrDefault();
+            var schoolHome = db.TblSchools.Select(s => new { s.Name, s.Logo, s.ProfilePicture, s.Acronym, s.About });
             return schoolHome;
         }
     }
