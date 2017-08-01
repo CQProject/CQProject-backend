@@ -1,4 +1,5 @@
 ﻿using CQPROJ.Business.Entities.IUser;
+using CQPROJ.Data.DB.Models;
 //using CQPROJ.Data.DB.Models;
 using Microsoft.AspNet.Identity;
 using System;
@@ -11,100 +12,118 @@ namespace CQPROJ.Business.Queries
 {
     public class BTeacher
     {
-        //private DBContextModel db = new DBContextModel();
+        private DBContextModel db = new DBContextModel();
 
-        //public List<Object> GetTeachers()
-        //{
-        //    var teachers = db.TblTeachers.Select(x => new { x.ID, x.Photo, x.UserFK });
-        //    var toSend = new List<Object>();
-        //    foreach(var teach in teachers)
-        //    {
-        //        var user = db.TblUsers
-        //            .Select(x => new { x.ID, x.Name, x.Email })
-        //            .Where(x => x.ID == teach.UserFK)
-        //            .FirstOrDefault();
-        //        toSend.Add(new
-        //        {
-        //            ID = teach.ID,
-        //            Photo = teach.Photo,
-        //            Name = user.Name,
-        //            Email = user.Email
-        //        });
-        //    }
-        //    return toSend;
-        //}
+        public Object GetTeachers()
+        {
+            var teachers = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 2);
 
-        //public Object GetTeacher(int id)
-        //{
-        //    try
-        //    {
-        //        var teach = db.TblTeachers
-        //            .Select(x => new { x.ID, x.Photo, x.FiscalNumber, x.CitizenCard, x.PhoneNumber, x.Address, x.Curriculum,x.UserFK })
-        //            .Where(x => x.ID == id)
-        //            .FirstOrDefault();
-        //        var user = db.TblUsers
-        //            .Select(x => new { x.ID, x.Name, x.Email, x.CreatedDate, x.IsActive })
-        //            .Where(x => x.ID == teach.UserFK)
-        //            .FirstOrDefault();
-        //        return new
-        //        {
-        //            Id = teach.ID,
-        //            UserId = user.ID,
-        //            Name = user.Name,
-        //            Email = user.Email,
-        //            Photo = teach.Photo,
-        //            FiscalNumber = teach.FiscalNumber,
-        //            CitizenCard = teach.CitizenCard,
-        //            Phone = teach.PhoneNumber,
-        //            Address = teach.Address,
-        //            CreatedDate = user.CreatedDate,
-        //            IsActive = user.IsActive,
-        //            Curriculum = teach.Curriculum
-        //        };
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return new { };
-        //    }
-        //}
+            var toSend = new List<Object>();
+            foreach (var teacher in teachers)
+            {
+                var user = db.TblUsers.Find(teacher.UserFK);
 
-        //public Object CreateTeacher(Teacher teacher)
-        //{
-        //    var pass = new PasswordHasher();
-        //    var passHashed = pass.HashPassword(teacher.Password);
-        //    var date = DateTime.Now;
+                toSend.Add(new
+                {
+                    ID = user.ID,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Photo = user.Photo
+                });
+            }
+            return toSend;
+        }
 
-        //    TblUsers user = new TblUsers { Name = teacher.Name, Email = teacher.Email, Password = passHashed, CreatedDate = date, IsActive = true, Function = "Teacher" };
-        //    db.TblUsers.Add(user);
-        //    db.SaveChanges();
-        //    TblTeachers teach = new TblTeachers { UserFK = user.ID, Address = teacher.Address, CitizenCard = teacher.CitizenCard, Curriculum = teacher.Curriculum, FiscalNumber = teacher.FiscalNumber, Photo = teacher.Photo, PhoneNumber = teacher.PhoneNumber};
-        //    db.TblTeachers.Add(teach);
-        //    db.SaveChanges();
+        public Object GetTeacher(int id)
+        {
+            var teacher = db.TblUserRoles.Find(id, 2);
 
-        //    return new { Result = "Success" };
-        //}
+            if (teacher == null)
+            {
+                return new { Result = "Failed" };
+            }
 
-        //public Object EditTeacher(int id, Teacher teacher)
-        //{
-        //    try
-        //    {
-        //        var teach = db.TblTeachers.Select(x => x).Where(x => x.ID == id).FirstOrDefault();
-        //        var user = db.TblUsers.Select(x => x).Where(x => x.ID == teach.UserFK).FirstOrDefault();
-        //        user.Name = teacher.Name;
-        //        user.Email = teacher.Email;
-        //        teach.FiscalNumber = teacher.FiscalNumber;
-        //        teach.CitizenCard = teacher.CitizenCard;
-        //        teach.PhoneNumber = teacher.PhoneNumber;
-        //        teach.Address = teacher.Address;
-        //        teach.Photo = teacher.Photo;
-        //        teach.Curriculum = teacher.Curriculum;
-        //        db.SaveChanges();
-        //        return new { Result = "Success" };
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return new { Result = "Failed" };
-        //    }
-        //}
+            var user = db.TblUsers.Find(id);
+
+            return new
+            {
+                Id = user.ID,
+                Photo = user.Photo,
+                FiscalNumber = user.FiscalNumber,
+                CitizenCard = user.CitizenCard,
+                PhoneNumber = user.PhoneNumber,
+                Address = user.Address,
+                Name = user.Name,
+                Email = user.Email,
+                RegisterDate = user.RegisterDate,
+                Function = user.Function,
+                Curriculum = user.Curriculum
+            };
+        }
+
+        public void CreateTeacher(User teacher)
+        {
+            var pass = new PasswordHasher();
+            var passHashed = pass.HashPassword(teacher.Password);
+            var date = DateTime.Now;
+
+            TblUsers user = new TblUsers
+            {
+                Address = teacher.Address,
+                CitizenCard = teacher.CitizenCard,
+                Curriculum = teacher.Curriculum,
+                Email = teacher.Email,
+                FiscalNumber = teacher.FiscalNumber,
+                Name = teacher.Name,
+                Password = passHashed,
+                PhoneNumber = teacher.PhoneNumber,
+                Photo = teacher.Photo,
+                IsActive = true,
+                Function = teacher.Function,
+                DateOfBirth = teacher.DateOfBirth,
+                RegisterDate = date
+
+            };
+
+            db.TblUsers.Add(user);
+            db.SaveChanges();
+
+            TblUserRoles userRoles = new TblUserRoles
+            {
+                UserFK = user.ID,
+                RoleFK = 2
+            };
+            db.TblUserRoles.Add(userRoles);
+            db.SaveChanges();
+        }
+
+        public Object EditTeacher(int id, User teachers)
+        {
+
+            var teacher = db.TblUserRoles.Find(id, 2);
+
+            if (teacher == null | teachers == null)
+            {
+                return new { Result = "Failed" };
+            }
+
+            TblUsers user = db.TblUsers.Find(id);
+
+            user.Name = teachers.Name;
+            user.Email = teachers.Email;
+            user.Address = teachers.Address;
+            user.CitizenCard = teachers.CitizenCard;
+            user.Curriculum = teachers.Curriculum;
+            user.FiscalNumber = teachers.FiscalNumber;
+            user.PhoneNumber = teachers.PhoneNumber;
+            user.Photo = teachers.Photo;
+            user.Function = teachers.Function;
+            user.DateOfBirth = teachers.DateOfBirth;
+
+            db.SaveChanges();
+
+            return new { Result = "Success" };
+        }
+        
     }
 }
