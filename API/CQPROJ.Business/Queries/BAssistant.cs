@@ -14,56 +14,55 @@ namespace CQPROJ.Business.Queries
 
         private DBContextModel db = new DBContextModel();
 
-        /*public Object GetAssistants()
+        public Object GetAssistants()
         {
-            var assistant = db.TblUsers.Select(x=>x);
+            var assistant = db.TblUserRoles.Select(x=>x).Where(x=>x.RoleFK==4);      
+
             var toSend = new List<Object>();
             foreach (var assist in assistant)
             {
-                var user = db.TblUserRoles
-                    .Select(x=>x)
-                    .Where(x => x.UserFK == assist.ID)
-                    .Where(x=> x.RoleFK == 4)
-                    .FirstOrDefault();
-
+                var user = db.TblUsers.Find(assist.UserFK);
 
                 toSend.Add(new
                 {
-                    ID = assist.ID,
-                    Name = assist.Name,
-                    Email = assist.Email,
-                    Photo = assist.Photo
+                    ID = user.ID,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Photo = user.Photo
                 });
             }
             return toSend;
-        }*/
+        }
 
-        //public Object GetAssistant(int id)
-        //{
-        //    var assistant = db.TblSchAssistants
-        //                    .Select(x => new { x.ID, x.UserFK, x.Photo, x.StartWorkTime, x.EndWorkTime, x.FiscalNumber, x.CitizenCard, x.PhoneNumber, x.Address })
-        //                    .Where(x => x.ID == id)
-        //                    .FirstOrDefault();
-        //    var user = db.TblUsers
-        //                .Select(x => new { x.ID, x.Name, x.Email, x.IsActive })
-        //                .Where(x => x.ID.Equals(assistant.UserFK))
-        //                .FirstOrDefault();
+        public Object GetAssistant(int id)
+        {
 
-        //    return new
-        //    {
-        //        Id = assistant.ID,
-        //        Photo = assistant.Photo,
-        //        StartWorkTime = assistant.StartWorkTime,
-        //        EndWorkTime = assistant.EndWorkTime,
-        //        FiscalNumber = assistant.FiscalNumber,
-        //        CitizenCard = assistant.CitizenCard,
-        //        PhoneNumber = assistant.PhoneNumber,
-        //        Address = assistant.Address,
-        //        Name = user.Name,
-        //        Email = user.Email,
-        //        IsActive = user.IsActive
-        //    };
-        //}
+            var assistant = db.TblUserRoles.Find(id, 4);
+
+            if (assistant == null)
+            {
+                return new { Result = "Failed" };
+            }
+
+            var user = db.TblUsers
+            .Find(id);
+
+            return new
+            {
+                Id = user.ID,
+                Photo = user.Photo,
+                FiscalNumber = user.FiscalNumber,
+                CitizenCard = user.CitizenCard,
+                PhoneNumber = user.PhoneNumber,
+                Address = user.Address,
+                Name = user.Name,
+                Email = user.Email,
+                RegisterDate = user.RegisterDate,
+                Function = user.Function,
+                Curriculum = user.Curriculum
+            };
+            
+        }
 
         public void CreateAssistant(User assistant)
         {
@@ -82,7 +81,7 @@ namespace CQPROJ.Business.Queries
                 PhoneNumber = assistant.PhoneNumber,
                 Photo = assistant.Photo,
                 IsActive = true,
-                Function = "Assistant",
+                Function = assistant.Function,
                 DateOfBirth = assistant.DateOfBirth,
                 RegisterDate = date
                 
@@ -96,32 +95,34 @@ namespace CQPROJ.Business.Queries
                 UserFK = user.ID,
                 RoleFK = 4
             };
+            db.TblUserRoles.Add(userRoles);
             db.SaveChanges();
         }
 
-        //public Object EditAssistant(int id, Assistant assistant)
-        //{
-        //    try
-        //    {
-        //        var assist = db.TblSchAssistants.Select(x => x).Where(x => x.ID == id).FirstOrDefault();
-        //        var user = db.TblUsers.Select(x => x).Where(x => x.ID == assist.UserFK).FirstOrDefault();
-        //        user.Name = assistant.Name;
-        //        user.Email = assistant.Email;
-        //        assist.Address = assistant.Address;
-        //        assist.CitizenCard = assistant.CitizenCard;
-        //        assist.Curriculum = assistant.Curriculum;
-        //        assist.EndWorkTime = assistant.EndWorkTime;
-        //        assist.FiscalNumber = assistant.FiscalNumber;
-        //        assist.PhoneNumber = assistant.PhoneNumber;
-        //        assist.Photo = assistant.Photo;
-        //        assist.StartWorkTime = assistant.StartWorkTime;
-        //        db.SaveChanges();
-        //        return new { Result = "Success" };
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return new { Result = "Failed" };
-        //    }
-        //}
+        public Object EditAssistant(int id,User assistant)
+        {
+
+            var assist = db.TblUserRoles.Find(id, 4);
+
+            if (assist == null | assistant == null)
+            {
+                return new { Result = "Failed" };
+            }
+
+            TblUsers user = db.TblUsers.Find(id);
+
+            user.Name = assistant.Name;
+            user.Email = assistant.Email;
+            user.Address = assistant.Address;
+            user.CitizenCard = assistant.CitizenCard;
+            user.Curriculum = assistant.Curriculum;
+            user.FiscalNumber = assistant.FiscalNumber;
+            user.PhoneNumber = assistant.PhoneNumber;
+            user.Photo = assistant.Photo;
+
+            db.SaveChanges();
+
+            return new { Result = "Success" };
+        }
     }
 }
