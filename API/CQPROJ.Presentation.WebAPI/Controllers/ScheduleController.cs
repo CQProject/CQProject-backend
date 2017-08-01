@@ -12,13 +12,13 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class ScheduleController : ApiController
     {
 
-        //// GET schedule
-        //[HttpGet]
-        //[Route("schedule/{id}")]
-        //public Object Get(int id)
-        //{
-        //    return new BSchedule().GetSchedule(id);
-        //}
+        // GET schedule
+        [HttpGet]
+        [Route("schedule/{id}")]
+        public Object Get(int id)
+        {
+            return new BSchedule().GetTeacherSchedule(id);
+        }
 
         //// PUT secretary/id
         //[HttpPut]

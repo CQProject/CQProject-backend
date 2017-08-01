@@ -10,46 +10,45 @@ namespace CQPROJ.Business.Queries
 {
     public class BSchedule
     {
-        //private DBContextModel db = new DBContextModel();
+        private DBContextModel db = new DBContextModel();
 
-        //public Object GetSchedule(int id)
+        public Object GetTeacherSchedule(int id)
+        {
+            var schedule = db.TblSchedules.Select(x => x).Where(x => x.TeacherFK == id);
+
+            var toSend = new List<Object>();
+            foreach (var sched in schedule)
+            {
+                toSend.Add(new
+                {
+                    ID = sched.ID,
+                    DayOfWeek = sched.DayOfWeek,
+                    Duration = sched.Duration,
+                    StartingTime = sched.StartingTime,
+                    Subject = sched.Subject
+                });
+            }
+            return toSend;
+        }
+
+        //public Object GetStudentSchedule(int id)
         //{
-        //    try
+
+        //    var schedule = db.TblSchedules.Select(x => x).Where(x => x.ClassFK == id);
+
+        //    var toSend = new List<Object>();
+        //    foreach (var sched in schedule)
         //    {
-        //        var schedule = db.TblSchedules
-        //                        .Select(x => new { x.ID, x.ClassFK, x.DayOfWeek, x.Duration, x.StartingTime, x.Subject, x.TeacherFK })
-        //                        .FirstOrDefault();
-        //        var claxx = db.TblClasses.Select(x => new { x.ID, x.ClassDesc, x.Year })
-        //                    .Where(x => x.ID == schedule.ClassFK)
-        //                    .FirstOrDefault();
-        //        var teacher = db.TblTeachers.Select(x => new { x.ID, x.UserFK })
-        //                        .Where(x => x.ID == schedule.TeacherFK)
-        //                        .FirstOrDefault();
-        //        var userTeacher = db.TblUsers.Select(x => new { x.ID, x.Name })
-        //                            .Where(x => x.ID == teacher.UserFK)
-        //                            .FirstOrDefault();
-        //        return new
+        //        toSend.Add(new
         //        {
-        //            Id = schedule.ID,
-        //            Subject = schedule.Subject,
-        //            DayOfWeek = schedule.DayOfTheWeek,
-        //            StartingTime = schedule.StartingTime,
-        //            EndingTime = schedule.EndingTime,
-        //            TeacherID = teacher.ID,
-        //            TeacherName = userTeacher.Name,
-        //            ClassID = claxx.ID,
-        //            ClassYearDesc = claxx.Year + " " + claxx.ClassDesc
-        //        };
+        //            ID = sched.ID,
+        //            DayOfWeek = sched.DayOfWeek,
+        //            Duration = sched.Duration,v
+        //            StartingTime = sched.StartingTime,
+        //            Subject = sched.Subject
+        //        });
         //    }
-        //    catch (Exception)
-        //    {
-        //        return new { };
-        //    }
-        //}
-
-        //public Object EditSchedule(int id, Schedule schedule)
-        //{
-        //    return null;
+        //    return toSend;
         //}
     }
 }
