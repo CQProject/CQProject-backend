@@ -115,6 +115,8 @@ namespace CQPROJ.Business.Queries
             user.Address = secretary.Address;
             user.Photo = secretary.Photo;
             user.Curriculum = secretary.Curriculum;
+            user.Function = secretary.Function;
+            user.DateOfBirth = secretary.DateOfBirth;
 
             db.SaveChanges();
             return new { Result = "Success" };
