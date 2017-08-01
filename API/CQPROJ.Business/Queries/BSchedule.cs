@@ -1,5 +1,5 @@
 ﻿using CQPROJ.Business.Entities;
-//using CQPROJ.Data.DB.Models;
+using CQPROJ.Data.DB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace CQPROJ.Business.Queries
         //    try
         //    {
         //        var schedule = db.TblSchedules
-        //                        .Select(x => new { x.ID, x.ClassFK, x.DayOfTheWeek, x.EndingTime, x.StartingTime, x.Subject, x.TeacherFK })
+        //                        .Select(x => new { x.ID, x.ClassFK, x.DayOfWeek, x.Duration, x.StartingTime, x.Subject, x.TeacherFK })
         //                        .FirstOrDefault();
         //        var claxx = db.TblClasses.Select(x => new { x.ID, x.ClassDesc, x.Year })
         //                    .Where(x => x.ID == schedule.ClassFK)
@@ -38,7 +38,7 @@ namespace CQPROJ.Business.Queries
         //            TeacherID = teacher.ID,
         //            TeacherName = userTeacher.Name,
         //            ClassID = claxx.ID,
-        //            ClassYearDesc = claxx.Year +" "+claxx.ClassDesc
+        //            ClassYearDesc = claxx.Year + " " + claxx.ClassDesc
         //        };
         //    }
         //    catch (Exception)

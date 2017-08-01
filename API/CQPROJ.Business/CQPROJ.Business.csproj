@@ -81,6 +81,7 @@
     <Compile Include="Queries\BAction.cs" />
     <Compile Include="Queries\BAssistant.cs" />
     <Compile Include="Queries\BClass.cs" />
+    <Compile Include="Queries\BGuardian.cs" />
     <Compile Include="Queries\BSchedule.cs" />
     <Compile Include="Queries\BSecretary.cs" />
     <Compile Include="Queries\BStudent.cs" />
