@@ -1,6 +1,5 @@
-﻿//using CQPROJ.Business.Entities;
-using CQPROJ.Business.Entities.IUser;
-//using CQPROJ.Data.DB.Models;
+﻿using CQPROJ.Business.Entities.IUser;
+using CQPROJ.Data.DB.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -13,109 +12,117 @@ namespace CQPROJ.Business.Queries
 {
     public class BSecretary
     {
-        //private DBContextModel db = new DBContextModel();
+        private DBContextModel db = new DBContextModel();
 
-        //public List<Object> GetSecretaries()
-        //{
-        //    var secs = db.TblSecretaries
-        //        .Select(x => new { x.ID, x.Photo, x.UserFK });
-        //    var toSend = new List<Object>();
-        //    foreach (var sec in secs)
-        //    {
-        //        var user = db.TblUsers
-        //            .Select(x => new { x.ID, x.Name, x.Email })
-        //            .Where(x => x.ID == sec.UserFK)
-        //            .FirstOrDefault();
-        //        toSend.Add(new
-        //        {
-        //            ID = sec.ID,
-        //            Name = user.Name,
-        //            Email = user.Email,
-        //            Photo = sec.Photo
-        //        });
-        //    }
-        //    return toSend;
-        //}
+        public List<Object> GetSecretaries()
+        {
+            var secs = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 3);
 
-        //public Object GetSecretary(int id)
-        //{
-        //    try
-        //    {
-        //        var sec = db.TblSecretaries
-        //            .Select(x => new { x.ID, x.Photo, x.StartWorkTime, x.EndWorkTime, x.FiscalNumber, x.CitizenCard, x.PhoneNumber, x.Address, x.Curriculum, x.UserFK })
-        //            .Where(x => x.ID == id)
-        //            .FirstOrDefault();
-        //        var user = db.TblUsers
-        //            .Select(x => new { x.ID, x.Name, x.Email, x.CreatedDate, x.IsActive })
-        //            .Where(x => x.ID == sec.UserFK)
-        //            .FirstOrDefault();
-        //        return new
-        //        {
-        //            Id = sec.ID,
-        //            UserId = user.ID,
-        //            Name = user.Name,
-        //            Email = user.Email,
-        //            Photo = sec.Photo,
-        //            StartWorkTime = sec.StartWorkTime,
-        //            EndWorkTime = sec.EndWorkTime,
-        //            FiscalNumber = sec.FiscalNumber,
-        //            CitizenCard = sec.CitizenCard,
-        //            Phone = sec.PhoneNumber,
-        //            Address = sec.Address,
-        //            CreatedDate = user.CreatedDate,
-        //            IsActive = user.IsActive,
-        //            Curriculum = sec.Curriculum
-        //        };
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return new { };
-        //    }
-        //}
+            var toSend = new List<Object>();
 
-        //public Object CreateSecretary(Secretary secretary)
-        //{
-        //    var pass = new PasswordHasher();
-        //    var passHashed = pass.HashPassword(secretary.Password);
-        //    var date = DateTime.Now;
+            foreach (var sec in secs)
+            {
+                var user = db.TblUsers.Find(sec.UserFK);
 
-        //    TblUsers user = new TblUsers { Name = secretary.Name, Email = secretary.Email, Password = passHashed, CreatedDate = date, IsActive = true, Function = "Secretary" };
-        //    db.TblUsers.Add(user);
-        //    db.SaveChanges();
-        //    TblSecretaries sec = new TblSecretaries { UserFK = user.ID, Address = secretary.Address, CitizenCard = secretary.CitizenCard, Curriculum = secretary.Curriculum, FiscalNumber = secretary.FiscalNumber, Photo = secretary.Photo, PhoneNumber = secretary.PhoneNumber, StartWorkTime = secretary.StartWorkTime, EndWorkTime = secretary.EndWorkTime };
-        //    db.TblSecretaries.Add(sec);
-        //    db.SaveChanges();
+                toSend.Add(new
+                {
+                    ID = user.ID,
+                    Name = user.Name,
+                    Email = user.Email,
+                    Photo = user.Photo
+                });
+            }
+            return toSend;
+        }
 
-        //    return new { Result = "Success"};
-        //}
+        public Object GetSecretary(int id)
+        {
 
-        //public Object EditSecretary(int id, Secretary secretary)
-        //{
-        //    try
-        //    {
-        //        var sec = db.TblSecretaries.Select(x => x).Where(x => x.ID == id).FirstOrDefault();
-        //        var user = db.TblUsers.Select(x => x).Where(x => x.ID == sec.UserFK).FirstOrDefault();
-        //        user.Name = secretary.Name;
-        //        user.Email = secretary.Email;
-        //        sec.FiscalNumber = secretary.FiscalNumber;
-        //        sec.CitizenCard = secretary.CitizenCard;
-        //        sec.PhoneNumber = secretary.PhoneNumber;
-        //        sec.Address = secretary.Address;
-        //        sec.Photo = secretary.Photo;
-        //        sec.Curriculum = secretary.Curriculum;
-        //        sec.StartWorkTime = secretary.StartWorkTime;
-        //        db.SaveChanges();
-        //        return new { Result = "Success" };
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return new { Result = "Failed" };
-        //    }
-        //}
+            var secretary = db.TblUserRoles.Find(id, 3);
 
-        ///*public Object RegistAction()
-        //{
+            if (secretary == null)
+            {
+                return new { Result = "Failed" };
+            }
 
-        //}*/
+            var user = db.TblUsers.Find(id);
+
+            return new
+            {
+                Id = user.ID,
+                Name = user.Name,
+                Email = user.Email,
+                Photo = user.Photo,
+                FiscalNumber = user.FiscalNumber,
+                CitizenCard = user.CitizenCard,
+                PhoneNumber = user.PhoneNumber,
+                Address = user.Address,
+                RegisterDate = user.RegisterDate,
+                Curriculum = user.Curriculum,
+                Function = user.Function
+            };
+
+        }
+
+        public Object CreateSecretary(User secretary)
+        {
+            var pass = new PasswordHasher();
+            var passHashed = pass.HashPassword(secretary.Password);
+            var date = DateTime.Now;
+
+            TblUsers user = new TblUsers {
+                Name = secretary.Name,
+                Email = secretary.Email,
+                Password = passHashed,
+                IsActive = true,
+                Function = secretary.Function,
+                Address = secretary.Address,
+                CitizenCard = secretary.CitizenCard,
+                Curriculum = secretary.Curriculum,
+                FiscalNumber = secretary.FiscalNumber,
+                Photo = secretary.Photo,
+                PhoneNumber = secretary.PhoneNumber,
+                DateOfBirth = secretary.DateOfBirth,
+                RegisterDate = date
+            };
+            db.TblUsers.Add(user);
+            db.SaveChanges();
+
+            TblUserRoles userRoles = new TblUserRoles { UserFK=user.ID, RoleFK=3 };
+            db.TblUserRoles.Add(userRoles);
+            db.SaveChanges();
+
+            return new { Result = "Success" };
+        }
+
+        public Object EditSecretary(int id, User secretary)
+        {
+
+            var sec = db.TblUserRoles.Find(id, 3);
+
+            if (sec == null)
+            {
+                return new { Result = "Failed" };
+            }
+
+            TblUsers user = db.TblUsers.Find(id);
+
+            user.Name = secretary.Name;
+            user.Email = secretary.Email;
+            user.FiscalNumber = secretary.FiscalNumber;
+            user.CitizenCard = secretary.CitizenCard;
+            user.PhoneNumber = secretary.PhoneNumber;
+            user.Address = secretary.Address;
+            user.Photo = secretary.Photo;
+            user.Curriculum = secretary.Curriculum;
+
+            db.SaveChanges();
+            return new { Result = "Success" };
+        }
+
+        /*public Object RegistAction()
+        {
+
+        }*/
     }
 }

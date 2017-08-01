@@ -12,22 +12,22 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
 
 
-        //// GET action
-        //[HttpGet]
-        //[Route("action")]
-        //public Object Get()
-        //{
-        //    var actions = new BAction().GetActions();
-        //    return actions;
-        //}
-        
-        //// GET action/:id
-        //[HttpGet]
-        //[Route("action/{id}")]
-        //public Object Get(int id)
-        //{
-        //    var action = new BAction().GetAction(id);
-        //    return action;
-        //}
+        // GET action
+        [HttpGet]
+        [Route("action")]
+        public Object Get()
+        {
+            var actions = new BAction().GetActions();
+            return actions;
+        }
+
+        // GET action/:id
+        [HttpGet]
+        [Route("action/{id}")]
+        public Object Get(int id)
+        {
+            var action = new BAction().GetAction(id);
+            return action;
+        }
     }
 }
