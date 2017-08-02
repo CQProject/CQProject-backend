@@ -17,7 +17,7 @@ namespace CQPROJ.Business.Queries
         public Object GetAssistants()
         {
 
-            var assistant = db.TblUserRoles.Select(x=>x).Where(x=>x.RoleFK==4);      
+            var assistant = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 4);      
 
             var toSend = new List<Object>();
             foreach (var assist in assistant)

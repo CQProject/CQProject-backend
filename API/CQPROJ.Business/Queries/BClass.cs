@@ -1,4 +1,5 @@
-﻿//using CQPROJ.Data.DB.Models;
+﻿
+using CQPROJ.Data.DB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,13 @@ namespace CQPROJ.Business.Queries
 {
     public class BClass
     {
-        //private DBContextModel db = new DBContextModel();
+        private DBContextModel db = new DBContextModel();
 
         //public Object GetClasses()
         //{
         //    //It is necessary to filter by the Current Year
         //    var classes = db.TblClasses.Select(x => new { x.ID, x.SchoolYear, x.Year, x.ClassDesc });
-            
+
         //    return classes;
         //}
 
@@ -56,5 +57,24 @@ namespace CQPROJ.Business.Queries
 
         //    return toSend;
         //}
+
+       
+        public Object GetTeachersClasses(int id)
+        {
+            var classes = db.TblClasses.Select(x => x).Where(x => x.TeacherFK == id);
+
+            var toSend = new List<Object>();
+            foreach (var clas in classes)
+            {
+                toSend.Add(new
+                {
+                    ID = clas.ID,
+                    Year = clas.Year,
+                    ClassDesc = clas.ClassDesc,
+                });
+            }
+            return toSend;
+
+        }
     }
 }

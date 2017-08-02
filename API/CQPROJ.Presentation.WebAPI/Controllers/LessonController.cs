@@ -20,12 +20,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return assistant;
         }
 
-        ////POST lesson/
-        //[HttpPost]
-        //[Route("lesson")]
-        //public void Post([FromBody]Lesson lesson)
-        //{
-        //    new BLesson().CreateLesson(lesson);
-        //}
+        //POST lesson/
+        [HttpPost]
+        [Route("lesson")]
+        public void Post([FromBody]Lesson lesson)
+        {
+            new BLesson().CreateLesson(lesson);
+        }
     }
 }
