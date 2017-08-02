@@ -16,6 +16,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("assistant")]
         public Object Get()
         {
+            //var role = new BAccount().confirmToken(this.Request);
+            
             var assistant = new BAssistant().GetAssistants();
             return assistant;
         }
