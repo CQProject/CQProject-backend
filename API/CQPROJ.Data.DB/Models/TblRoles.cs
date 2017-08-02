@@ -8,7 +8,6 @@ namespace CQPROJ.Data.DB.Models
 
     public partial class TblRoles
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
 
         [Required]
