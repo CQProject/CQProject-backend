@@ -27,5 +27,14 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         //    var classByID = new BClass().GetClass(id);
         //    return classByID;
         //}
+
+        // GET class/:id
+        [HttpGet]
+        [Route("class/{id}")]
+        public Object Get(int id)
+        {
+            var classes = new BClass().GetTeachersClasses(id);
+            return classes;
+        }
     }
 }
