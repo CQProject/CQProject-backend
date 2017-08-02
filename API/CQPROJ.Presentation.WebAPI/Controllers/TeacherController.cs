@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using CQPROJ.Business.Queries;
 using CQPROJ.Business.Entities.IUser;
+using CQPROJ.Business.Entities.Payload;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
 {
@@ -32,9 +33,22 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // POST teacher/
         [HttpPost]
         [Route("teacher")]
-        public void Post([FromBody]User teacher)
+        public Object Post([FromBody]User teacher)
         {
-            new BTeacher().CreateTeacher(teacher);
+            Payload payload = new BAccount().confirmToken(this.Request);
+
+            switch (payload.rol)
+            {
+                case "3":
+                    new BTeacher().CreateTeacher(teacher);
+                    return new { Result = "Great Success" };
+                case "6":
+                    new BTeacher().CreateTeacher(teacher);
+                    return new { Result = "Great Success" };
+                default:
+                    return new { Result = "Not Great Success - Unauthorized" };
+            }
+
         }
 
         // PUT teacher/id
