@@ -34,29 +34,22 @@ namespace CQPROJ.Business.Queries
 
         }
 
-        //public void CreateLesson(User teacher)
-        //{
+        /**************************************NOT SURE**************************************************/
+        public void CreateLesson(Lesson lesson)
+        {
 
-        //    TblLessons lesson = new TblLessons
-        //    {
-        //        Day = lesson.Day,
-        //        Homework = lesson.Homework,
-        //        Observations = lesson.Observations,
-        //        Summary = lesson.Summary,
-        //        ScheduleFK = lesson.ScheduleFK
+            TblLessons les = new TblLessons
+            {
+                Day = lesson.Day,
+                Homework = lesson.Homework,
+                Observations = lesson.Observations,
+                Summary = lesson.Summary,
+                ScheduleFK = lesson.ScheduleFK
 
-        //    };
+            };
 
-        //    db.TblUsers.Add(user);
-        //    db.SaveChanges();
-
-        //    TblUserRoles userRoles = new TblUserRoles
-        //    {
-        //        UserFK = user.ID,
-        //        RoleFK = 4
-        //    };
-        //    db.TblUserRoles.Add(userRoles);
-        //    db.SaveChanges();
-        //}
+            db.TblLessons.Add(les);
+            db.SaveChanges();
+        }
     }
 }
