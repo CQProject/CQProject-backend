@@ -18,8 +18,13 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("assistant")]
         public Object Get()
         {
-            //var role = new BAccount().confirmToken(this.Request);
-            
+            int[] roles = BAccount.confirmToken(this.Request);
+
+            if (roles.Length == 0)
+            {
+                return new { Result = "Unauthorized" };
+            }
+
             var assistant = new BAssistant().GetAssistants();
             return assistant;
         }
@@ -29,6 +34,14 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("assistant/{id}")]
         public Object Get(int id)
         {
+
+            int[] roles = BAccount.confirmToken(this.Request);
+
+            if (roles.Length == 0)
+            {
+                return new { Result = "Unauthorized" };
+            }
+
             var assistant = new BAssistant().GetAssistant(id);
             return assistant;
         }
@@ -39,17 +52,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         public Object Post([FromBody]User assistant)
         {
 
-            Payload payload = new BAccount().confirmToken(this.Request);
+            int[] roles = BAccount.confirmToken(this.Request);
 
-
-            if (payload == null)
-            {
-                return new { Result = "Unauthorized" };
-            }
-
-            Match result = Regex.Match(payload.rol, @"(3|6)$", RegexOptions.IgnoreCase); // faz match com um único 1 ou 3
-
-            if (!result.Success)
+            if (!roles.Contains(3) && !roles.Contains(6))
             {
                 return new { Result = "Unauthorized" };
             }
@@ -62,17 +67,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [HttpPut]
         [Route("assistant/{id}")]
         public Object Put(int id,[FromBody]User assistant)
-        { Payload payload = new BAccount().confirmToken(this.Request);
+        {
 
+            int[] roles = BAccount.confirmToken(this.Request);
 
-            if (payload == null)
-            {
-                return new { Result = "Unauthorized" };
-            }
-
-            Match result = Regex.Match(payload.rol, @"(3|6)$", RegexOptions.IgnoreCase); // faz match com um único 1 ou 3
-
-            if (!result.Success)
+            if (roles.Length == 0)
             {
                 return new { Result = "Unauthorized" };
             }

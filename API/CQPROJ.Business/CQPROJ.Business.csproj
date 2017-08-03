@@ -87,10 +87,10 @@
   <ItemGroup>
     <Compile Include="Entities\IAction.cs" />
     <Compile Include="Entities\IAccount.cs" />
-    <Compile Include="Entities\IPayload.cs" />
     <Compile Include="Entities\IDocuments.cs" />
     <Compile Include="Entities\IEvaluation.cs" />
     <Compile Include="Entities\ILesson.cs" />
+    <Compile Include="Entities\IPayload.cs" />
     <Compile Include="Entities\ISchedule.cs" />
     <Compile Include="Entities\IUser.cs" />
     <Compile Include="Queries\BAccount.cs" />

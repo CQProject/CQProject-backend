@@ -18,10 +18,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("teacher")]
         public Object Get()
         {
-            Payload payload = new BAccount().confirmToken(this.Request);
+            int[] roles = BAccount.confirmToken(this.Request);
 
-
-            if (payload == null)
+            if (roles.Length == 0)
             {
                 return new { Result = "Unauthorized" };
             }
@@ -35,9 +34,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("teacher/{id}")]
         public Object Get(int id)
         {
-            Payload payload = new BAccount().confirmToken(this.Request);
+            int[] roles = BAccount.confirmToken(this.Request);
 
-            if (payload == null)
+            if (roles.Length == 0)
             {
                 return new { Result = "Unauthorized" };
             }
@@ -51,16 +50,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("teacher")]
         public Object Post([FromBody]User teacher)
         {
-            Payload payload = new BAccount().confirmToken(this.Request);
+            int[] roles = BAccount.confirmToken(this.Request);
 
-            if(payload == null)
-            {
-                return new { Result = "Unauthorized" };
-            }
-
-            Match result = Regex.Match(payload.rol, @"(3|6)$", RegexOptions.IgnoreCase); // faz match com um único 1 ou 3
-
-            if (!result.Success)
+            if (!roles.Contains(3) && !roles.Contains(6))
             {
                 return new { Result = "Not Great Success - Unauthorized" };
                
@@ -75,18 +67,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("teacher/{id}")]
         public Object Put(int id, [FromBody]User teacher)
         {
-            Payload payload = new BAccount().confirmToken(this.Request);
+            int[] roles = BAccount.confirmToken(this.Request);
 
-            if (payload == null)
-            {
-                return new { Result = " Failed" };
-            }
-
-            Match result = Regex.Match(payload.rol, @"(3|6)$", RegexOptions.IgnoreCase); // faz match com um único 1 ou 3
-
-            if (!result.Success)
+            if (!roles.Contains(3) && !roles.Contains(6))
             {
                 return new { Result = "Not Great Success - Unauthorized" };
+
             }
 
             new BTeacher().EditTeacher(id, teacher);
