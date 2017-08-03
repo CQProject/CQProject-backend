@@ -28,14 +28,14 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         //    return classByID;
         //}
 
-        // GET class/:id
-        [HttpGet]
-        [Route("class/{id}")]
-        public Object Get(int id)
-        {
+        //// GET class/:id
+        //[HttpGet]
+        //[Route("class/{id}")]
+        //public Object Get(int id)
+        //{
 
-            var classes = new BClass().GetTeachersClasses(id);
-            return classes;
-        }
+        //    var classes = new BClass().GetTeachersClasses(id);
+        //    return classes;
+        //}
     }
 }

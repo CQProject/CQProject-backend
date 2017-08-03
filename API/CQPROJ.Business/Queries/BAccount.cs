@@ -40,7 +40,7 @@ namespace CQPROJ.Business.Queries
 
                 int? classID = (db.TblUsers.Find(user.ID).Function == "student") ?
                     db.TblClassStudents.Where(x => x.StudentFK == user.ID).OrderByDescending(x => x.ClassFK).FirstOrDefault().ClassFK :
-                    db.TblClasses.Where(x => x.TeacherFK == user.ID).OrderByDescending(x => x.ID).FirstOrDefault().ID;
+                    db.TblClassTeachers.Where(x => x.TeacherFK == user.ID).OrderByDescending(x => x.ClassFK).FirstOrDefault().ClassFK;
                 var role = db.TblUserRoles.Where(x => x.UserFK == user.ID).Select(x=>x.RoleFK);
 
                 Dictionary<string, object> payload;
