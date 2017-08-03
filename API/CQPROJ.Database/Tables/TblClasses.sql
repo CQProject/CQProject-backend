@@ -5,6 +5,5 @@
 	[Year]			NVARCHAR(MAX)	NULL,
 	[ClassDesc]		NVARCHAR(MAX)	NULL,
 	[SchoolFK]		INT				NULL,
-	[TeacherFK]		INT				NULL,
 	CONSTRAINT [PK_CLassID] PRIMARY KEY CLUSTERED ([ID] ASC)
 )
