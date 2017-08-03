@@ -11,9 +11,9 @@ namespace CQPROJ.Business.Queries
 {
     public class BStudent
     {
-        private DBContextModel db = new DBContextModel();
+        private static DBContextModel db = new DBContextModel();
 
-        public List<Object> GetStudents(int id)
+        public static List<Object> GetStudents(int id)
         {
 
 
@@ -44,14 +44,14 @@ namespace CQPROJ.Business.Queries
             return toSend;
         }
 
-        public Object GetStudent(int id)
+        public static Object GetStudent(int id)
         {
 
             var student = db.TblUserRoles.Find(id, 1);
 
             if (student == null)
             {
-                return new { Result = "Failed" };
+                return null;
             }
 
 
@@ -71,7 +71,7 @@ namespace CQPROJ.Business.Queries
             };
         }
 
-        public int CreateStudent(User student)
+        public static void CreateStudent(User student)
         {
             var pass = new PasswordHasher();
             var passHashed = pass.HashPassword(student.Password);
@@ -103,16 +103,16 @@ namespace CQPROJ.Business.Queries
             db.TblUserRoles.Add(userRoles);
             db.SaveChanges();
 
-            return user.ID;
+            //return user.ID;
         }
 
-        public Object EditStudent(int id, User student)
+        public static Object EditStudent(int id, User student)
         {
             var stud = db.TblUserRoles.Find(id, 4);
 
             if (stud == null | student == null)
             {
-                return new { Result = "Failed" };
+                return new { Result = "failed" };
             }
 
             TblUsers user = db.TblUsers.Find(id);
@@ -126,7 +126,7 @@ namespace CQPROJ.Business.Queries
 
             db.SaveChanges();
 
-            return new { Result = "Success" };
+            return new { result = "success" };
         }
 
     }
