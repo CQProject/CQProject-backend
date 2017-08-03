@@ -12,13 +12,22 @@ namespace CQPROJ.Business.Queries
 {
     public class BTeacher
     {
-        private DBContextModel db = new DBContextModel();
+        private static DBContextModel db = new DBContextModel();
 
-        public Object GetTeachers()
+        public static Object GetTeachers(int id)
         {
-            var teachers = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 2);
+            List<TblUserRoles> teachers;
+            try
+            {
+                teachers = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 2).OrderBy(x => x.UserFK).Skip(50 * id).Take(50).ToList();
+            }
+            catch (Exception)
+            {
+                teachers = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 2).OrderBy(x => x.UserFK).Skip(50 * id).ToList();
+            }
 
             var toSend = new List<Object>();
+
             foreach (var teacher in teachers)
             {
                 var user = db.TblUsers.Find(teacher.UserFK);
@@ -34,13 +43,13 @@ namespace CQPROJ.Business.Queries
             return toSend;
         }
 
-        public Object GetTeacher(int id)
+        public static Object GetTeacher(int id)
         {
             var teacher = db.TblUserRoles.Find(id, 2);
 
             if (teacher == null)
             {
-                return new { Result = "Failed" };
+                return null;
             }
 
             var user = db.TblUsers.Find(id);
@@ -61,7 +70,7 @@ namespace CQPROJ.Business.Queries
             };
         }
 
-        public void CreateTeacher(User teacher)
+        public static void CreateTeacher(User teacher)
         {
             var pass = new PasswordHasher();
             var passHashed = pass.HashPassword(teacher.Password);
@@ -97,14 +106,14 @@ namespace CQPROJ.Business.Queries
             db.SaveChanges();
         }
 
-        public Object EditTeacher(int id, User teachers)
+        public static Object EditTeacher(int id, User teachers)
         {
 
             var teacher = db.TblUserRoles.Find(id, 2);
 
             if (teacher == null | teachers == null)
             {
-                return new { Result = "Failed" };
+                return new { result = "failed" };
             }
 
             TblUsers user = db.TblUsers.Find(id);
@@ -122,7 +131,7 @@ namespace CQPROJ.Business.Queries
 
             db.SaveChanges();
 
-            return new { Result = "Success" };
+            return new { result = "success" };
         }
         
     }

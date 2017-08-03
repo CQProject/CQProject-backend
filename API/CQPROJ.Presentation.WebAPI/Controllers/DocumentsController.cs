@@ -13,7 +13,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
 
         // GET documents/user/:id
-        [HttpGet]
+        /*[HttpGet]
         [Route("documents/user/{id}")]
         public Object Get(int id)
         {
@@ -35,6 +35,6 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         public void Post([FromBody]Document document)
         {
             new BDocuments().CreateClassDocument(document);
-        }
+        }*/
     }
 }

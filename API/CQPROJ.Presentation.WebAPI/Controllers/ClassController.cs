@@ -29,7 +29,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         //}
 
         // GET class/:id
-        [HttpGet]
+        /*[HttpGet]
         [Route("class/{id}")]
         public Object Get(int id)
         {
@@ -43,6 +43,6 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             var classes = new BClass().GetClassesByTeacher(id);
             return classes;
-        }
+        }*/
     }
 }

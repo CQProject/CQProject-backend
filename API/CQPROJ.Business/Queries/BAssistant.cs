@@ -12,17 +12,25 @@ namespace CQPROJ.Business.Queries
     public class BAssistant
     {
 
-        private DBContextModel db = new DBContextModel();
+        private static DBContextModel db = new DBContextModel();
 
-        public Object GetAssistants()
+        public static Object GetAssistantsPage(int id)
         {
 
-            var assistant = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 4);      
+            List<TblUserRoles> assistants;
+            try
+            {
+                assistants = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 4).OrderBy(x=>x.UserFK).Skip(50 * id).Take(50).ToList();
+            } catch (Exception)
+            {
+                assistants = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 4).OrderBy(x => x.UserFK).Skip(50 * id).ToList();
+            }
 
             var toSend = new List<Object>();
-            foreach (var assist in assistant)
-            {
-                var user = db.TblUsers.Find(assist.UserFK);
+
+            foreach(var assistant in assistants) {
+
+                var user = db.TblUsers.Find(assistant.UserFK);
 
                 toSend.Add(new
                 {
@@ -32,17 +40,17 @@ namespace CQPROJ.Business.Queries
                     Photo = user.Photo
                 });
             }
-            return toSend;
+            return toSend;    
         }
 
-        public Object GetAssistant(int id)
+        public static Object GetAssistant(int id)
         {
 
             var assistant = db.TblUserRoles.Find(id, 4);
 
             if (assistant == null)
             {
-                return new { Result = "Failed" };
+                return null;
             }
 
             var user = db.TblUsers.Find(id);
@@ -64,7 +72,7 @@ namespace CQPROJ.Business.Queries
             
         }
 
-        public void CreateAssistant(User assistant)
+        public static void CreateAssistant(User assistant)
         {
             var pass = new PasswordHasher();
             var passHashed = pass.HashPassword(assistant.Password);
@@ -99,14 +107,14 @@ namespace CQPROJ.Business.Queries
             db.SaveChanges();
         }
 
-        public Object EditAssistant(int id,User assistant)
+        public static Object EditAssistant(int id,User assistant)
         {
 
             var assist = db.TblUserRoles.Find(id, 4);
 
             if (assist == null | assistant == null)
             {
-                return new { Result = "Failed" };
+                return new { result = "failed" };
             }
 
             TblUsers user = db.TblUsers.Find(id);
@@ -124,7 +132,7 @@ namespace CQPROJ.Business.Queries
 
             db.SaveChanges();
 
-            return new { Result = "Success" };
+            return new { result = "success" };
         }
     }
 }
