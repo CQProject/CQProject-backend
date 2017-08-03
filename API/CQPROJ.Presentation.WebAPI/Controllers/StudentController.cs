@@ -1,5 +1,6 @@
 ﻿using CQPROJ.Business.Entities;
 using CQPROJ.Business.Entities.IUser;
+using CQPROJ.Business.Entities.Payload;
 using CQPROJ.Business.Queries;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,21 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("student/page/{id}")]
         public Object Page(int id)
         {
-            var students = new BStudent().GetStudents(id);
-            return students;
+            Payload info = BAccount.confirmToken(this.Request);
+
+            if (info == null)
+            {
+                return new { result = "unauthorized" };
+            }
+
+            var students = BStudent.GetStudents(id);
+
+            if (students == null)
+            {
+                return new { result = "failed" };
+            }
+
+            return new { result = "success", data = new { page = id, info = students } };
         }
 
         // GET student/:id
@@ -23,16 +37,30 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("student/profile/{id}")]
         public Object Profile(int id)
         {
-            var student = new BStudent().GetStudent(id);
-            return student;
+
+            Payload info = BAccount.confirmToken(this.Request);
+
+            if (info == null)
+            {
+                return new { result = "unauthorized" };
+            }
+
+            var student = BStudent.GetStudent(id);
+
+            if (student == null)
+            {
+                return new { result = "failed" };
+            }
+
+            return new { result = "success", data = student };
         }
 
-        // POST student
+        /*// POST student
         [HttpPost]
         [Route("student")]
         public void Post([FromBody]User student,[FromBody]User[] guardian)
         {
-            int stud = new BStudent().CreateStudent(student);
+            //int stud = new BStudent().CreateStudent(student);
             //for(var i = 0; i < guardian.length;i++){
             //create guardian and add parenting
             //}
@@ -43,8 +71,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("student/{id}")]
         public Object Put(int id, [FromBody]User student)
         {
-            return new BStudent().EditStudent(id, student);
-        }
+            //return new BStudent().EditStudent(id, student);
+        }*/
 
         ////// DELETE api/<controller>/5
         ////public void Delete(int id)

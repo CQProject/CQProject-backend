@@ -12,11 +12,19 @@ namespace CQPROJ.Business.Queries
 {
     public class BSecretary
     {
-        private DBContextModel db = new DBContextModel();
+        private static DBContextModel db = new DBContextModel();
 
-        public List<Object> GetSecretaries()
+        public static List<Object> GetSecretaries(int id)
         {
-            var secs = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 3);
+            List<TblUserRoles> secs;
+            try
+            {
+                secs = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 3).OrderBy(x => x.UserFK).Skip(50 * id).Take(50).ToList();
+            }
+            catch (Exception)
+            {
+                secs = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 3).OrderBy(x => x.UserFK).Skip(50 * id).ToList();
+            }
 
             var toSend = new List<Object>();
 
@@ -35,14 +43,14 @@ namespace CQPROJ.Business.Queries
             return toSend;
         }
 
-        public Object GetSecretary(int id)
+        public static Object GetSecretary(int id)
         {
 
             var secretary = db.TblUserRoles.Find(id, 3);
 
             if (secretary == null)
             {
-                return new { Result = "Failed" };
+                return null;
             }
 
             var user = db.TblUsers.Find(id);
@@ -64,7 +72,7 @@ namespace CQPROJ.Business.Queries
 
         }
 
-        public Object CreateSecretary(User secretary)
+        public static void CreateSecretary(User secretary)
         {
             var pass = new PasswordHasher();
             var passHashed = pass.HashPassword(secretary.Password);
@@ -91,11 +99,9 @@ namespace CQPROJ.Business.Queries
             TblUserRoles userRoles = new TblUserRoles { UserFK=user.ID, RoleFK=3 };
             db.TblUserRoles.Add(userRoles);
             db.SaveChanges();
-
-            return new { Result = "Success" };
         }
 
-        public Object EditSecretary(int id, User secretary)
+        public static Object EditSecretary(int id, User secretary)
         {
 
             var sec = db.TblUserRoles.Find(id, 3);
@@ -119,7 +125,7 @@ namespace CQPROJ.Business.Queries
             user.DateOfBirth = secretary.DateOfBirth;
 
             db.SaveChanges();
-            return new { Result = "Success" };
+            return new { result = "success" };
         }
 
         /*public Object RegistAction()
