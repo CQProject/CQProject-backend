@@ -16,28 +16,27 @@ namespace CQPROJ.Business.Queries
         public Object GetTeacherLesson(int id)
         {
 
-            var lesson = db.TblLessons.Find(id);
+            var lessons = db.TblLessons.Select(x => x).Where(x => x.ScheduleFK == id);
 
-            if (lesson == null)
+           var toSend = new List<Object>();
+            foreach (var lesson in lessons)
             {
-                return new { Result = "Failed" };
+                toSend.Add(new
+                {
+                    ID = lesson.ID,
+                    Day = lesson.Day,
+                    Homework = lesson.Homework,
+                    Observations = lesson.Observations,
+                    Summary = lesson.Summary
+                });
             }
-
-            return new
-            {
-                Id = lesson.ID,
-                Day = lesson.Day,
-                Homework = lesson.Homework,
-                Observations = lesson.Observations,
-                Summary = lesson.Summary
-            };
+            return toSend;
 
         }
 
         /**************************************NOT SURE**************************************************/
         public void CreateLesson(Lesson lesson)
         {
-
             TblLessons les = new TblLessons
             {
                 Day = lesson.Day,
