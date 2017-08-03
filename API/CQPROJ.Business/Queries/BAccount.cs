@@ -19,41 +19,44 @@ namespace CQPROJ.Business.Queries
 
         public string Login(Login requestUser,Uri client)
         {
-
-            var user = db.TblUsers.Select(x => x).Where(x => x.Email == requestUser.Email).FirstOrDefault();
-
-            if (user == null)
+            try
             {
-                return null;
-            }
+                var user = db.TblUsers.Select(x => x).Where(x => x.Email == requestUser.Email).FirstOrDefault();
 
-            var password = new PasswordHasher();
-            if (password.VerifyHashedPassword(user.Password, requestUser.Password).ToString() != "Success")
-            {
-                return null;
-            }
+                if (user == null)
+                {
+                    return null;
+                }
 
-            byte[] secretKey = Encoding.ASCII.GetBytes("secret");
-            DateTime issued = DateTime.Now;
-            DateTime expire = DateTime.Now.AddHours(10);
+                var password = new PasswordHasher();
+                if (password.VerifyHashedPassword(user.Password, requestUser.Password).ToString() != "Success")
+                {
+                    return null;
+                }
 
-            var classID = db.TblClassStudents.Where(x => x.StudentFK == user.ID).Select(x => x.ClassFK).FirstOrDefault();
-            var role = db.TblUserRoles.Select(x => x).Where(x => x.UserFK == user.ID).FirstOrDefault().RoleFK;
+                byte[] secretKey = Encoding.ASCII.GetBytes("secret");
+                DateTime issued = DateTime.Now;
+                DateTime expire = DateTime.Now.AddHours(10);
 
-            Dictionary<string, object> payload;
-            if (classID == 0)
-            {
-                payload = new Dictionary<string, object>(){
+                int? classID = (db.TblUsers.Find(user.ID).Function == "student") ?
+                    db.TblClassStudents.Where(x => x.StudentFK == user.ID).OrderByDescending(x => x.ClassFK).FirstOrDefault().ClassFK :
+                    db.TblClasses.Where(x => x.TeacherFK == user.ID).OrderByDescending(x => x.ID).FirstOrDefault().ID;
+                var role = db.TblUserRoles.Where(x => x.UserFK == user.ID).Select(x=>x.RoleFK);
+
+                Dictionary<string, object> payload;
+                if (classID == null)
+                {
+                    payload = new Dictionary<string, object>(){
                     {"iss",client.Authority },
                     {"aud",user.ID },
                     {"rol",role },
                     {"iat",ToUnixTime(issued).ToString() },
                     {"exp",ToUnixTime(expire).ToString() }
                 };
-            }
-            else
-            {
-                payload = new Dictionary<string, object>(){
+                }
+                else
+                {
+                    payload = new Dictionary<string, object>(){
                     {"iss",client.Authority },
                     {"aud",user.ID },
                     {"cla", classID },
@@ -61,33 +64,45 @@ namespace CQPROJ.Business.Queries
                     {"iat",ToUnixTime(issued).ToString() },
                     {"exp",ToUnixTime(expire).ToString() }
                 };
-            }
+                }
 
-            return JWT.Encode(payload, secretKey, JwsAlgorithm.HS256);    
+                return JWT.Encode(payload, secretKey, JwsAlgorithm.HS256);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
-        public Object confirmToken(HttpRequestMessage request)
+        public Payload confirmToken(HttpRequestMessage request)
         {
-            string token =  request.Headers.GetValues("Token").First();
-            byte[] secretKey = Encoding.ASCII.GetBytes("secret");
-            string pl = JWT.Decode(token,secretKey,JwsAlgorithm.HS256);
-            long date = ToUnixTime(DateTime.Now);
+            try
+            {
+                string token = request.Headers.GetValues("Authorization").First();
+                byte[] secretKey = Encoding.ASCII.GetBytes("secret");
+                string pl = JWT.Decode(token, secretKey, JwsAlgorithm.HS256);
+                long date = ToUnixTime(DateTime.Now);
 
-            JavaScriptSerializer pay = new JavaScriptSerializer();
-            Payload payload = pay.Deserialize<Payload>(pl);
+                JavaScriptSerializer pay = new JavaScriptSerializer();
+                Payload payload = pay.Deserialize<Payload>(pl);
 
-            if (!payload.iss.Contains(request.RequestUri.Authority))
+                if (!payload.iss.Contains(request.RequestUri.Authority))
+                {
+                    return null;
+                }
+
+                if (date > Convert.ToInt64(payload.exp))
+                {
+                    //logout
+                    return null;
+                }
+
+                return payload;
+            }
+            catch (Exception)
             {
                 return null;
             }
-
-            if(date > Convert.ToInt64(payload.exp))
-            {
-                //logout
-                return null;
-            }
-
-            return new { UserId=payload.aud, ClassId=payload.cla, RoleId=payload.rol };
         }
 
         static long ToUnixTime(DateTime dateTime)

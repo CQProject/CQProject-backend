@@ -33,6 +33,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("class/{id}")]
         public Object Get(int id)
         {
+
             var classes = new BClass().GetTeachersClasses(id);
             return classes;
         }
