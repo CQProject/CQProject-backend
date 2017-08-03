@@ -61,8 +61,11 @@ namespace CQPROJ.Business.Queries
             }
         }
 
-        public Payload confirmToken(HttpRequestMessage request)
+        public static int[] confirmToken(HttpRequestMessage request)
         {
+
+            Payload payload;
+
             try
             {
                 string token = request.Headers.GetValues("Authorization").First();
@@ -71,24 +74,30 @@ namespace CQPROJ.Business.Queries
                 long date = ToUnixTime(DateTime.Now);
 
                 JavaScriptSerializer pay = new JavaScriptSerializer();
-                Payload payload = pay.Deserialize<Payload>(pl);
+                payload = pay.Deserialize<Payload>(pl);
 
                 if (!payload.iss.Contains(request.RequestUri.Authority))
                 {
-                    return null;
+                    return new[] {0};
                 }
 
                 if (date > Convert.ToInt64(payload.exp))
                 {
-                    //logout
-                    return null;
+                    return new[] { 0 };
                 }
 
-                return payload;
+                if (payload.rol != null)
+                {
+                    return payload.rol;
+                }
+                else
+                {
+                    return new[] { 0 };
+                }
             }
             catch (Exception)
             {
-                return null;
+                return new[] { 0 };
             }
         }
 

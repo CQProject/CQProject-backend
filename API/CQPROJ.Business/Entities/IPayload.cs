@@ -9,10 +9,9 @@ namespace CQPROJ.Business.Entities.Payload
     public class Payload
     {
         public string iss { get; set; }
-        public string aud { get; set; }
-        public string cla { get; set; }
-        public string rol { get; set; }
-        public string iat { get; set; }
-        public string exp { get; set; }
+        public int aud { get; set; }
+        public int[] rol { get; set; }
+        public long iat { get; set; }
+        public long exp { get; set; }
     }
 }
