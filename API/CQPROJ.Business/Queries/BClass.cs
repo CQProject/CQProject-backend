@@ -58,23 +58,27 @@ namespace CQPROJ.Business.Queries
         //    return toSend;
         //}
 
-       
-        //public Object GetTeachersClasses(int id)
-        //{
-        //    var classes = db.TblClasses.Select(x => x).Where(x => x.TeacherFK == id);
 
-        //    var toSend = new List<Object>();
-        //    foreach (var clas in classes)
-        //    {
-        //        toSend.Add(new
-        //        {
-        //            ID = clas.ID,
-        //            Year = clas.Year,
-        //            ClassDesc = clas.ClassDesc,
-        //        });
-        //    }
-        //    return toSend;
+        public Object GetClassesByTeacher(int id)
+        {
 
-        //}
+            var classes = db.TblClassUsers.Select(x => x).Where(x => x.UserFK == id);
+
+            var toSend = new List<Object>();
+
+            foreach (var clas in classes)
+            {
+                var classInfo = db.TblClasses.Find(clas.ClassFK);
+
+                toSend.Add(new
+                {
+                    ID = clas.ClassFK,
+                    Year = classInfo.Year,
+                    ClassDesc = classInfo.ClassDesc,
+                });
+            }
+            return toSend;
+
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             int[] roles = BAccount.confirmToken(this.Request);
 
-            if (roles.Length == 0)
+            if (roles.Contains(0))
             {
                 return new { Result = "Unauthorized" };
             }
@@ -37,7 +37,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             int[] roles = BAccount.confirmToken(this.Request);
 
-            if (roles.Length == 0)
+            if (roles.Contains(0))
             {
                 return new { Result = "Unauthorized" };
             }
