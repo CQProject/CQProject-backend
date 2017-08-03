@@ -37,16 +37,19 @@ namespace CQPROJ.Business.Queries
                 byte[] secretKey = Encoding.ASCII.GetBytes("secret");
                 DateTime issued = DateTime.Now;
                 DateTime expire = DateTime.Now.AddHours(10);
-                
+
+
+                var roles = db.TblUserRoles.Where(x => x.UserFK == user.ID).Select(x => x.RoleFK);
+
                 Dictionary<string, object> payload = new Dictionary<string, object>(){
                     {"iss",client.Authority },
                     {"aud",user.ID },
+                    {"rol",roles },
                     {"iat",ToUnixTime(issued).ToString() },
                     {"exp",ToUnixTime(expire).ToString() }
                 };
                 var token= JWT.Encode(payload, secretKey, JwsAlgorithm.HS256);
 
-                var roles = db.TblUserRoles.Where(x => x.UserFK == user.ID).Select(x => x.RoleFK);
                 if (roles.Contains(1) || roles.Contains(2))
                 {
                     int classID = db.TblClassUsers.Where(x => x.UserFK == user.ID).OrderByDescending(x => x.ClassFK).FirstOrDefault().ClassFK;

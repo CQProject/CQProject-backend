@@ -28,14 +28,21 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         //    return classByID;
         //}
 
-        //// GET class/:id
-        //[HttpGet]
-        //[Route("class/{id}")]
-        //public Object Get(int id)
-        //{
+        // GET class/:id
+        [HttpGet]
+        [Route("class/{id}")]
+        public Object Get(int id)
+        {
+            int[] roles = BAccount.confirmToken(this.Request);
 
-        //    var classes = new BClass().GetTeachersClasses(id);
-        //    return classes;
-        //}
+            if (!roles.Contains(3) && !roles.Contains(6) && !roles.Contains(2))
+            {
+                return new { Result = "Not Great Success - Unauthorized" };
+
+            }
+
+            var classes = new BClass().GetClassesByTeacher(id);
+            return classes;
+        }
     }
 }

@@ -12,11 +12,19 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class DocumentsController : ApiController
     {
 
-        // GET documents/:id
+        // GET documents/user/:id
         [HttpGet]
-        [Route("documents/{id}")]
+        [Route("documents/user/{id}")]
         public Object Get(int id)
         {
+            int[] roles = BAccount.confirmToken(this.Request);
+
+            if (!roles.Contains(2) && !roles.Contains(3) && !roles.Contains(6))
+            {
+                return new { Result = "Not Great Success - Unauthorized" };
+
+            }
+
             var documents = new BDocuments().GetClassDocuments(id);
             return documents;
         }
