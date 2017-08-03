@@ -15,35 +15,46 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET assistant/
         [HttpGet]
-        [Route("assistant")]
-        public Object Get()
+        [Route("assistant/page/{id}")]
+        public Object Page(int id)
         {
-            int[] roles = BAccount.confirmToken(this.Request);
+            Payload info = BAccount.confirmToken(this.Request);
 
-            if (roles.Contains(0))
+            if (info == null)
             {
-                return new { Result = "Unauthorized" };
+                return new { result = "unauthorized" };
             }
 
-            var assistant = new BAssistant().GetAssistants();
-            return assistant;
+            var assistant = BAssistant.GetAssistantsPage(id);
+
+            if (assistant == null)
+            {
+                return new { result = "failed" };
+            }
+
+            return new { result = "success",data = new { page = id, info = assistant} };
         }
 
         // GET assistant/:id
         [HttpGet]
-        [Route("assistant/{id}")]
-        public Object Get(int id)
+        [Route("assistant/profile/{id}")]
+        public Object Profile(int id)
         {
+            Payload info = BAccount.confirmToken(this.Request);
 
-            int[] roles = BAccount.confirmToken(this.Request);
-
-            if (roles.Contains(0))
+            if (info == null)
             {
-                return new { Result = "Unauthorized" };
+                return new { result = "unauthorized" };
             }
 
-            var assistant = new BAssistant().GetAssistant(id);
-            return assistant;
+            var assistant = BAssistant.GetAssistant(id);
+
+            if (assistant == null)
+            {
+                return new { result = "failed" };
+            }
+
+            return new { result = "success", data = assistant };
         }
 
         //POST assistant/
@@ -52,15 +63,22 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         public Object Post([FromBody]User assistant)
         {
 
-            int[] roles = BAccount.confirmToken(this.Request);
+            Payload info = BAccount.confirmToken(this.Request);
 
-            if (!roles.Contains(3) && !roles.Contains(6))
+            if (info == null)
             {
-                return new { Result = "Unauthorized" };
+                return new { result = "unauthorized" };
             }
 
-            new BAssistant().CreateAssistant(assistant);
-            return new { Result = "Great Success" };
+            if (!info.rol.Contains(3) && !info.rol.Contains(6))
+            {
+                return new { result = "unauthorized" };
+            }
+
+            BAssistant.CreateAssistant(assistant);
+
+            return new { result = "success" };
+  
         }
 
         // PUT assistant/id
@@ -69,15 +87,19 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         public Object Put(int id,[FromBody]User assistant)
         {
 
-            int[] roles = BAccount.confirmToken(this.Request);
+            Payload info = BAccount.confirmToken(this.Request);
 
-            if (roles.Length == 0)
+            if (info == null)
             {
-                return new { Result = "Unauthorized" };
+                return new { result = "unauthorized" };
             }
 
-            new BAssistant().EditAssistant(id,assistant);
-            return new { Result = "Great Success" };
+            if (!info.rol.Contains(3) && !info.rol.Contains(6))
+            {
+                return new { result = "unauthorized" };
+            }
+
+            return BAssistant.EditAssistant(id,assistant);
         }
     }
 }

@@ -16,13 +16,22 @@ namespace CQPROJ.Business.Queries
         public List<Object> GetStudents(int id)
         {
 
-            var student = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 1);
+
+            List<TblUserRoles> students;
+            try
+            {
+                students = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 1).OrderBy(x => x.UserFK).Skip(50 * id).Take(50).ToList();
+            }
+            catch (Exception)
+            {
+                students = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 1).OrderBy(x => x.UserFK).Skip(50 * id).ToList();
+            }
+
 
             var toSend = new List<Object>();
-            int max = id * 50 + 50;
-            for(var i = id*50; i < max; i++) { 
+            foreach(var student in students) { 
 
-                var user = db.TblUsers.Find(i+1);
+                var user = db.TblUsers.Find(student.UserFK);
 
                 toSend.Add(new
                 {

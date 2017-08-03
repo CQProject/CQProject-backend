@@ -24,11 +24,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if( info == null)
             {
-                return new { Result = "Failed" };
+                return new { result = "failed" };
             }
             else
             {
-                return new { result = "Success", data = info };
+                return new { result = "success", data = info };
             }
         }
 

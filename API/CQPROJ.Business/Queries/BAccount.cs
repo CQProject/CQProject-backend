@@ -53,10 +53,10 @@ namespace CQPROJ.Business.Queries
                 if (roles.Contains(1) || roles.Contains(2))
                 {
                     int classID = db.TblClassUsers.Where(x => x.UserFK == user.ID).OrderByDescending(x => x.ClassFK).FirstOrDefault().ClassFK;
-                    return new { token = token, userID = user.ID, roles = roles, classID = classID };
+                    return new { token = token, userID = user.ID, roles = roles, classID = classID, name = user.Name, photo = user.Photo };
                 }
 
-                return new { token=token, userID=user.ID, roles=roles, classID=0 };
+                return new { token=token, userID=user.ID, roles=roles, classID=0, name = user.Name, photo = user.Photo };
             }
             catch (Exception)
             {
@@ -64,7 +64,7 @@ namespace CQPROJ.Business.Queries
             }
         }
 
-        public static int[] confirmToken(HttpRequestMessage request)
+        public static Payload confirmToken(HttpRequestMessage request)
         {
 
             Payload payload;
@@ -81,26 +81,19 @@ namespace CQPROJ.Business.Queries
 
                 if (!payload.iss.Contains(request.RequestUri.Authority))
                 {
-                    return new[] {0};
+                    return null;
                 }
 
                 if (date > Convert.ToInt64(payload.exp))
                 {
-                    return new[] { 0 };
+                    return null;
                 }
 
-                if (payload.rol != null)
-                {
-                    return payload.rol;
-                }
-                else
-                {
-                    return new[] { 0 };
-                }
+                return payload;
             }
             catch (Exception)
             {
-                return new[] { 0 };
+                return null;
             }
         }
 
