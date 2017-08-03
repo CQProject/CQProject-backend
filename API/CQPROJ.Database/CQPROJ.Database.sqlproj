@@ -68,7 +68,7 @@
     <Build Include="Tables\TblRoles.sql" />
     <Build Include="Tables\TblUserRoles.sql" />
     <Build Include="Tables\TblClasses.sql" />
-    <Build Include="Tables\TblClassStudents.sql" />
+    <Build Include="Tables\TblClassUsers.sql" />
     <Build Include="Tables\TblTasks.sql" />
     <Build Include="Tables\TblSchedules.sql" />
     <Build Include="Tables\TblLessons.sql" />
@@ -81,7 +81,6 @@
     <Build Include="Tables\TblSensors.sql" />
     <Build Include="Tables\TblParenting.sql" />
     <Build Include="Tables\TblDone.sql" />
-    <Build Include="Tables\TblClassTeachers.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="notas.sql" />

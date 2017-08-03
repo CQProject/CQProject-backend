@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[TblClassUsers]
+(
+	[ClassFK]	INT NOT NULL,
+	[UserFK] INT NOT NULL,
+	CONSTRAINT [PK_ClassUser] PRIMARY KEY CLUSTERED ([ClassFK] ASC, [UserFK] ASC)
+)

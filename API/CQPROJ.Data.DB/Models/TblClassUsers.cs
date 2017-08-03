@@ -6,7 +6,7 @@ namespace CQPROJ.Data.DB.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class TblClassTeachers
+    public partial class TblClassUsers
     {
         [Key]
         [Column(Order = 0)]
@@ -16,6 +16,6 @@ namespace CQPROJ.Data.DB.Models
         [Key]
         [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int TeacherFK { get; set; }
+        public int UserFK { get; set; }
     }
 }

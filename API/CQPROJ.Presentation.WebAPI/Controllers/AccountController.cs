@@ -20,15 +20,15 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             
             Uri client = this.Request.RequestUri;
-            var token = new BAccount().Login(userRequest,client);
+            var info = new BAccount().Login(userRequest,client);
 
-            if( token == null)
+            if( info == null)
             {
                 return new { Result = "Failed" };
             }
             else
             {
-                return new { Result = "Success", Token = token };
+                return new { result = "Success", data = info };
             }
         }
 

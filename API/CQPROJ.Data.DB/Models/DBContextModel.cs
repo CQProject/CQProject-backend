@@ -14,8 +14,7 @@ namespace CQPROJ.Data.DB.Models
 
         public virtual DbSet<TblActions> TblActions { get; set; }
         public virtual DbSet<TblClasses> TblClasses { get; set; }
-        public virtual DbSet<TblClassStudents> TblClassStudents { get; set; }
-        public virtual DbSet<TblClassTeachers> TblClassTeachers { get; set; }
+        public virtual DbSet<TblClassUsers> TblClassUsers { get; set; }
         public virtual DbSet<TblDocuments> TblDocuments { get; set; }
         public virtual DbSet<TblDone> TblDone { get; set; }
         public virtual DbSet<TblEvaluations> TblEvaluations { get; set; }

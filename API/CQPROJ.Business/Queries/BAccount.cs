@@ -17,7 +17,7 @@ namespace CQPROJ.Business.Queries
     {
         private DBContextModel db = new DBContextModel();
 
-        public string Login(Login requestUser,Uri client)
+        public Object Login(Login requestUser,Uri client)
         {
             try
             {
@@ -37,36 +37,23 @@ namespace CQPROJ.Business.Queries
                 byte[] secretKey = Encoding.ASCII.GetBytes("secret");
                 DateTime issued = DateTime.Now;
                 DateTime expire = DateTime.Now.AddHours(10);
-
-                int? classID = (db.TblUsers.Find(user.ID).Function == "student") ?
-                    db.TblClassStudents.Where(x => x.StudentFK == user.ID).OrderByDescending(x => x.ClassFK).FirstOrDefault().ClassFK :
-                    db.TblClassTeachers.Where(x => x.TeacherFK == user.ID).OrderByDescending(x => x.ClassFK).FirstOrDefault().ClassFK;
-                var role = db.TblUserRoles.Where(x => x.UserFK == user.ID).Select(x=>x.RoleFK);
-
-                Dictionary<string, object> payload;
-                if (classID == null)
-                {
-                    payload = new Dictionary<string, object>(){
+                
+                Dictionary<string, object> payload = new Dictionary<string, object>(){
                     {"iss",client.Authority },
                     {"aud",user.ID },
-                    {"rol",role },
                     {"iat",ToUnixTime(issued).ToString() },
                     {"exp",ToUnixTime(expire).ToString() }
                 };
-                }
-                else
+                var token= JWT.Encode(payload, secretKey, JwsAlgorithm.HS256);
+
+                var roles = db.TblUserRoles.Where(x => x.UserFK == user.ID).Select(x => x.RoleFK);
+                if (roles.Contains(1) || roles.Contains(2))
                 {
-                    payload = new Dictionary<string, object>(){
-                    {"iss",client.Authority },
-                    {"aud",user.ID },
-                    {"cla", classID },
-                    {"rol",role },
-                    {"iat",ToUnixTime(issued).ToString() },
-                    {"exp",ToUnixTime(expire).ToString() }
-                };
+                    int classID = db.TblClassUsers.Where(x => x.UserFK == user.ID).OrderByDescending(x => x.ClassFK).FirstOrDefault().ClassFK;
+                    return new { token = token, userID = user.ID, roles = roles, classID = classID };
                 }
 
-                return JWT.Encode(payload, secretKey, JwsAlgorithm.HS256);
+                return new { token=token, userID=user.ID, roles=roles, classID=0 };
             }
             catch (Exception)
             {

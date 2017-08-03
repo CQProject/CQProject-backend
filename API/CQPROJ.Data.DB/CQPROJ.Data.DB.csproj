@@ -100,8 +100,7 @@
     <Compile Include="Models\DBContextModel.cs" />
     <Compile Include="Models\TblActions.cs" />
     <Compile Include="Models\TblClasses.cs" />
-    <Compile Include="Models\TblClassStudents.cs" />
-    <Compile Include="Models\TblClassTeachers.cs" />
+    <Compile Include="Models\TblClassUsers.cs" />
     <Compile Include="Models\TblDocuments.cs" />
     <Compile Include="Models\TblDone.cs" />
     <Compile Include="Models\TblEvaluations.cs" />
