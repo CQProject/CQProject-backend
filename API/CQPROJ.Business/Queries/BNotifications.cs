@@ -105,17 +105,17 @@ namespace CQPROJ.Business.Queries
                 Hour = date,
                 Subject = notification.Subject,
                 Urgency = notification.Urgency,
-                UserFK = notification.UserFK
+                UserFK = notification.SenderFK
                 };
 
                 db.TblNotifications.Add(notif);
                 db.SaveChanges();
 
             
-                foreach (var mail in notification.Email)
+                foreach (var receiver in notification.ReceiverFK)
                 {
 
-                    var user = db.TblUsers.Select(x => x).Where(x => x.Email == mail).FirstOrDefault();
+                    var user = db.TblUsers.Find(receiver);
 
                     TblValidations valid = new TblValidations
                     {

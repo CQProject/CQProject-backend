@@ -18,8 +18,8 @@ namespace CQPROJ.Business.Entities
 
         public Boolean Urgency { get; set; }
 
-        public int UserFK { get; set; }
+        public int SenderFK { get; set; }
 
-        public string[] Email { get; set; }
+        public int[] ReceiverFK { get; set; }
     }
 }
