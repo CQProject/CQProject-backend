@@ -22,17 +22,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (info == null)
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info="Não autorizado." };
             }
 
             var assistant = BAssistant.GetAssistantsPage(id);
 
             if (assistant == null)
             {
-                return new { result = "failed" };
+                return new { result = false, info="Número da página não contém nenhum utilizador."};
             }
 
-            return new { result = "success",data = new { page = id, info = assistant} };
+            return new { result = true, data = new { page = id, info = assistant} };
         }
 
         // GET assistant/:id
@@ -44,17 +44,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (info == null)
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             var assistant = BAssistant.GetAssistant(id);
 
             if (assistant == null)
             {
-                return new { result = "failed" };
+                return new { result = false, info = "Utilizador não encontrado." };
             }
 
-            return new { result = "success", data = assistant };
+            return new { result = true, data = assistant };
         }
 
         //POST assistant/
@@ -67,17 +67,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (info == null)
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             if (!info.rol.Contains(3) && !info.rol.Contains(6))
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             BAssistant.CreateAssistant(assistant);
 
-            return new { result = "success" };
+            return new { result = true };
   
         }
 
@@ -91,12 +91,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (info == null)
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             if (!info.rol.Contains(3) && !info.rol.Contains(6))
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             return BAssistant.EditAssistant(id,assistant);

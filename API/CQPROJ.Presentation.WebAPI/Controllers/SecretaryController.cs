@@ -24,17 +24,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (info == null)
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             var secretaries = BSecretary.GetSecretaries(id);
 
             if (secretaries == null)
             {
-                return new { result = "failed" };
+                return new { result = false, info = "Número da página não contém nenhum utilizador." };
             }
 
-            return new { result = "success", data = new { page = id, info = secretaries } };
+            return new { result = true, data = new { page = id, info = secretaries } };
         }
 
         // GET secretary/:id
@@ -46,17 +46,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (info == null)
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             var secretary = BSecretary.GetSecretary(id);
 
             if (secretary == null)
             {
-                return new { result = "failed" };
+                return new { result = false, info = "Utilizador não encontrado." };
             }
 
-            return new { result = "success", data = secretary };
+            return new { result = true, data = secretary };
         }
 
         //POST secretary/
@@ -68,17 +68,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (info == null)
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             if (!info.rol.Contains(6))
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             BSecretary.CreateSecretary(secretary);
 
-            return new { result = "success" };
+            return new { result = true };
         }
 
         // PUT secretary/id
@@ -90,12 +90,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (info == null)
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             if (!info.rol.Contains(6))
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             return BSecretary.EditSecretary(id, secretary);

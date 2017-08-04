@@ -114,7 +114,7 @@ namespace CQPROJ.Business.Queries
 
             if (assist == null | assistant == null)
             {
-                return new { result = "failed" };
+                return new { result = false };
             }
 
             TblUsers user = db.TblUsers.Find(id);
@@ -132,7 +132,7 @@ namespace CQPROJ.Business.Queries
 
             db.SaveChanges();
 
-            return new { result = "success" };
+            return new { result = true };
         }
     }
 }

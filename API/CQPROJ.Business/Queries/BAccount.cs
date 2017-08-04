@@ -97,6 +97,39 @@ namespace CQPROJ.Business.Queries
             }
         }
 
+        public static bool confirmValidationToken(HttpRequestMessage request)
+        {
+
+            Payload payload;
+
+            try
+            {
+                string token = request.Headers.GetValues("Authorization").First();
+                byte[] secretKey = Encoding.ASCII.GetBytes("secret");
+                string pl = JWT.Decode(token, secretKey, JwsAlgorithm.HS256);
+                long date = ToUnixTime(DateTime.Now);
+
+                JavaScriptSerializer pay = new JavaScriptSerializer();
+                payload = pay.Deserialize<Payload>(pl);
+
+                if (!payload.iss.Contains(request.RequestUri.Authority))
+                {
+                    return false;
+                }
+
+                if (date > Convert.ToInt64(payload.exp))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         static long ToUnixTime(DateTime dateTime)
         {
             return (int)(dateTime.ToUniversalTime().Subtract(new DateTime(1970, 1, 1))).TotalSeconds;

@@ -19,17 +19,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (info == null)
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             var students = BStudent.GetStudents(id);
 
             if (students == null)
             {
-                return new { result = "failed" };
+                return new { result = false, info = "Número da página não contém nenhum utilizador." };
             }
 
-            return new { result = "success", data = new { page = id, info = students } };
+            return new { result = true, data = new { page = id, info = students } };
         }
 
         // GET student/:id
@@ -42,17 +42,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (info == null)
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             var student = BStudent.GetStudent(id);
 
             if (student == null)
             {
-                return new { result = "failed" };
+                return new { result = false, info = "Utilizador não encontrado." };
             }
 
-            return new { result = "success", data = student };
+            return new { result = true, data = student };
         }
 
         /*// POST student
