@@ -1,4 +1,5 @@
 ﻿using CQPROJ.Business.Entities;
+using CQPROJ.Business.Entities.Payload;
 using CQPROJ.Business.Queries;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,22 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("notifications/sent/{id}")]
         public Object GetSentNotifs(int id)
         {
-            var notifications = new BNotifications().GetSentNotifications(id);
-            return notifications;
+
+
+            Payload info = BAccount.confirmToken(this.Request);
+
+            if (info == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            if (info.aud != id)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var notifications = BNotifications.GetSentNotifications(id);
+            return new { result = true, data = notifications };
         }
 
         // GET notifications/unread/:id
@@ -25,8 +40,21 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("notifications/unread/{id}")]
         public Object GetUnreadNotifs(int id)
         {
-            var notifications = new BNotifications().GetUnreadNotifications(id);
-            return notifications;
+
+            Payload info = BAccount.confirmToken(this.Request);
+
+            if (info == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            if (info.aud != id)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var notifications = BNotifications.GetUnreadNotifications(id);
+            return new { result = true, data = notifications };
         }
 
         // GET notifications/read/:id
@@ -34,25 +62,49 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("notifications/read/{id}")]
         public Object GetReadNotifs(int id)
         {
-            var notifications = new BNotifications().GetReadNotifications(id);
-            return notifications;
+
+            Payload info = BAccount.confirmToken(this.Request);
+
+            if (info == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            if (info.aud != id)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+
+            var notifications = BNotifications.GetReadNotifications(id);
+            return new { result = true, data = notifications };
         }
 
         //POST notifications/send
         [HttpPost]
         [Route("notifications/send")]
-        public void Post([FromBody]Notification notification)
+        public Object Post([FromBody]Notification notification)
         {
-            new BNotifications().SendNotification(notification);
+
+            Payload info = BAccount.confirmToken(this.Request);
+
+            if (info == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            BNotifications.SendNotification(notification);
+
+            return new { result = true };
         }
 
         // GET notifications/message/:id
-        [HttpGet]
+       /* [HttpGet]
         [Route("notifications/message/{id}")]
         public Object GetNotifMessage(int id)
         {
             var notifications = new BNotifications().GetNotificationMessage(id);
             return notifications;
-        }
+        }*/
     }
 }

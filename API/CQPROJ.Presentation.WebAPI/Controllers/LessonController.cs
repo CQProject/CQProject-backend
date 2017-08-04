@@ -1,4 +1,5 @@
 ﻿using CQPROJ.Business.Entities;
+using CQPROJ.Business.Entities.Payload;
 using CQPROJ.Business.Queries;
 using System;
 using System.Collections.Generic;
@@ -16,16 +17,43 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("lesson/{id}")]
         public Object Get(int id)
         {
-            var lesson = new BLesson().GetAllLessonsBySchedule(id);
-            return lesson;
+            Payload info = BAccount.confirmToken(this.Request);
+
+            if (info == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var lesson = BLesson.GetAllLessonsBySchedule(id);
+
+            if (lesson == null)
+            {
+                return new { result = false, info = "Nenhuma lição encontrada." };
+            }
+
+            return new { result = true, data = new { page = id, info = lesson } };
         }
 
         //POST lesson/
         [HttpPost]
         [Route("lesson")]
-        public void Post([FromBody]Lesson lesson)
+        public Object Post([FromBody]Lesson lesson)
         {
-            new BLesson().CreateLesson(lesson);
+
+            Payload info = BAccount.confirmToken(this.Request);
+
+            if (info == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            if (!info.rol.Contains(2))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            BLesson.CreateLesson(lesson);
+            return new { result = true };
         }
     }
 }
