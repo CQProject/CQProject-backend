@@ -1,4 +1,5 @@
 ﻿using CQPROJ.Business.Entities;
+using CQPROJ.Business.Entities.Payload;
 using CQPROJ.Business.Queries;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,70 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class ScheduleController : ApiController
     {
 
-        // GET schedule
+        // GET schedule/teacher/{id}
         [HttpGet]
-        [Route("schedule/{id}")]
-        public Object Get(int id)
+        [Route("schedule/teacher/{id}")]
+        public Object GetTeachersSchedule(int id)
         {
-            return new BSchedule().GetTeacherSchedule(id);
+            Payload info = BAccount.confirmToken(this.Request);
+
+            if (info == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var schedule = BSchedule.GetTeacherSchedule(id);
+
+            if (schedule == null)
+            {
+                return new { result = false, info = "Aula não encontrada." };
+            }
+
+            return new { result = true, data = schedule };
+        }
+
+        // GET schedule/class/{id}
+        [HttpGet]
+        [Route("schedule/class/{id}")]
+        public Object GetClassSchedule(int id)
+        {
+            Payload info = BAccount.confirmToken(this.Request);
+
+            if (info == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var schedule = BSchedule.GetClassSchedule(id);
+
+            if (schedule == null)
+            {
+                return new { result = false, info = "Aula não encontrada." };
+            }
+
+            return new { result = true, data = schedule };
+        }
+
+        // GET schedule/room/{id}
+        [HttpGet]
+        [Route("schedule/room/{id}")]
+        public Object GetScheduleRoom(int id)
+        {
+            Payload info = BAccount.confirmToken(this.Request);
+
+            if (info == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+           var schedule = BSchedule.GetScheduleRoom(id);
+
+            if (schedule == null)
+            {
+                return new { result = false, info = "Aula não encontrada." };
+            }
+
+            return new { result = true, data = schedule };
         }
 
         //// PUT secretary/id

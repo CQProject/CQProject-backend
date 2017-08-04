@@ -10,9 +10,17 @@ namespace CQPROJ.Business.Entities.ISchedule
     {
         public string Subject { get; set; }
 
-        public DateTime? StartingTime { get; set; }
+        public int? StartingTime { get; set; }
 
-        public DateTime? EndingTime { get; set; }
+        public int? Duration { get; set; }
+
+        public int? DayOfWeek { get; set; }
+
+        public int? TeacherFK { get; set; }
+
+        public int? ClassFK { get; set; }
+
+        public int? RoomFK { get; set; }
 
     }
 }
