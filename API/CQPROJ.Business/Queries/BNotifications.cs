@@ -34,17 +34,14 @@ namespace CQPROJ.Business.Queries
         public Object GetUnreadNotifications(int userID)
         {
             var validations = db.TblValidations.Select(x => x).Where(x => x.UserFK == userID && x.Read == false);
-
             var toSend = new List<Object>();
             foreach (var validation in validations)
             {
-                var notification = db.TblNotifications.Find(validation.NotificationFK);
                 toSend.Add(new
                 {
-                    Hour = notification.Hour,
-                    ID = notification.ID,
-                    Subject = notification.Subject,
-                    Urgency = notification.Urgency
+                    NotificationFK = validation.NotificationFK,
+                    Read = validation.Read,
+                    Accepted = validation.Accepted
                 });
             }
             return toSend;
@@ -53,21 +50,48 @@ namespace CQPROJ.Business.Queries
         public Object GetReadNotifications(int userID)
         {
             var validations = db.TblValidations.Select(x => x).Where(x => x.UserFK == userID && x.Read == true);
-
             var toSend = new List<Object>();
             foreach (var validation in validations)
             {
-                var notification = db.TblNotifications.Find(validation.NotificationFK);
                 toSend.Add(new
                 {
-                    Hour = notification.Hour,
-                    ID = notification.ID,
-                    Subject = notification.Subject,
-                    Urgency = notification.Urgency
+                    NotificationFK = validation.NotificationFK,
+                    Read = validation.Read,
+                    Accepted = validation.Accepted
                 });
             }
             return toSend;
         }
+        //var toSend = new List<Object>();
+        //    foreach (var validation in validations)
+        //    {
+        //        var notification = db.TblNotifications.Find(validation.NotificationFK);
+        //        toSend.Add(new
+        //        {
+        //            Hour = notification.Hour,
+        //            ID = notification.ID,
+        //            Subject = notification.Subject,
+        //            Urgency = notification.Urgency
+        //        });
+        //    }
+        //public Object GetReadNotifications(int userID)
+        //{
+        //    var validations = db.TblValidations.Select(x => x).Where(x => x.UserFK == userID && x.Read == true);
+
+        //    var toSend = new List<Object>();
+        //    foreach (var validation in validations)
+        //    {
+        //        var notification = db.TblNotifications.Find(validation.NotificationFK);
+        //        toSend.Add(new
+        //        {
+        //            Hour = notification.Hour,
+        //            ID = notification.ID,
+        //            Subject = notification.Subject,
+        //            Urgency = notification.Urgency
+        //        });
+        //    }
+        //    return toSend;
+        //}
 
         public void SendNotification(Notification notification)
         {
