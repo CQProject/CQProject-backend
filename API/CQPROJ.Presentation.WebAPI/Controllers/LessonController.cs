@@ -34,10 +34,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = lesson };
         }
 
-        // GET lesson/teacher/:id
+        // GET lesson/student/:id
         [HttpGet]
-        [Route("lesson/teacher/{id}")]
-        public Object GetLessonsByTeacher(int id)
+        [Route("lesson/student/{lessonid}/{studentid}")]
+        public Object GetLessonsByStudent(int lessonid,int studentid)
         {
             Payload info = BAccount.confirmToken(this.Request);
 
@@ -46,7 +46,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var lesson = BLesson.GetAllLessonsByTeacher(id);
+            if ((!info.rol.Contains(3) && !info.rol.Contains(6) && !info.rol.Contains(2) && info.aud!=studentid && !BGuardian.GetGuardians(studentid).Contains(info.aud)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var lesson = BLesson.GetAllLessonsByStudent(lessonid, studentid);
 
             if (lesson == null)
             {
@@ -54,33 +59,6 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
 
             return new { result = true, data = lesson };
-        }
-
-        // GET lesson/all/{id}
-        [HttpGet]
-        [Route("lesson/all/{id}")]
-        public Object Page(int id)
-        {
-            Payload info = BAccount.confirmToken(this.Request);
-
-            if (info == null)
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-
-            if (!info.rol.Contains(3) && !info.rol.Contains(6))
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-
-            var lesson = BLesson.GetAllLessons(id);
-
-            if (lesson == null)
-            {
-                return new { result = false, info = "Número da página não contém nenhuma lição." };
-            }
-
-            return new { result = true, data = new { page = id, info = lesson } };
         }
 
         // GET lesson/profile/:id
@@ -126,5 +104,26 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             BLesson.CreateLesson(lesson);
             return new { result = true };
         }
+
+        // PUT lesson/id
+    /*    [HttpPut]
+        [Route("lesson/{id}")]
+        public Object Put(int id, [FromBody]Lesson lesson)
+        {
+
+            Payload info = BAccount.confirmToken(this.Request);
+
+            if (info == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            if (!info.rol.Contains(3) && !info.rol.Contains(6) ) verifyTeacher no schedule
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            return BLesson.EditLesson(id, lesson);
+        }*/
     }
 }

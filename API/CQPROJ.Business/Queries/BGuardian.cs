@@ -13,6 +13,13 @@ namespace CQPROJ.Business.Queries
     {
         private static DBContextModel db = new DBContextModel();
 
+        public static List<int> GetGuardians(int studentID)
+        {
+            var guardians = db.TblParenting.Where(x => x.StudentFK == studentID).Select(x => x.GuardianFK).ToList();
+
+            return guardians;
+        }
+
         public static void CreateGuardian(User guardian, int id)
         {
                 var pass = new PasswordHasher();
