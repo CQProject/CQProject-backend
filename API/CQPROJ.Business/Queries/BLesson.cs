@@ -83,6 +83,10 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
+                if(lesson == null)
+                {
+                    return new { result = false };
+                }
                 var lessonFind = db.TblLessons.Find(id);
 
                 TblLessons les = new TblLessons
