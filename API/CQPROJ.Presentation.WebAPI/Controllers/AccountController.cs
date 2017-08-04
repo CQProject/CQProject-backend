@@ -32,6 +32,16 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("account/verifytoken")]
+        public Object verifytoken()
+        {
+            Uri client = this.Request.RequestUri;
+            bool verified = BAccount.confirmValidationToken(this.Request);
+
+            return new { result = true, data = verified };
+        }
+
         // PUT api/<controller>/5
         public void Put(int id, [FromBody]string value)
         {

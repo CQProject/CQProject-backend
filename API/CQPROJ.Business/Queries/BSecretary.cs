@@ -108,7 +108,7 @@ namespace CQPROJ.Business.Queries
 
             if (sec == null)
             {
-                return new { Result = "Failed" };
+                return new { Result = false };
             }
 
             TblUsers user = db.TblUsers.Find(id);
@@ -125,7 +125,7 @@ namespace CQPROJ.Business.Queries
             user.DateOfBirth = secretary.DateOfBirth;
 
             db.SaveChanges();
-            return new { result = "success" };
+            return new { result = true };
         }
 
         /*public Object RegistAction()

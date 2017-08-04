@@ -22,7 +22,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (info == null)
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             var teachers = BTeacher.GetTeachers(id);
@@ -30,10 +30,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (teachers == null)
             {
-                return new { result = "failed" };
+                return new { result = false, info = "Número da página não contém nenhum utilizador." };
             }
 
-            return new { result = "success", data = new { page = id, info = teachers } };
+            return new { result = true, data = new { page = id, info = teachers } };
         }
 
         // GET teacher/:id
@@ -45,17 +45,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (info == null)
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             var teacher = BTeacher.GetTeacher(id);
 
             if (teacher == null)
             {
-                return new { result = "failed" };
+                return new { result = false, info = "Utilizador não encontrado." };
             }
 
-            return new { result = "success", data = teacher };
+            return new { result = true, data = teacher };
         }
 
         // POST teacher/
@@ -67,17 +67,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (info == null)
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             if (!info.rol.Contains(3) && !info.rol.Contains(6))
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             BTeacher.CreateTeacher(teacher);
 
-            return new { Result = "success" };
+            return new { Result = true };
         }
 
         
@@ -90,12 +90,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (info == null)
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             if (!info.rol.Contains(3) && !info.rol.Contains(6))
             {
-                return new { result = "unauthorized" };
+                return new { result = false, info = "Não autorizado." };
             }
 
             return BTeacher.EditTeacher(id, teacher);
