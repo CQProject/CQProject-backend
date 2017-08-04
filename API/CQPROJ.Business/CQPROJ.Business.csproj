@@ -93,6 +93,7 @@
     <Compile Include="Entities\INotifications.cs" />
     <Compile Include="Entities\IPayload.cs" />
     <Compile Include="Entities\ISchedule.cs" />
+    <Compile Include="Entities\IStudent_Guardian.cs" />
     <Compile Include="Entities\IUser.cs" />
     <Compile Include="Queries\BAccount.cs" />
     <Compile Include="Queries\BAction.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Queries\BClass.cs" />
     <Compile Include="Queries\BDocuments.cs" />
     <Compile Include="Queries\BEvaluation.cs" />
+    <Compile Include="Queries\BGuardian.cs" />
     <Compile Include="Queries\BLesson.cs" />
     <Compile Include="Queries\BNotifications.cs" />
     <Compile Include="Queries\BSchedule.cs" />

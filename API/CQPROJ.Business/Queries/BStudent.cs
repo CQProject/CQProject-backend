@@ -71,7 +71,7 @@ namespace CQPROJ.Business.Queries
             };
         }
 
-        public static void CreateStudent(User student)
+        public static int CreateStudent(User student)
         {
             var pass = new PasswordHasher();
             var passHashed = pass.HashPassword(student.Password);
@@ -103,7 +103,8 @@ namespace CQPROJ.Business.Queries
             db.TblUserRoles.Add(userRoles);
             db.SaveChanges();
 
-            //return user.ID;
+
+            return user.ID;
         }
 
         public static Object EditStudent(int id, User student)

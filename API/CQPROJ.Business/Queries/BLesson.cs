@@ -13,7 +13,7 @@ namespace CQPROJ.Business.Queries
     {
         private DBContextModel db = new DBContextModel();
 
-        public Object GetTeacherLesson(int id)
+        public Object GetAllLessonsBySchedule(int id)
         {
 
             var lessons = db.TblLessons.Select(x => x).Where(x => x.ScheduleFK == id);

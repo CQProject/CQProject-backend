@@ -16,7 +16,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("lesson/{id}")]
         public Object Get(int id)
         {
-            var lesson = new BLesson().GetTeacherLesson(id);
+            var lesson = new BLesson().GetAllLessonsBySchedule(id);
             return lesson;
         }
 

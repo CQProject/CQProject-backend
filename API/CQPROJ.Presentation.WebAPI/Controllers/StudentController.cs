@@ -55,24 +55,27 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = student };
         }
 
-        /*// POST student
+        // POST student
         [HttpPost]
         [Route("student")]
-        public void Post([FromBody]User student,[FromBody]User[] guardian)
+        public Object Post([FromBody]Student_Guardian users)
         {
-            //int stud = new BStudent().CreateStudent(student);
-            //for(var i = 0; i < guardian.length;i++){
-            //create guardian and add parenting
-            //}
+            int studentID = BStudent.CreateStudent(users.Student);
+            foreach (var user in users.Guardian)
+            {
+                BGuardian.CreateGuardian(user, studentID);
+            }
+
+            return new { result = true };
         }
 
-        // PUT student/:id
-        [HttpPut]
-        [Route("student/{id}")]
-        public Object Put(int id, [FromBody]User student)
-        {
-            //return new BStudent().EditStudent(id, student);
-        }*/
+        //// PUT student/:id
+        //[HttpPut]
+        //[Route("student/{id}")]
+        //public Object Put(int id, [FromBody]User student)
+        //{
+        //    //return new BStudent().EditStudent(id, student);
+        //}
 
         ////// DELETE api/<controller>/5
         ////public void Delete(int id)

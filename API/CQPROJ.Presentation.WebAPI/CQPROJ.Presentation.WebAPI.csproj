@@ -169,6 +169,7 @@
     <Compile Include="Controllers\ClassController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\EvaluationController.cs" />
+    <Compile Include="Controllers\GuardianController.cs" />
     <Compile Include="Controllers\LessonController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\ScheduleController.cs" />

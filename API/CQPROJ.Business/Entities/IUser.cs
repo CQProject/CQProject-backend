@@ -35,5 +35,6 @@ namespace CQPROJ.Business.Entities.IUser
         public bool? IsActive { get; set; }
 
         public string Function { get; set; }
+
     }
 }
