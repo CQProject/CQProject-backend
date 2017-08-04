@@ -11,9 +11,9 @@ namespace CQPROJ.Business.Queries
 {
     public class BLesson
     {
-        private DBContextModel db = new DBContextModel();
+        private static DBContextModel db = new DBContextModel();
 
-        public Object GetAllLessonsBySchedule(int id)
+        public static Object GetAllLessonsBySchedule(int id)
         {
 
             var lessons = db.TblLessons.Select(x => x).Where(x => x.ScheduleFK == id);
@@ -35,7 +35,7 @@ namespace CQPROJ.Business.Queries
         }
 
         /**************************************NOT SURE**************************************************/
-        public void CreateLesson(Lesson lesson)
+        public static void CreateLesson(Lesson lesson)
         {
             TblLessons les = new TblLessons
             {

@@ -10,9 +10,9 @@ namespace CQPROJ.Business.Queries
 {
     public class BNotifications
     {
-        private DBContextModel db = new DBContextModel();
+        private static DBContextModel db = new DBContextModel();
 
-        public Object GetSentNotifications(int id)
+        public static Object GetSentNotifications(int id)
         {
 
             var notifications = db.TblNotifications.Select(x => x).Where(x => x.UserFK == id);
@@ -31,7 +31,7 @@ namespace CQPROJ.Business.Queries
             return toSend;
         }
 
-        public Object GetUnreadNotifications(int userID)
+        public static Object GetUnreadNotifications(int userID)
         {
             var validations = db.TblValidations.Select(x => x).Where(x => x.UserFK == userID && x.Read == false);
             var toSend = new List<Object>();
@@ -47,7 +47,7 @@ namespace CQPROJ.Business.Queries
             return toSend;
         }
 
-        public Object GetReadNotifications(int userID)
+        public static Object GetReadNotifications(int userID)
         {
             var validations = db.TblValidations.Select(x => x).Where(x => x.UserFK == userID && x.Read == true);
             var toSend = new List<Object>();
@@ -93,7 +93,7 @@ namespace CQPROJ.Business.Queries
         //    return toSend;
         //}
 
-        public void SendNotification(Notification notification)
+        public static void SendNotification(Notification notification)
         {
             var date = DateTime.Now;
 
@@ -134,7 +134,7 @@ namespace CQPROJ.Business.Queries
             }      
         }
 
-        public Object GetNotificationMessage(int id)
+        public static Object GetNotificationMessage(int id)
         {
             var notifications = db.TblNotifications.Select(x => x).Where(x => x.ID == id).FirstOrDefault();
 
