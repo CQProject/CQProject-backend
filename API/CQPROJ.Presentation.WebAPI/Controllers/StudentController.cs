@@ -4,6 +4,7 @@ using CQPROJ.Business.Entities.Payload;
 using CQPROJ.Business.Queries;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
@@ -60,7 +61,21 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("student")]
         public Object Post([FromBody]Student_Guardian users)
         {
+
+            Payload info = BAccount.confirmToken(this.Request);
+
+            if (info == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            if (!info.rol.Contains(3) && !info.rol.Contains(6))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
             int studentID = BStudent.CreateStudent(users.Student);
+
             foreach (var user in users.Guardian)
             {
                 BGuardian.CreateGuardian(user, studentID);

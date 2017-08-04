@@ -62,7 +62,6 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("assistant")]
         public Object Post([FromBody]User assistant)
         {
-
             Payload info = BAccount.confirmToken(this.Request);
 
             if (info == null)
