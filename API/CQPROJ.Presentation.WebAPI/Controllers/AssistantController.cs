@@ -20,13 +20,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload info = BAccount.confirmToken(this.Request);
 
-            if (info == null)
+            if (info == null  || (!info.rol.Contains(3) && !info.rol.Contains(6)))
             {
                 return new { result = false, info="Não autorizado." };
-            }
-            if (!info.rol.Contains(3) && !info.rol.Contains(6))
-            {
-                return new { result = false, info = "Não autorizado." };
             }
 
             var assistant = BAssistant.GetAssistantsPage(id);

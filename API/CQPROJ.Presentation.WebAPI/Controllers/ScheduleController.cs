@@ -16,6 +16,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // GET schedule/teacher/{id}
         [HttpGet]
         [Route("schedule/teacher/{id}")]
+
+        // Secretários, admins e professor se o id do header corresponder ao pedido
+
         public Object GetTeachersSchedule(int id)
         {
             Payload info = BAccount.confirmToken(this.Request);
@@ -38,6 +41,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // GET schedule/class/{id}
         [HttpGet]
         [Route("schedule/class/{id}")]
+
+        // Secretários, admins, professores e alunos ou encarregados se estiverem relacioandos à turma
+
         public Object GetClassSchedule(int id)
         {
             Payload info = BAccount.confirmToken(this.Request);
@@ -60,6 +66,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // GET schedule/room/{id}
         [HttpGet]
         [Route("schedule/room/{id}")]
+
+        // Secretários, admins
+
         public Object GetScheduleRoom(int id)
         {
             Payload info = BAccount.confirmToken(this.Request);

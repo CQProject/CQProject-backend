@@ -41,12 +41,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload info = BAccount.confirmToken(this.Request);
 
-            if (info == null)
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-
-            if ((!info.rol.Contains(3) && !info.rol.Contains(6) && !info.rol.Contains(2) && info.aud!=studentid && !BGuardian.GetGuardians(studentid).Contains(info.aud)))
+            if (info == null || ((!info.rol.Contains(3) && !info.rol.Contains(6) && !info.rol.Contains(2) && info.aud != studentid && !BGuardian.GetGuardians(studentid).Contains(info.aud))))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -66,6 +61,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("lesson/profile/{id}")]
         public Object GetLessonsByID(int id)
         {
+            // Mesmos direitos das schedules
+
             Payload info = BAccount.confirmToken(this.Request);
 
             if (info == null)

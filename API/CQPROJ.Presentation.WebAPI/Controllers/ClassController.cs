@@ -10,6 +10,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class ClassController : ApiController
     {
+
+        // MESMOS rights que schedules
+
+
+
         //// GET class/
         //[HttpGet]
         //[Route("class")]

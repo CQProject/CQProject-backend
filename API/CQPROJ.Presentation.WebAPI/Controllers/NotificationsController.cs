@@ -43,12 +43,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             Payload info = BAccount.confirmToken(this.Request);
 
-            if (info == null)
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-
-            if (info.aud != id)
+            if (info == null || info.aud != id)
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -89,6 +84,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             Payload info = BAccount.confirmToken(this.Request);
 
             if (info == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            if (info.aud != id)
             {
                 return new { result = false, info = "Não autorizado." };
             }

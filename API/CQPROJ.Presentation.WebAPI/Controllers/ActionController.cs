@@ -15,6 +15,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // GET action
         [HttpGet]
         [Route("action")]
+
+        // Secretarios e admins
+
         public Object Get()
         {
             var actions = new BAction().GetActions();
@@ -24,6 +27,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // GET action/:id
         [HttpGet]
         [Route("action/{id}")]
+
+        // Secretarios e admins
+
         public Object Get(int id)
         {
             var action = new BAction().GetAction(id);
