@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[TblSubjects]
+(
+	[ID]		INT				NOT NULL IDENTITY(1,1),
+	[Name]		NVARCHAR(MAX)	NULL,
+	CONSTRAINT [PK_SubjectID] PRIMARY KEY CLUSTERED ([ID] ASC)
+)

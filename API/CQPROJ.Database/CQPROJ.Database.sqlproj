@@ -81,6 +81,8 @@
     <Build Include="Tables\TblSensors.sql" />
     <Build Include="Tables\TblParenting.sql" />
     <Build Include="Tables\TblDone.sql" />
+    <Build Include="Tables\TblFloors.sql" />
+    <Build Include="Tables\TblSubjects.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="notas.sql" />

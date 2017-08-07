@@ -105,6 +105,7 @@
     <Compile Include="Models\TblDone.cs" />
     <Compile Include="Models\TblEvaluations.cs" />
     <Compile Include="Models\TblEvaluationStudents.cs" />
+    <Compile Include="Models\TblFloors.cs" />
     <Compile Include="Models\TblLessons.cs" />
     <Compile Include="Models\TblLessonStudents.cs" />
     <Compile Include="Models\TblNotifications.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Models\TblSchedules.cs" />
     <Compile Include="Models\TblSchools.cs" />
     <Compile Include="Models\TblSensors.cs" />
+    <Compile Include="Models\TblSubjects.cs" />
     <Compile Include="Models\TblTasks.cs" />
     <Compile Include="Models\TblUserRoles.cs" />
     <Compile Include="Models\TblUsers.cs" />

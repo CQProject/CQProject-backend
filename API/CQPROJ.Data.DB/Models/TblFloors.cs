@@ -6,12 +6,14 @@ namespace CQPROJ.Data.DB.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class TblRooms
+    public partial class TblFloors
     {
         public int ID { get; set; }
 
         public string Name { get; set; }
 
-        public int? FloorFK { get; set; }
+        public string Image { get; set; }
+
+        public int? SchoolFK { get; set; }
     }
 }

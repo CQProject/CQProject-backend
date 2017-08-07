@@ -5,6 +5,6 @@
 	[Logo]				NVARCHAR(MAX)	NULL, 
     [ProfilePicture]	NVARCHAR(MAX)	NULL, 
     [Acronym]			NVARCHAR(MAX)	NULL,
-	[About]				NVARCHAR(MAX)	NULL, 
+	[About]				NVARCHAR(MAX)	NULL,
     CONSTRAINT [PK_SchoolID] PRIMARY KEY CLUSTERED ([ID] ASC)
 )

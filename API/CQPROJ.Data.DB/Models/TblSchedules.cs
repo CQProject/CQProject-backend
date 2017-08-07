@@ -10,13 +10,13 @@ namespace CQPROJ.Data.DB.Models
     {
         public int ID { get; set; }
 
-        public string Subject { get; set; }
-
         public int? StartingTime { get; set; }
 
         public int? Duration { get; set; }
 
         public int? DayOfWeek { get; set; }
+
+        public int? SubjectFK { get; set; }
 
         public int? TeacherFK { get; set; }
 

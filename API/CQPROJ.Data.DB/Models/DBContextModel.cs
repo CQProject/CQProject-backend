@@ -19,6 +19,7 @@ namespace CQPROJ.Data.DB.Models
         public virtual DbSet<TblDone> TblDone { get; set; }
         public virtual DbSet<TblEvaluations> TblEvaluations { get; set; }
         public virtual DbSet<TblEvaluationStudents> TblEvaluationStudents { get; set; }
+        public virtual DbSet<TblFloors> TblFloors { get; set; }
         public virtual DbSet<TblLessons> TblLessons { get; set; }
         public virtual DbSet<TblLessonStudents> TblLessonStudents { get; set; }
         public virtual DbSet<TblNotifications> TblNotifications { get; set; }
@@ -28,6 +29,7 @@ namespace CQPROJ.Data.DB.Models
         public virtual DbSet<TblSchedules> TblSchedules { get; set; }
         public virtual DbSet<TblSchools> TblSchools { get; set; }
         public virtual DbSet<TblSensors> TblSensors { get; set; }
+        public virtual DbSet<TblSubjects> TblSubjects { get; set; }
         public virtual DbSet<TblTasks> TblTasks { get; set; }
         public virtual DbSet<TblUserRoles> TblUserRoles { get; set; }
         public virtual DbSet<TblUsers> TblUsers { get; set; }
