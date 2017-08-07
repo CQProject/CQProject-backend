@@ -11,6 +11,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class EvaluationController : ApiController
     {
+
+        // MESMOS rights que schedules
+
+
         //POST evaluation/
         [HttpPost]
         [Route("evaluation")]

@@ -11,8 +11,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class ClassController : ApiController
     {
 
-        // MESMOS rights que schedules
-
+        // todos os profs, secretarios e admins
 
 
         //// GET class/
@@ -23,6 +22,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         //    var classes = new BClass().GetClasses();
         //    return classes;
         //}
+
+
+
 
         //// GET secretary/:id
         //[HttpGet]
