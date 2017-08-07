@@ -26,7 +26,7 @@ namespace CQPROJ.Business.Queries
                     DayOfWeek = sched.DayOfWeek,
                     Duration = sched.Duration,
                     StartingTime = sched.StartingTime,
-                    Subject = sched.Subject
+                    Subject = sched.SubjectFK
                 });
             }
             return toSend;
@@ -45,7 +45,7 @@ namespace CQPROJ.Business.Queries
                     DayOfWeek = sched.DayOfWeek,
                     Duration = sched.Duration,
                     StartingTime = sched.StartingTime,
-                    Subject = sched.Subject
+                    Subject = sched.SubjectFK
                 });
             }
             return toSend;
@@ -64,7 +64,7 @@ namespace CQPROJ.Business.Queries
                     DayOfWeek = sched.DayOfWeek,
                     Duration = sched.Duration,
                     StartingTime = sched.StartingTime,
-                    Subject = sched.Subject
+                    Subject = sched.SubjectFK
                 });
             }
             return toSend;
@@ -79,7 +79,7 @@ namespace CQPROJ.Business.Queries
                 Duration = schedule.Duration,
                 RoomFK = schedule.RoomFK,
                 StartingTime = schedule.StartingTime,
-                Subject = schedule.Subject,
+                SubjectFK = schedule.SubjectFK,
                 TeacherFK = schedule.TeacherFK
             };
 

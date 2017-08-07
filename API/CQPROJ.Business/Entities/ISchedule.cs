@@ -8,7 +8,7 @@ namespace CQPROJ.Business.Entities.ISchedule
 {
     public class Schedule
     {
-        public string Subject { get; set; }
+        public int SubjectFK { get; set; }
 
         public int? StartingTime { get; set; }
 
