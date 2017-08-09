@@ -34,8 +34,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET documents/user/:id
-        [HttpGet]
-        [Route("documents/class/{id}")]
+        //[HttpGet]
+        //[Route("documents/class/{id}")]
 
         // alunos e encarregado associados à class
 

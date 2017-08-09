@@ -15,8 +15,6 @@ namespace CQPROJ.Business.Queries
 
         public static List<Object> GetStudents(int id)
         {
-
-
             List<TblUserRoles> students;
             try
             {

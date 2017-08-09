@@ -15,9 +15,10 @@ namespace CQPROJ.Business.Queries
 {
     public class BAccount
     {
-        private DBContextModel db = new DBContextModel();
+        private static DBContextModel db = new DBContextModel();
 
-        public Object Login(Login requestUser,Uri client)
+
+        public static Object Login(Login requestUser,Uri client)
         {
             try
             {
@@ -34,29 +35,32 @@ namespace CQPROJ.Business.Queries
                     return null;
                 }
 
-                byte[] secretKey = Encoding.ASCII.GetBytes("secret");
+                byte[] secretKey = Encoding.ASCII.GetBytes("vMDUMFlFl6jUANQZezAu4bAmwBD9IyYl");
+
                 DateTime issued = DateTime.Now;
                 DateTime expire = DateTime.Now.AddHours(10);
-
-
                 var roles = db.TblUserRoles.Where(x => x.UserFK == user.ID).Select(x => x.RoleFK);
+                var classes = db.TblClassUsers.Where(x => x.UserFK == user.ID).Select(x => x.ClassFK);
+                if (roles.Contains(5))
+                {
+                    foreach(int child in BParenting.GetChildren(user.ID))
+                    {
+                        classes = classes.Concat(db.TblClassUsers.Where(x => x.UserFK == child).Select(x => x.ClassFK));
+                    }
+                }
 
                 Dictionary<string, object> payload = new Dictionary<string, object>(){
                     {"iss",client.Authority },
                     {"aud",user.ID },
+                    {"iat",_ToUnixTime(issued).ToString() },
+                    {"exp",_ToUnixTime(expire).ToString() },
                     {"rol",roles },
-                    {"iat",ToUnixTime(issued).ToString() },
-                    {"exp",ToUnixTime(expire).ToString() }
+                    {"cla",classes }
                 };
+
                 var token= JWT.Encode(payload, secretKey, JwsAlgorithm.HS256);
 
-                if (roles.Contains(1) || roles.Contains(2))
-                {
-                    int classID = db.TblClassUsers.Where(x => x.UserFK == user.ID).OrderByDescending(x => x.ClassFK).FirstOrDefault().ClassFK;
-                    return new { token = token, userID = user.ID, roles = roles, classID = classID, name = user.Name, photo = user.Photo };
-                }
-
-                return new { token=token, userID=user.ID, roles=roles, classID=0, name = user.Name, photo = user.Photo };
+                return new { token=token, userID=user.ID, roles=roles, name = user.Name, photo = user.Photo };
             }
             catch (Exception)
             {
@@ -64,31 +68,31 @@ namespace CQPROJ.Business.Queries
             }
         }
 
+
         public static Payload confirmToken(HttpRequestMessage request)
         {
 
             Payload payload;
-
             try
             {
                 string token = request.Headers.GetValues("Authorization").First();
-                byte[] secretKey = Encoding.ASCII.GetBytes("secret");
-                string pl = JWT.Decode(token, secretKey, JwsAlgorithm.HS256);
-                long date = ToUnixTime(DateTime.Now);
 
-                JavaScriptSerializer pay = new JavaScriptSerializer();
-                payload = pay.Deserialize<Payload>(pl);
+                byte[] secretKey = Encoding.ASCII.GetBytes("vMDUMFlFl6jUANQZezAu4bAmwBD9IyYl");
+                string decoded = JWT.Decode(token, secretKey, JwsAlgorithm.HS256);
+
+                long date = _ToUnixTime(DateTime.Now);
+
+                JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
+                payload = jsSerializer.Deserialize<Payload>(decoded);
 
                 if (!payload.iss.Contains(request.RequestUri.Authority))
                 {
                     return null;
                 }
-
                 if (date > Convert.ToInt64(payload.exp))
                 {
                     return null;
                 }
-
                 return payload;
             }
             catch (Exception)
@@ -97,40 +101,7 @@ namespace CQPROJ.Business.Queries
             }
         }
 
-        public static bool confirmValidationToken(HttpRequestMessage request)
-        {
-
-            Payload payload;
-
-            try
-            {
-                string token = request.Headers.GetValues("Authorization").First();
-                byte[] secretKey = Encoding.ASCII.GetBytes("secret");
-                string pl = JWT.Decode(token, secretKey, JwsAlgorithm.HS256);
-                long date = ToUnixTime(DateTime.Now);
-
-                JavaScriptSerializer pay = new JavaScriptSerializer();
-                payload = pay.Deserialize<Payload>(pl);
-
-                if (!payload.iss.Contains(request.RequestUri.Authority))
-                {
-                    return false;
-                }
-
-                if (date > Convert.ToInt64(payload.exp))
-                {
-                    return false;
-                }
-
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        static long ToUnixTime(DateTime dateTime)
+        private static long _ToUnixTime(DateTime dateTime)
         {
             return (int)(dateTime.ToUniversalTime().Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
         }

@@ -14,38 +14,44 @@ namespace CQPROJ.Business.Queries
 
         private static DBContextModel db = new DBContextModel();
 
-        public static Object GetAssistantsPage(int id)
+        public static Object GetAssistantsPages()
         {
-
-            List<TblUserRoles> assistants;
-            try
-            {
-                assistants = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 4).OrderBy(x=>x.UserFK).Skip(50 * id).Take(50).ToList();
-            } catch (Exception)
-            {
-                assistants = db.TblUserRoles.Select(x => x).Where(x => x.RoleFK == 4).OrderBy(x => x.UserFK).Skip(50 * id).ToList();
-            }
-
-            var toSend = new List<Object>();
-
-            foreach(var assistant in assistants) {
-
-                var user = db.TblUsers.Find(assistant.UserFK);
-
-                toSend.Add(new
-                {
-                    ID = user.ID,
-                    Name = user.Name,
-                    Email = user.Email,
-                    Photo = user.Photo
-                });
-            }
-            return toSend;    
+            return Math.Ceiling((float)db.TblUserRoles.Where(x => x.RoleFK == 4).Count() / 50);
         }
 
+        public static Object GetAssistantsPage(int pageID)
+        {
+            try
+            {
+                var assistants = db.TblUserRoles.Where(x => x.RoleFK == 4).OrderBy(x => x.UserFK).Skip(50 * pageID).Take(50).ToList();
+
+                if (assistants.Count() == 0)
+                {
+                    return null;
+                }
+
+                var toSend = new List<Object>();
+                foreach (var assistant in assistants)
+                {
+                    var user = db.TblUsers.Find(assistant.UserFK);
+                    toSend.Add(new
+                    {
+                        ID = user.ID,
+                        Name = user.Name,
+                        Email = user.Email,
+                        Photo = user.Photo
+                    });
+                }
+                return toSend;
+            }
+            catch (ArgumentException)
+            {
+                return null;
+            }
+        }
+        
         public static Object GetAssistant(int id)
         {
-
             var assistant = db.TblUserRoles.Find(id, 4);
 
             if (assistant == null)
@@ -69,16 +75,16 @@ namespace CQPROJ.Business.Queries
                 Function = user.Function,
                 Curriculum = user.Curriculum
             };
-            
         }
 
-        public static void CreateAssistant(User assistant)
+        public static Object CreateAssistant(User assistant)
         {
             var pass = new PasswordHasher();
             var passHashed = pass.HashPassword(assistant.Password);
             var date = DateTime.Now;
 
-            TblUsers user = new TblUsers {
+            TblUsers user = new TblUsers
+            {
                 Address = assistant.Address,
                 CitizenCard = assistant.CitizenCard,
                 Curriculum = assistant.Curriculum,
@@ -92,7 +98,7 @@ namespace CQPROJ.Business.Queries
                 Function = assistant.Function,
                 DateOfBirth = assistant.DateOfBirth,
                 RegisterDate = date
-                
+
             };
 
             db.TblUsers.Add(user);
@@ -105,9 +111,11 @@ namespace CQPROJ.Business.Queries
             };
             db.TblUserRoles.Add(userRoles);
             db.SaveChanges();
+
+            return new { result = true };
         }
 
-        public static Object EditAssistant(int id,User assistant)
+        public static Object EditAssistant(int id, User assistant)
         {
 
             var assist = db.TblUserRoles.Find(id, 4);

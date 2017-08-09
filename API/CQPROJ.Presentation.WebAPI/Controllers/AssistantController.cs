@@ -13,14 +13,29 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class AssistantController : ApiController
     {
-        // GET assistant/
+        // GET assistant/pages
+        [HttpGet]
+        [Route("assistant/pages")]
+        public Object Count()
+        {
+            Payload payload = BAccount.confirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            
+            return new { result = true, data = BAssistant.GetAssistantsPages() };
+        }
+
+        // GET assistant/page/:id
         [HttpGet]
         [Route("assistant/page/{id}")]
         public Object Page(int id)
         {
-            Payload info = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.confirmToken(this.Request);
 
-            if (info == null  || (!info.rol.Contains(3) && !info.rol.Contains(6)))
+            if (payload == null  || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
                 return new { result = false, info="Não autorizado." };
             }
@@ -29,9 +44,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (assistant == null)
             {
-                return new { result = false, info="Número da página não contém nenhum utilizador."};
+                return new { result = false, info= "Impossível carregar página." };
             }
-
             return new { result = true, data = new { page = id, info = assistant} };
         }
 
@@ -40,14 +54,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("assistant/profile/{id}")]
         public Object Profile(int id)
         {
-            Payload info = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.confirmToken(this.Request);
 
-            if (info == null)
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-
-            if (!info.rol.Contains(3) && !info.rol.Contains(6))
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -58,7 +67,6 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Utilizador não encontrado." };
             }
-
             return new { result = true, data = assistant };
         }
 
@@ -67,22 +75,14 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("assistant")]
         public Object Post([FromBody]User assistant)
         {
-            Payload info = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.confirmToken(this.Request);
 
-            if (info == null)
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
+            return BAssistant.CreateAssistant(assistant);
 
-            if (!info.rol.Contains(3) && !info.rol.Contains(6))
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-
-            BAssistant.CreateAssistant(assistant);
-
-            return new { result = true };
-  
         }
 
         // PUT assistant/id
@@ -90,19 +90,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("assistant/{id}")]
         public Object Put(int id,[FromBody]User assistant)
         {
+            Payload payload = BAccount.confirmToken(this.Request);
 
-            Payload info = BAccount.confirmToken(this.Request);
-
-            if (info == null)
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
-
-            if (!info.rol.Contains(3) && !info.rol.Contains(6))
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-
             return BAssistant.EditAssistant(id,assistant);
         }
     }

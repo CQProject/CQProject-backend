@@ -9,31 +9,32 @@ namespace CQPROJ.Business.Queries
 {
     public class BAction
     {
-        private DBContextModel db = new DBContextModel();
 
-        public Object GetActions()
+        private static DBContextModel db = new DBContextModel();
+
+
+        public static Object GetPagesByUser(int userID)
         {
-            var actions = db.TblActions
-                 .Select(x => new { x.ID, x.Hour, x.Description, UserId =  x.UserFK });
-            return actions;
+            return Math.Ceiling((float)db.TblActions.Where(x => x.UserFK == userID).Count() / 50);
         }
-
-        public Object GetAction(int id)
+        
+        public static Object GetActionsbyUser(int userID, int pageID)
         {
+            List<TblActions> actions;
             try
             {
-                var action = db.TblActions.Select(x => new { x.ID, x.Hour, x.Description, x.UserFK }).Where(x => x.ID == id).FirstOrDefault();
-                var user = db.TblUsers.Select(y => new { y.ID, y.Name, y.Email, y.Function }).Where(x => x.ID == action.ID).FirstOrDefault();
-                return new
+                actions = db.TblActions.Where(x => x.UserFK == userID).OrderByDescending(x => x.ID).Skip(50 * pageID).Take(50).ToList();
+                Console.WriteLine(actions[0].Description);
+
+                if (actions.Count() == 0)
                 {
-                    Id = action.ID,
-                    ExecutionHour = action.Hour,
-                    Description = action.Description,
-                };
+                    return null;
+                }
+                return actions;
             }
-            catch (Exception)
+            catch (ArgumentException)
             {
-                return new {  };
+                return null;
             }
         }
     }

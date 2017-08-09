@@ -41,6 +41,27 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = new { page = id, info = teachers } };
         }
 
+        // GET teacher/class/:id
+        [HttpGet]
+        [Route("teacher/class/{id}")]
+        public Object ClassesByTeacher(int id)
+        {
+            Payload payload = BAccount.confirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6) && !payload.rol.Contains(2)) || (payload.rol.Contains(2) && payload.aud != id))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var classes = BClass.GetClassesByUser(id);
+
+            if (classes == null)
+            {
+                return new { result = false, info = "Sem turma atribuída." };
+            }
+            return new { result = true, data = classes };
+        }
+
         // GET teacher/:id
         [HttpGet]
         [Route("teacher/profile/{id}")]

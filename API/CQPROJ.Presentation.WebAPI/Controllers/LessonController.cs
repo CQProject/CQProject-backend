@@ -41,7 +41,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload info = BAccount.confirmToken(this.Request);
 
-            if (info == null || ((!info.rol.Contains(3) && !info.rol.Contains(6) && !info.rol.Contains(2) && info.aud != studentid && !BGuardian.GetGuardians(studentid).Contains(info.aud))))
+            if (info == null || ((!info.rol.Contains(3) && !info.rol.Contains(6) && !info.rol.Contains(2) && info.aud != studentid && !BParenting.GetGuardians(studentid).Contains(info.aud))))
             {
                 return new { result = false, info = "Não autorizado." };
             }

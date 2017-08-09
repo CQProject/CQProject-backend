@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CQPROJ.Business.Queries;
+using CQPROJ.Business.Entities.Payload;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
 {
@@ -14,14 +15,49 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // todos os profs, secretarios e admins
 
 
-        //// GET class/
-        //[HttpGet]
-        //[Route("class")]
-        //public Object Get()
-        //{
-        //    var classes = new BClass().GetClasses();
-        //    return classes;
-        //}
+        // GET class/teachers/:id
+        [HttpGet]
+        [Route("class/teachers/{id}")]
+        public Object ClassesByTeacher(int id)
+        {
+            Payload payload = BAccount.confirmToken(this.Request);
+
+            if (payload == null || payload.rol.Contains(4) ||
+                ((payload.rol.Contains(1) || payload.rol.Contains(2) || payload.rol.Contains(5)) && !payload.cla.Contains(id)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var teachers = BClass.GetTeachersByClass(id);
+
+            if (teachers == null)
+            {
+                return new { result = false, info = "Sem turma atribuída." };
+            }
+            return new { result = true, data = teachers };
+        }
+
+        // GET class/students/:id
+        [HttpGet]
+        [Route("class/students/{id}")]
+        public Object ClassByStudent(int id)
+        {
+            Payload payload = BAccount.confirmToken(this.Request);
+
+            if (payload == null || payload.rol.Contains(4) ||
+               ((payload.rol.Contains(1) || payload.rol.Contains(2) || payload.rol.Contains(5)) && !payload.cla.Contains(id)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var classes = BClass.GetStudentsByClass(id);
+
+            if (classes == null)
+            {
+                return new { result = false, info = "Sem turma atribuída." };
+            }
+            return new { result = true, data = classes };
+        }
 
 
 

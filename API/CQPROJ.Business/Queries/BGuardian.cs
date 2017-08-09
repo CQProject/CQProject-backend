@@ -9,15 +9,18 @@ using System.Threading.Tasks;
 
 namespace CQPROJ.Business.Queries
 {
-    public class BGuardian
+    public class BParenting
     {
         private static DBContextModel db = new DBContextModel();
 
         public static List<int> GetGuardians(int studentID)
         {
-            var guardians = db.TblParenting.Where(x => x.StudentFK == studentID).Select(x => x.GuardianFK).ToList();
+            return db.TblParenting.Where(x => x.StudentFK == studentID).Select(x => x.GuardianFK).ToList();
+        }
 
-            return guardians;
+        public static List<int> GetChildren(int guardianID)
+        {
+            return db.TblParenting.Where(x => x.GuardianFK == guardianID).Select(x => x.StudentFK).ToList();
         }
 
         public static void CreateGuardian(User guardian, int id)

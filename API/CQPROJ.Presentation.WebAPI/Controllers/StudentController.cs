@@ -38,6 +38,29 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = new { page = id, info = students } };
         }
 
+        // GET student/class/:id
+        [HttpGet]
+        [Route("student/class/{id}")]
+        public Object ClassByStudent(int id)
+        {
+            Payload payload = BAccount.confirmToken(this.Request);
+
+            if (payload == null || payload.rol.Contains(2) || payload.rol.Contains(4) ||
+                (payload.rol.Contains(1) && payload.aud != id) ||
+                (payload.rol.Contains(5) && !BParenting.GetGuardians(id).Contains(payload.aud)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var classes = BClass.GetClassesByUser(id);
+
+            if (classes == null)
+            {
+                return new { result = false, info = "Sem turma atribuída." };
+            }
+            return new { result = true, data = classes };
+        }
+
         // GET student/:id
         [HttpGet]
         [Route("student/profile/{id}")]
@@ -88,7 +111,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             foreach (var user in users.Guardian)
             {
-                BGuardian.CreateGuardian(user, studentID);
+                BParenting.CreateGuardian(user, studentID);
             }
 
             return new { result = true };

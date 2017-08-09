@@ -18,11 +18,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("account/login")]
         public Object Login([FromBody]Login userRequest)
         {
-            
             Uri client = this.Request.RequestUri;
-            var info = new BAccount().Login(userRequest,client);
+            var info = BAccount.Login(userRequest,client);
 
-            if( info == null)
+            if ( info == null)
             {
                 return new { result = false };
             }
@@ -32,24 +31,24 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
         }
 
+        // GET account/verifytoken/
         [HttpGet]
         [Route("account/verifytoken")]
         public Object verifytoken()
         {
             Uri client = this.Request.RequestUri;
-            bool verified = BAccount.confirmValidationToken(this.Request);
 
-            return new { result = true, data = verified };
+            if (BAccount.confirmToken(this.Request) == null)
+            {
+                return new { result = true, data = false };
+            }
+            return new { result = true, data = true };
         }
 
-        // PUT api/<controller>/5
+        // PUT account/:id
         public void Put(int id, [FromBody]string value)
         {
-        }
 
-        // DELETE api/<controller>/5
-        public void Delete(int id)
-        {
         }
     }
 }
