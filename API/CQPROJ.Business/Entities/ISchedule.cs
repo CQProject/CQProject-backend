@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CQPROJ.Business.Entities.ISchedule
 {
-    public class Schedule
+    public class ISchedule
     {
         public int SubjectFK { get; set; }
 

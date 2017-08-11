@@ -41,18 +41,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // GET student/class/:id
         [HttpGet]
         [Route("student/class/{id}")]
-        public Object ClassByStudent(int id)
+        public Object StudentsByClass(int id)
         {
             Payload payload = BAccount.confirmToken(this.Request);
 
-            if (payload == null || payload.rol.Contains(2) || payload.rol.Contains(4) ||
-                (payload.rol.Contains(1) && payload.aud != id) ||
-                (payload.rol.Contains(5) && !BParenting.GetGuardians(id).Contains(payload.aud)))
+            if (payload == null || payload.rol.Contains(4) ||
+               ((payload.rol.Contains(1) || payload.rol.Contains(2) || payload.rol.Contains(5)) && !payload.cla.Contains(id)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var classes = BClass.GetClassesByUser(id);
+            var classes = BClass.GetStudentsByClass(id);
 
             if (classes == null)
             {

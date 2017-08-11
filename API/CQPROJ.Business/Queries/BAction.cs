@@ -12,7 +12,6 @@ namespace CQPROJ.Business.Queries
 
         private static DBContextModel db = new DBContextModel();
 
-
         public static Object GetPagesByUser(int userID)
         {
             return Math.Ceiling((float)db.TblActions.Where(x => x.UserFK == userID).Count() / 50);
@@ -20,12 +19,10 @@ namespace CQPROJ.Business.Queries
         
         public static Object GetActionsbyUser(int userID, int pageID)
         {
-            List<TblActions> actions;
             try
             {
-                actions = db.TblActions.Where(x => x.UserFK == userID).OrderByDescending(x => x.ID).Skip(50 * pageID).Take(50).ToList();
-                Console.WriteLine(actions[0].Description);
-
+                List<TblActions> actions = db.TblActions.Where(x => x.UserFK == userID).OrderByDescending(x => x.ID).Skip(50 * pageID).Take(50).ToList();
+                
                 if (actions.Count() == 0)
                 {
                     return null;

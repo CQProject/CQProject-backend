@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CQPROJ.Business.Entities
 {
-    public class Student_Guardian
+    public class IParenting
     {
         public User Student { get; set; }
 

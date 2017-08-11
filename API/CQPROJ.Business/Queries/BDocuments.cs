@@ -10,27 +10,27 @@ namespace CQPROJ.Business.Queries
 {
     public class BDocuments
     {
-        private DBContextModel db = new DBContextModel();
+        private static DBContextModel db = new DBContextModel();
 
-        public Object GetClassDocuments(int id)
+        public static Object GetDocumentsbyUser(int id)
         {
-            var documents = db.TblDocuments.Select(x => x).Where(x => x.UserFK == id);
-
-            var toSend = new List<Object>();
-            foreach (var document in documents)
+            try
             {
-                toSend.Add(new
+                var docs = db.TblDocuments.Where(x => x.UserFK == id).Select(x => new { x.ID, x.ClassFK, x.File, x.SubmitedIn, x.IsVisible });
+
+                if (docs.Count() == 0)
                 {
-                    ID = document.ID,
-                    File = document.File,
-                    IsVisible = document.IsVisible,
-                    SubmitedIn = document.SubmitedIn
-                });
+                    return null;
+                }
+                return docs;
             }
-            return toSend;
+            catch (ArgumentException)
+            {
+                return null;
+            }
         }
 
-        public void CreateClassDocument(Document document)
+        public void CreateClassDocument(IDocument document)
         {
             var date = DateTime.Now;
 

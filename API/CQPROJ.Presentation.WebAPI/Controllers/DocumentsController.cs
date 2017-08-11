@@ -12,58 +12,26 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class DocumentsController : ApiController
     {
-
-
-        // MESMOS rights que schedules
-
         // GET documents/user/:id
         [HttpGet]
         [Route("documents/user/{id}")]
         public Object GetbyUser(int id)
         {
-            Payload info = BAccount.confirmToken(this.Request);
+            IPayload info = BAccount.confirmToken(this.Request);
 
-            if (info == null || ((!info.rol.Contains(3) && !info.rol.Contains(6) && !info.rol.Contains(2)) || (info.rol.Contains(2) && info.aud != id)))
+            if (info == null || 
+                (!info.rol.Contains(3) && !info.rol.Contains(6) && !info.rol.Contains(2) || 
+                (info.rol.Contains(2) && info.aud != id)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
             
-            var documents = new BDocuments().GetClassDocuments(id);
-
-            return new { result = true, info = documents };
+            var docs = BDocuments.GetDocumentsbyUser(id);
+            if (docs == null)
+            {
+                return new { result = true, info="nã foi" };
+            }
+            return new { result = true, data = docs };
         }
-
-        // GET documents/user/:id
-        //[HttpGet]
-        //[Route("documents/class/{id}")]
-
-        // alunos e encarregado associados à class
-
-        //public Object GetbyClass(int id)
-        //{
-        //    Payload info = BAccount.confirmToken(this.Request);
-
-        //    if (info == null)
-        //    {
-        //        return new { result = false, info = "Não autorizado." };
-        //    }
-
-        //    if ((!info.rol.Contains(3) && !info.rol.Contains(6) && !info.rol.Contains(2)) || (info.rol.Contains(2) && info.aud != id))
-        //    {
-        //        return new { result = false, info = "Não autorizado." };
-        //    }
-
-        //    var documents = new BDocuments().GetClassDocuments(id);
-
-        //    return new { result = true, info = documents };
-        //}
-
-        /*//POST documents/
-        [HttpPost]
-        [Route("documents")]
-        public void Post([FromBody]Document document)
-        {
-            new BDocuments().CreateClassDocument(document);
-        }*/
     }
 }

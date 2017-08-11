@@ -18,7 +18,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("assistant/pages")]
         public Object Count()
         {
-            Payload payload = BAccount.confirmToken(this.Request);
+            IPayload payload = BAccount.confirmToken(this.Request);
 
             if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
@@ -33,7 +33,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("assistant/page/{id}")]
         public Object Page(int id)
         {
-            Payload payload = BAccount.confirmToken(this.Request);
+            IPayload payload = BAccount.confirmToken(this.Request);
 
             if (payload == null  || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
@@ -49,12 +49,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = new { page = id, info = assistant} };
         }
 
-        // GET assistant/:id
+        // GET assistant/profile/:id
         [HttpGet]
         [Route("assistant/profile/{id}")]
         public Object Profile(int id)
         {
-            Payload payload = BAccount.confirmToken(this.Request);
+            IPayload payload = BAccount.confirmToken(this.Request);
 
             if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
@@ -75,14 +75,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("assistant")]
         public Object Post([FromBody]User assistant)
         {
-            Payload payload = BAccount.confirmToken(this.Request);
+            IPayload payload = BAccount.confirmToken(this.Request);
 
             if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            return BAssistant.CreateAssistant(assistant);
-
+            if (BAssistant.CreateAssistant(assistant))
+            {
+                return new { result = true };
+            }
+            return new { result = false, info = "Não foi possível registar utilizador." };
         }
 
         // PUT assistant/id
@@ -90,13 +93,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("assistant/{id}")]
         public Object Put(int id,[FromBody]User assistant)
         {
-            Payload payload = BAccount.confirmToken(this.Request);
+            IPayload payload = BAccount.confirmToken(this.Request);
 
             if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            return BAssistant.EditAssistant(id,assistant);
+            if(BAssistant.EditAssistant(id, assistant))
+            {
+                return new { result = true };
+            }
+            return new { result = false, info = "Não foi possível alterar dados do utilizador." };
         }
     }
 }

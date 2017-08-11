@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace CQPROJ.Business.Entities.IAccount
 {
-    public class Login
+    public class ILogin
     {
         public string Email { get; set; }
-
         public string Password { get; set; }
     }
 }

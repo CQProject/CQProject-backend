@@ -206,6 +206,10 @@
       <Project>{0eb08608-7fd5-4221-871c-08efc107839c}</Project>
       <Name>CQPROJ.Business</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CQPROJ.Data.DB\CQPROJ.Data.DB.csproj">
+      <Project>{7DCF14F4-03E7-4A9F-A7E8-2556D4C0D695}</Project>
+      <Name>CQPROJ.Data.DB</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

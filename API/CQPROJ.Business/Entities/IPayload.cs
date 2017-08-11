@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CQPROJ.Business.Entities.Payload
 {
-    public class Payload
+    public class IPayload
     {
         public string iss { get; set; }
         public int aud { get; set; }

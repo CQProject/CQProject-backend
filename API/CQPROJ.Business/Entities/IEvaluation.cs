@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CQPROJ.Business.Entities
 {
-    public class Evaluation
+    public class IEvaluation
     {
         public int ID { get; set; }
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CQPROJ.Business.Entities
 {
-    public class Document
+    public class IDocument
     {
         public int ID { get; set; }
 

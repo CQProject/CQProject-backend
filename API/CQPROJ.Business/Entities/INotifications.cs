@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CQPROJ.Business.Entities
 {
-    public class Notification
+    public class INotification
     {
         public int ID { get; set; }
 

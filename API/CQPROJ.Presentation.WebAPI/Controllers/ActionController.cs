@@ -16,7 +16,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("action/pages/{userid}")]
         public Object Page(int userid)
         {
-            Payload info = BAccount.confirmToken(this.Request);
+            IPayload info = BAccount.confirmToken(this.Request);
 
             if (info == null || (!info.rol.Contains(3) && !info.rol.Contains(6)))
             {
@@ -31,7 +31,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("action/page/{userid}/{pageid}")]
         public Object GetByUser(int userid, int pageid)
         {
-            Payload info = BAccount.confirmToken(this.Request);
+            IPayload info = BAccount.confirmToken(this.Request);
 
             if (info == null || (!info.rol.Contains(3) && !info.rol.Contains(6)))
             {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using CQPROJ.Data.DB.Models;
 using CQPROJ.Business.Entities.IUser;
+using System.Data.Entity;
 
 namespace CQPROJ.Business.Queries
 {
@@ -23,26 +24,14 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var assistants = db.TblUserRoles.Where(x => x.RoleFK == 4).OrderBy(x => x.UserFK).Skip(50 * pageID).Take(50).ToList();
+                var assistants = db.TblUserRoles.Where(x => x.RoleFK == 4).OrderBy(x => x.UserFK).Skip(50 * pageID).Take(50).Select(x=>x.UserFK).ToList();
 
                 if (assistants.Count() == 0)
                 {
                     return null;
                 }
-
-                var toSend = new List<Object>();
-                foreach (var assistant in assistants)
-                {
-                    var user = db.TblUsers.Find(assistant.UserFK);
-                    toSend.Add(new
-                    {
-                        ID = user.ID,
-                        Name = user.Name,
-                        Email = user.Email,
-                        Photo = user.Photo
-                    });
-                }
-                return toSend;
+                
+                return assistants;
             }
             catch (ArgumentException)
             {
@@ -77,70 +66,84 @@ namespace CQPROJ.Business.Queries
             };
         }
 
-        public static Object CreateAssistant(User assistant)
+        public static Boolean CreateAssistant(User assistant)
         {
-            var pass = new PasswordHasher();
-            var passHashed = pass.HashPassword(assistant.Password);
-            var date = DateTime.Now;
-
-            TblUsers user = new TblUsers
+            try
             {
-                Address = assistant.Address,
-                CitizenCard = assistant.CitizenCard,
-                Curriculum = assistant.Curriculum,
-                Email = assistant.Email,
-                FiscalNumber = assistant.FiscalNumber,
-                Name = assistant.Name,
-                Password = passHashed,
-                PhoneNumber = assistant.PhoneNumber,
-                Photo = assistant.Photo,
-                IsActive = true,
-                Function = assistant.Function,
-                DateOfBirth = assistant.DateOfBirth,
-                RegisterDate = date
+                var hasher = new PasswordHasher();
+                var password = hasher.HashPassword(assistant.Password);
+                var date = DateTime.Now;
 
-            };
+                TblUsers user = new TblUsers
+                {
+                    Address = assistant.Address,
+                    CitizenCard = assistant.CitizenCard,
+                    Curriculum = assistant.Curriculum,
+                    Email = assistant.Email,
+                    FiscalNumber = assistant.FiscalNumber,
+                    Name = assistant.Name,
+                    Password = password,
+                    PhoneNumber = assistant.PhoneNumber,
+                    Photo = assistant.Photo,
+                    IsActive = true,
+                    Function = assistant.Function,
+                    DateOfBirth = assistant.DateOfBirth,
+                    RegisterDate = date
 
-            db.TblUsers.Add(user);
-            db.SaveChanges();
+                };
+                db.TblUsers.Add(user);
+                db.SaveChanges();
 
-            TblUserRoles userRoles = new TblUserRoles
+                TblUserRoles userRoles = new TblUserRoles
+                {
+                    UserFK = user.ID,
+                    RoleFK = 4
+                };
+                db.TblUserRoles.Add(userRoles);
+                db.SaveChanges();
+
+                return true;
+            }
+            catch (Exception)
             {
-                UserFK = user.ID,
-                RoleFK = 4
-            };
-            db.TblUserRoles.Add(userRoles);
-            db.SaveChanges();
-
-            return new { result = true };
+                return false;
+            }
+            
         }
 
-        public static Object EditAssistant(int id, User assistant)
+        public static Boolean EditAssistant(int id, User assistant)
         {
-
-            var assist = db.TblUserRoles.Find(id, 4);
-
-            if (assist == null | assistant == null)
+            try
             {
-                return new { result = false };
+                var role = db.TblUserRoles.Find(id, 4);
+
+                if (role == null || assistant == null)
+                {
+                    return false;
+                }
+
+                TblUsers user = db.TblUsers.Find(id);
+
+                user.Name = assistant.Name;
+                user.Email = assistant.Email;
+                user.Address = assistant.Address;
+                user.CitizenCard = assistant.CitizenCard;
+                user.Curriculum = assistant.Curriculum;
+                user.FiscalNumber = assistant.FiscalNumber;
+                user.PhoneNumber = assistant.PhoneNumber;
+                user.Photo = assistant.Photo;
+                user.Function = assistant.Function;
+                user.DateOfBirth = assistant.DateOfBirth;
+
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return true;
             }
-
-            TblUsers user = db.TblUsers.Find(id);
-
-            user.Name = assistant.Name;
-            user.Email = assistant.Email;
-            user.Address = assistant.Address;
-            user.CitizenCard = assistant.CitizenCard;
-            user.Curriculum = assistant.Curriculum;
-            user.FiscalNumber = assistant.FiscalNumber;
-            user.PhoneNumber = assistant.PhoneNumber;
-            user.Photo = assistant.Photo;
-            user.Function = assistant.Function;
-            user.DateOfBirth = assistant.DateOfBirth;
-
-            db.SaveChanges();
-
-            return new { result = true };
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

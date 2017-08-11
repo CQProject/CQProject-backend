@@ -18,7 +18,7 @@ namespace CQPROJ.Business.Queries
         private static DBContextModel db = new DBContextModel();
 
 
-        public static Object Login(Login requestUser,Uri client)
+        public static Object Login(ILogin requestUser,Uri client)
         {
             try
             {
@@ -69,10 +69,10 @@ namespace CQPROJ.Business.Queries
         }
 
 
-        public static Payload confirmToken(HttpRequestMessage request)
+        public static IPayload confirmToken(HttpRequestMessage request)
         {
 
-            Payload payload;
+            IPayload payload;
             try
             {
                 string token = request.Headers.GetValues("Authorization").First();
@@ -83,7 +83,7 @@ namespace CQPROJ.Business.Queries
                 long date = _ToUnixTime(DateTime.Now);
 
                 JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
-                payload = jsSerializer.Deserialize<Payload>(decoded);
+                payload = jsSerializer.Deserialize<IPayload>(decoded);
 
                 if (!payload.iss.Contains(request.RequestUri.Authority))
                 {

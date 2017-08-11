@@ -44,22 +44,23 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // GET teacher/class/:id
         [HttpGet]
         [Route("teacher/class/{id}")]
-        public Object ClassesByTeacher(int id)
+        public Object TeachersByClass(int id)
         {
             Payload payload = BAccount.confirmToken(this.Request);
 
-            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6) && !payload.rol.Contains(2)) || (payload.rol.Contains(2) && payload.aud != id))
+            if (payload == null || payload.rol.Contains(4) ||
+                ((payload.rol.Contains(1) || payload.rol.Contains(2) || payload.rol.Contains(5)) && !payload.cla.Contains(id)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var classes = BClass.GetClassesByUser(id);
+            var teachers = BClass.GetTeachersByClass(id);
 
-            if (classes == null)
+            if (teachers == null)
             {
                 return new { result = false, info = "Sem turma atribuída." };
             }
-            return new { result = true, data = classes };
+            return new { result = true, data = teachers };
         }
 
         // GET teacher/:id

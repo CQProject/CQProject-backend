@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CQPROJ.Business.Entities.IAction
 {
-    class RegistAction
+    class IAction
     {
         [Required]
         public string Name { get; set; }
