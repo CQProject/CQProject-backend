@@ -1,11 +1,8 @@
-﻿using CQPROJ.Business.Entities;
-using CQPROJ.Business.Entities.ISchedule;
-using CQPROJ.Data.DB.Models;
+﻿using CQPROJ.Data.DB.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CQPROJ.Business.Queries
 {
@@ -13,114 +10,59 @@ namespace CQPROJ.Business.Queries
     {
         private static DBContextModel db = new DBContextModel();
 
-        public static Object GetTeacherSchedule(int teacherID)
+        public static Object GetScheduleByTeacher(int teacherID)
         {
-            var schedule = db.TblSchedules.Select(x => x).Where(x => x.TeacherFK == teacherID);
-
-            var toSend = new List<Object>();
-            foreach (var sched in schedule)
+            try
             {
-                toSend.Add(new
-                {
-                    ID = sched.ID,
-                    DayOfWeek = sched.DayOfWeek,
-                    Duration = sched.Duration,
-                    StartingTime = sched.StartingTime,
-                    Subject = sched.SubjectFK
-                });
+                var schedules = db.TblSchedules.Select(x => x).Where(x => x.TeacherFK == teacherID);
+                if (schedules.Count() == 0) { return null; }
+                return schedules;
             }
-            return toSend;
+            catch (Exception) { return null; }
         }
 
-        public static Object GetClassSchedule(int classFK)
+        public static Object GetScheduleByClass(int classID)
         {
-            var schedule = db.TblSchedules.Select(x => x).Where(x => x.ClassFK == classFK);
-
-            var toSend = new List<Object>();
-            foreach (var sched in schedule)
+            try
             {
-                toSend.Add(new
-                {
-                    ID = sched.ID,
-                    DayOfWeek = sched.DayOfWeek,
-                    Duration = sched.Duration,
-                    StartingTime = sched.StartingTime,
-                    Subject = sched.SubjectFK
-                });
+                var schedules = db.TblSchedules.Select(x => x).Where(x => x.ClassFK == classID);
+                if (schedules.Count() == 0) { return null; }
+                return schedules;
             }
-            return toSend;
+            catch (Exception) { return null; }
         }
 
-        public static Object GetScheduleRoom(int roomFK)
+        public static Object GetScheduleByRoom(int roomID)
         {
-            var schedule = db.TblSchedules.Select(x => x).Where(x => x.RoomFK == roomFK);
-
-            var toSend = new List<Object>();
-            foreach (var sched in schedule)
+            try
             {
-                toSend.Add(new
-                {
-                    ID = sched.ID,
-                    DayOfWeek = sched.DayOfWeek,
-                    Duration = sched.Duration,
-                    StartingTime = sched.StartingTime,
-                    Subject = sched.SubjectFK
-                });
+                var schedules = db.TblSchedules.Select(x => x).Where(x => x.RoomFK == roomID);
+                if (schedules.Count() == 0) { return null; }
+                return schedules;
             }
-            return toSend;
+            catch (Exception) { return null; }
         }
 
-        public static void CreateSchedule(Schedule schedule)
+        public static Boolean CreateSchedule(TblSchedules schedule)
         {
-            TblSchedules sched = new TblSchedules
+            try
             {
-                ClassFK = schedule.ClassFK,
-                DayOfWeek = schedule.DayOfWeek,
-                Duration = schedule.Duration,
-                RoomFK = schedule.RoomFK,
-                StartingTime = schedule.StartingTime,
-                SubjectFK = schedule.SubjectFK,
-                TeacherFK = schedule.TeacherFK
-            };
-
-            db.TblSchedules.Add(sched);
-            db.SaveChanges();
-        }
-
-        public static bool VerifyTeacher(int teacherID,int lessonID)
-        {
-            var schedule = db.TblSchedules.Where(x => x.TeacherFK == teacherID).Select(x => x.ID);
-
-            var lesson = db.TblLessons.Find(lessonID);
-
-            if(schedule.Any(x=>x == lesson.ScheduleFK))
-            {
+                db.TblSchedules.Add(schedule);
+                db.SaveChanges();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            catch (Exception) { return false; }
         }
 
-        //public Object GetStudentSchedule(int id)
-        //{
-
-        //    var schedule = db.TblSchedules.Select(x => x).Where(x => x.ClassFK == id);
-
-        //    var toSend = new List<Object>();
-        //    foreach (var sched in schedule)
-        //    {
-        //        toSend.Add(new
-        //        {
-        //            ID = sched.ID,
-        //            DayOfWeek = sched.DayOfWeek,
-        //            Duration = sched.Duration,v
-        //            StartingTime = sched.StartingTime,
-        //            Subject = sched.Subject
-        //        });
-        //    }
-        //    return toSend;
-        //}
+        public static Boolean EditSchedule(TblSchedules schedule)
+        {
+            try
+            {
+                db.Entry(schedule).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception) { return false; }
+        }
     }
 }

@@ -1,112 +1,129 @@
-﻿using CQPROJ.Business.Entities;
-using CQPROJ.Business.Entities.IUser;
-using CQPROJ.Data.DB.Models;
+﻿using CQPROJ.Data.DB.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CQPROJ.Business.Queries
 {
     public class BLesson
     {
         private static DBContextModel db = new DBContextModel();
-
-        public static Object GetAllLessonsBySchedule(int id)
+        
+        public static Object GetLessonsBySubject(int subjectID, int classID)
         {
-
-            var lessons = db.TblLessons.Select(x => x).Where(x => x.ScheduleFK == id);
-
-           var toSend = new List<Object>();
-            foreach (var lesson in lessons)
+            try
             {
-                toSend.Add(new
+                var schedules = db.TblSchedules.Where(x => x.ClassFK == classID && x.SubjectFK == subjectID);
+                var lessons = new List<TblLessons>();
+                foreach (var schedule in schedules)
+                {
+                    lessons.Concat(db.TblLessons.Where(x => x.ScheduleFK == schedule.ID));
+                }
+                if (lessons.Count() == 0) { return null; }
+                return lessons;
+            }
+            catch (Exception) { return null; }
+        }
+
+
+        public static Object GetLessonToStudent(int lessonID, int studentID)
+        {
+            try
+            {
+                var lesson= db.TblLessons.Find(lessonID);
+                var lessonUser = db.TblLessonStudents.Find(lessonID, studentID);
+                return new
                 {
                     ID = lesson.ID,
                     Day = lesson.Day,
-                    Homework = lesson.Homework,
-                    Observations = lesson.Observations,
-                    Summary = lesson.Summary
-                });
-            }
-            return toSend;
-
-        }
-
-        public static Object GetAllLessonsByStudent(int LessonID, int studentID)
-        {
-            try
-            {
-                var lessons = db.TblLessonStudents.Find(LessonID, studentID);
-
-                return lessons;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-        }
-
-
-        public static Object GetLessonProfile(int id)
-        {
-
-            var lesson = db.TblLessons.Find(id);
-
-            return new
-            {
-                ID = lesson.ID,
-                Observations = lesson.Observations,
-                Summary = lesson.Summary
-            };
-
-        }
-
-        public static void CreateLesson(Lesson lesson)
-        {
-            TblLessons les = new TblLessons
-            {
-                Day = lesson.Day,
-                Homework = lesson.Homework,
-                Observations = lesson.Observations,
-                Summary = lesson.Summary,
-                ScheduleFK = lesson.ScheduleFK
-            };
-
-            db.TblLessons.Add(les);
-            db.SaveChanges();
-        }
-
-        public static Object EditLesson(int id,Lesson lesson)
-        {
-            try
-            {
-                if(lesson == null)
-                {
-                    return new { result = false };
-                }
-                var lessonFind = db.TblLessons.Find(id);
-
-                TblLessons les = new TblLessons
-                {
-                    Day = lesson.Day,
-                    Homework = lesson.Homework,
-                    Observations = lesson.Observations,
                     Summary = lesson.Summary,
+                    Observations = lesson.Observations,
+                    Homework = lesson.Homework,
+                    Presence = lessonUser.Presence,
+                    Behavior = lessonUser.Behavior,
+                    Material = lessonUser.Material,
                     ScheduleFK = lesson.ScheduleFK
                 };
-
-                db.TblLessons.Add(les);
-                db.SaveChanges();
-
-                return new { result = true };
             }
-            catch (Exception)
+            catch (Exception) { return null; }
+        }
+
+        public static Object GetLessonToTeacher(int lessonID)
+        {
+            try
             {
-                return new { result = false, data = "Lição não encontrada" };
+                var lesson = db.TblLessons.Find(lessonID);
+                var lessonUser = db.TblLessonStudents.Where(x=>x.LessonFK==lessonID);
+                return new
+                {
+                    lesson = lesson,
+                    students= lessonUser
+                };
             }
+            catch (Exception) { return null; }
+        }
+
+        public static Boolean CreateLesson(TblLessons lesson)
+        {
+            try
+            {
+                db.TblLessons.Add(lesson);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception) { return false; }
+        }
+
+        public static Boolean RegisterFaults(TblLessonStudents lesson)
+        {
+            try
+            {
+                db.TblLessonStudents.Add(lesson);
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception) { return false; }
+        }
+
+        public static Boolean EditLesson(TblLessons lesson)
+        {
+            try
+            {
+                db.Entry(lesson).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception) { return false; }
+        }
+
+        public static Boolean EditFaults(TblLessonStudents lesson)
+        {
+            try
+            {
+                db.Entry(lesson).State = EntityState.Modified;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception) { return false; }
+        }
+
+        public static Boolean VerifyTeacher(TblLessons lesson, int teacherID)
+        {
+            try
+            {
+                return db.TblSchedules.Find(lesson.ScheduleFK).TeacherFK == teacherID ? true : false;
+            }
+            catch (Exception) { return false; }
+        }
+
+        public static Boolean VerifyTeacher(TblLessonStudents lesson, int teacherID)
+        {
+            try
+            {
+                return db.TblSchedules.Find(db.TblLessons.Find(lesson.LessonFK).ScheduleFK).TeacherFK == teacherID ? true : false;
+            }
+            catch (Exception) { return false; }
         }
     }
 }

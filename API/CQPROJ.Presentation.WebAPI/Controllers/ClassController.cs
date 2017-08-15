@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using CQPROJ.Business.Entities.IAccount;
 using CQPROJ.Business.Queries;
-using CQPROJ.Business.Entities.Payload;
-using CQPROJ.Business.Entities;
 using CQPROJ.Data.DB.Models;
+using System;
+using System.Linq;
+using System.Web.Http;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
 {
@@ -17,19 +13,19 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // todos os profs, secretarios e admins
 
 
-        // GET class/teachers/:id
+        // GET class/teacher/:teacherid
         [HttpGet]
-        [Route("class/teacher/{id}")]
-        public Object ClassesByTeacher(int id)
+        [Route("class/teacher/{teacherid}")]
+        public Object ClassesByTeacher(int teacherid)
         {
-            IPayload payload = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6) && !payload.rol.Contains(2)) || (payload.rol.Contains(2) && payload.aud != id))
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6) && !payload.rol.Contains(2)) || (payload.rol.Contains(2) && payload.aud != teacherid))
             {
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var classes = BClass.GetClassesByUser(id);
+            var classes = BClass.GetClassesByUser(teacherid);
 
             if (classes == null)
             {
@@ -38,21 +34,21 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = classes };
         }
 
-        // GET class/students/:id
+        // GET class/student/:studentid
         [HttpGet]
-        [Route("class/students/{id}")]
-        public Object ClassesByStudent(int id)
+        [Route("class/student/{studentid}")]
+        public Object ClassesByStudent(int studentid)
         {
-            IPayload payload = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
             if (payload == null || payload.rol.Contains(2) || payload.rol.Contains(4) ||
-                (payload.rol.Contains(1) && payload.aud != id) ||
-                (payload.rol.Contains(5) && !BParenting.GetGuardians(id).Contains(payload.aud)))
+                (payload.rol.Contains(1) && payload.aud != studentid) ||
+                (payload.rol.Contains(5) && !BParenting.GetGuardians(studentid).Contains(payload.aud)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var classes = BClass.GetClassesByUser(id);
+            var classes = BClass.GetClassesByUser(studentid);
 
             if (classes == null)
             {
@@ -61,19 +57,19 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = classes };
         }
 
-        // GET class/school/:id
+        // GET class/school/:schoolid
         [HttpGet]
-        [Route("class/school/{id}")]
-        public Object ClassesBySchool(int id)
+        [Route("class/school/{schoolid}")]
+        public Object ClassesBySchool(int schoolid)
         {
-            IPayload payload = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null || !payload.rol.Contains(3) || !payload.rol.Contains(6))
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var classes = BClass.GetClassesBySchool(id);
+            var classes = BClass.GetClassesBySchool(schoolid);
 
             if (classes == null)
             {
@@ -82,20 +78,42 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = classes };
         }
 
-        // GET class/students/:id
+        // GET student/class/:classid
         [HttpGet]
-        [Route("class/profile/{id}")]
-        public Object Profile(int id)
+        [Route("student/class/{classid}")]
+        public Object StudentsByClass(int classid)
         {
-            IPayload payload = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
             if (payload == null || payload.rol.Contains(4) ||
-                ((payload.rol.Contains(1) || payload.rol.Contains(5) || payload.rol.Contains(2)) && !payload.cla.Contains(id)))
+               ((payload.rol.Contains(1) || payload.rol.Contains(2) || payload.rol.Contains(5)) && !payload.cla.Contains(classid)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var classs = BClass.GetClassProfile(id);
+            var classes = BClass.GetStudentsByClass(classid);
+
+            if (classes == null)
+            {
+                return new { result = false, info = "Sem turma atribuída." };
+            }
+            return new { result = true, data = classes };
+        }
+
+        // GET class/profile/:classid
+        [HttpGet]
+        [Route("class/profile/{classid}")]
+        public Object Profile(int classid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || payload.rol.Contains(4) ||
+                ((payload.rol.Contains(1) || payload.rol.Contains(5) || payload.rol.Contains(2)) && !payload.cla.Contains(classid)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var classs = BClass.GetClassProfile(classid);
 
             if (classs == null)
             {
@@ -104,12 +122,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = classs };
         }
 
-        //POST class/
+        //POST class/profile
         [HttpPost]
-        [Route("class")]
+        [Route("class/profile")]
         public Object Post([FromBody]TblClasses newclass)
         {
-            IPayload payload = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
             if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
@@ -119,25 +137,61 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = true };
             }
-            return new { result = false, info="Não foi possível registar a turma" };
+            return new { result = false, info="Não foi possível registar a turma." };
         }
 
-        // PUT class/id
-        [HttpPut]
-        [Route("class/{id}")]
-        public Object Put(int id, [FromBody]TblClasses newclass)
+        // POST class/user/
+        [HttpPost]
+        [Route("class/user")]
+        public Object AddUser([FromBody]ClassUser classuser)
         {
-            IPayload payload = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
             if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (BClass.EditClass(id, newclass))
+            if (!BClass.AddUser(classuser.ClassID, classuser.UserID))
+            {
+                return new { result = false, info = "Não foi possível adicionar o utilizador à turma." };
+            }
+            return new { result = true };
+        }
+
+        // DELETE class/user/
+        [HttpDelete]
+        [Route("class/user")]
+        public Object RemoveUser([FromBody]ClassUser classuser)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            if (!BClass.RemoveUser(classuser.ClassID, classuser.UserID))
+            {
+                return new { result = false, info = "Não foi possível remover o utilizador à turma." };
+            }
+            return new { result = true };
+        }
+
+        // PUT class/profile/
+        [HttpPut]
+        [Route("class/profile")]
+        public Object PutProfile([FromBody]TblClasses editedclass)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            if (BClass.EditClass(editedclass))
             {
                 return new { result = true };
             }
-            return new { result = false, info = "Não foi possível alterar dados da turma" };
+            return new { result = false, info = "Não foi possível alterar dados da turma." };
         }
     }
 }

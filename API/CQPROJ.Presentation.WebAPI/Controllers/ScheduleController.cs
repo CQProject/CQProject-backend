@@ -1,11 +1,8 @@
-﻿using CQPROJ.Business.Entities;
-using CQPROJ.Business.Entities.Payload;
+﻿using CQPROJ.Business.Entities.IAccount;
 using CQPROJ.Business.Queries;
+using CQPROJ.Data.DB.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
@@ -13,22 +10,21 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class ScheduleController : ApiController
     {
 
-        // GET schedule/teacher/{id}
+        // GET schedule/teacher/{teacherid}
         [HttpGet]
-        [Route("schedule/teacher/{id}")]
-
-        // Secretários, admins e professor se o id do header corresponder ao pedido
-
-        public Object GetTeachersSchedule(int id)
+        [Route("schedule/teacher/{teacherid}")]
+        public Object ScheduleByTeacher(int teacherid)
         {
-            Payload info = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (info == null)
+            if (payload == null ||
+                (!payload.rol.Contains(2) && !payload.rol.Contains(3) && !payload.rol.Contains(6)) ||
+                (payload.rol.Contains(2) && payload.aud != teacherid))
             {
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var schedule = BSchedule.GetTeacherSchedule(id);
+            var schedule = BSchedule.GetScheduleByTeacher(teacherid);
 
             if (schedule == null)
             {
@@ -38,22 +34,20 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = schedule };
         }
 
-        // GET schedule/class/{id}
+        // GET schedule/class/:classid
         [HttpGet]
-        [Route("schedule/class/{id}")]
-
-        // Secretários, admins, professores e alunos ou encarregados se estiverem relacioandos à turma
-
-        public Object GetClassSchedule(int id)
+        [Route("schedule/class/{classid}")]
+        public Object ScheduleByClass(int classid)
         {
-            Payload info = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (info == null)
+            if (payload == null || payload.rol.Contains(4) ||
+                ((payload.rol.Contains(1) || payload.rol.Contains(5) && !payload.cla.Contains(classid))))
             {
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var schedule = BSchedule.GetClassSchedule(id);
+            var schedule = BSchedule.GetScheduleByClass(classid);
 
             if (schedule == null)
             {
@@ -63,22 +57,19 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = schedule };
         }
 
-        // GET schedule/room/{id}
+        // GET schedule/room/:roomid
         [HttpGet]
-        [Route("schedule/room/{id}")]
-
-        // Secretários, admins
-
-        public Object GetScheduleRoom(int id)
+        [Route("schedule/room/{roomid}")]
+        public Object GetScheduleByRoom(int roomid)
         {
-            Payload info = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (info == null)
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
 
-           var schedule = BSchedule.GetScheduleRoom(id);
+            var schedule = BSchedule.GetScheduleByRoom(roomid);
 
             if (schedule == null)
             {
@@ -88,13 +79,40 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = schedule };
         }
 
-        //// PUT secretary/id
-        //[HttpPut]
-        //[Route("schedule/{id}")]
-        //public Object Put(int id, [FromBody]Schedule schedule)
-        //{
-        //    return new BSchedule().EditSchedule(id, schedule);
-        //}
+        //POST schedule
+        [HttpPost]
+        [Route("schedule")]
+        public Object Post([FromBody]TblSchedules schedule)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            if (BSchedule.CreateSchedule(schedule))
+            {
+                return new { result = true };
+            }
+            return new { result = false, info = "Não foi possível registar a aula." };
+        }
+
+        // PUT schedule
+        [HttpPut]
+        [Route("schedule")]
+        public Object PutProfile([FromBody]TblSchedules schedule)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            if (BSchedule.EditSchedule(schedule))
+            {
+                return new { result = true };
+            }
+            return new { result = false, info = "Não foi possível alterar dados da aula." };
+        }
     }
 }

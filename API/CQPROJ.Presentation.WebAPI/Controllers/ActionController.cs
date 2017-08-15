@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using CQPROJ.Business.Entities.IAccount;
 using CQPROJ.Business.Queries;
-using CQPROJ.Business.Entities.Payload;
+using System;
+using System.Linq;
+using System.Web.Http;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
 {
@@ -16,9 +13,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("action/pages/{userid}")]
         public Object Page(int userid)
         {
-            IPayload info = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (info == null || (!info.rol.Contains(3) && !info.rol.Contains(6)))
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -31,9 +28,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("action/page/{userid}/{pageid}")]
         public Object GetByUser(int userid, int pageid)
         {
-            IPayload info = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (info == null || (!info.rol.Contains(3) && !info.rol.Contains(6)))
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
                 return new { result = false, info = "Não autorizado." };
             }

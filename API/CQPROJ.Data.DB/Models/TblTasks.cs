@@ -10,9 +10,7 @@ namespace CQPROJ.Data.DB.Models
     {
         public int ID { get; set; }
 
-        public DateTime? Day { get; set; }
-
-        public bool? Weekly { get; set; }
+        public int? DayOfWeek { get; set; }
 
         public string Description { get; set; }
 

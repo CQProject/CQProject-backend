@@ -17,60 +17,104 @@ namespace CQPROJ.Business.Queries
 
         public static Object GetClassesByUser(int userID)
         {
-            return db.TblClassUsers.Where(x => x.UserFK == userID).Select(x => x.ClassFK).ToList();
+            try
+            {
+                var classes = db.TblClassUsers.Where(x => x.UserFK == userID).Select(x => x.ClassFK).ToList();
+                if (classes.Count() == 0) { return null; }
+                return classes;
+            }
+            catch (Exception) { return null; }
+
         }
 
         public static Object GetTeachersByClass(int classID)
         {
-            return db.TblClassUsers.Where(x => x.ClassFK == classID && db.TblUserRoles.Any(y => y.UserFK == x.UserFK && y.RoleFK == 2)).Select(x => x.UserFK).ToList();
+            try
+            {
+                var classes = db.TblClassUsers
+                    .Where(x => x.ClassFK == classID && db.TblUserRoles.Any(y => y.UserFK == x.UserFK && y.RoleFK == 2))
+                    .Select(x => x.UserFK).ToList();
+                if (classes.Count() == 0) { return null; }
+                return classes;
+            }
+            catch (Exception) { return null; }
         }
 
         public static Object GetStudentsByClass(int classID)
         {
-            return db.TblClassUsers.Where(x => x.ClassFK == classID && db.TblUserRoles.Any(y => y.UserFK == x.UserFK && y.RoleFK == 1)).Select(x => x.UserFK).ToList();
+            try
+            {
+                var students = db.TblClassUsers
+                    .Where(x => x.ClassFK == classID && db.TblUserRoles.Any(y => y.UserFK == x.UserFK && y.RoleFK == 1))
+                    .Select(x => x.UserFK).ToList();
+                if (students.Count() == 0) { return null; }
+                return students;
+            }
+            catch (Exception) { return null; }
         }
 
         public static Object GetClassesBySchool(int schoolID)
         {
-            return db.TblClasses.Where(x => x.SchoolFK == schoolID).ToList();
+            try
+            {
+                var classes = db.TblClasses.Where(x => x.SchoolFK == schoolID).ToList();
+                if (classes.Count() == 0) { return null; }
+                return classes;
+            }
+            catch (Exception) { return null; }
         }
 
         public static Object GetClassProfile(int classID)
         {
-            return db.TblClasses.Where(x => x.ID == classID).ToList();
+            try
+            {
+                return db.TblClasses.Where(x => x.ID == classID).ToList();
+            }
+            catch (Exception) { return null; }
         }
 
-        public static Boolean CreateClass(TblClasses new_class)
+        public static Boolean CreateClass(TblClasses newClass)
         {
             try
             {
-                db.TblClasses.Add(new_class);
+                db.TblClasses.Add(newClass);
                 db.SaveChanges();
                 return true;
             }
-            catch (Exception)
-            {
-                return false;
-            }
+            catch (Exception) { return false; }
         }
 
-        public static Boolean EditClass(int id, TblClasses new_class)
+        public static Boolean EditClass(TblClasses alteredClass)
         {
             try
             {
-                TblClasses alteredclass = db.TblClasses.Find(id);
-                if (alteredclass == null)
-                {
-                    return false;
-                }
-                db.Entry(alteredclass).State = EntityState.Modified;
+                db.Entry(alteredClass).State = EntityState.Modified;
                 db.SaveChanges();
                 return true;
             }
-            catch (Exception)
+            catch (Exception) { return false; }
+        }
+
+        public static Boolean AddUser(int classID, int userID)
+        {
+            try
             {
-                return false;
+                db.TblClassUsers.Add(new TblClassUsers { ClassFK = classID, UserFK = userID });
+                db.SaveChanges();
+                return true;
             }
+            catch { return false; }
+        }
+
+        public static Boolean RemoveUser(int classID, int userID)
+        {
+            try
+            {
+                db.TblClassUsers.Remove(db.TblClassUsers.Find(classID, userID));
+                db.SaveChanges();
+                return true;
+            }
+            catch { return false; }
         }
     }
 }

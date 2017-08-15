@@ -1,12 +1,7 @@
 ﻿using CQPROJ.Business.Entities.IAccount;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
 using CQPROJ.Business.Queries;
-using System.Web;
+using System;
+using System.Web.Http;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
 {
@@ -34,11 +29,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // GET account/verifytoken/
         [HttpGet]
         [Route("account/verifytoken")]
-        public Object verifytoken()
+        public Object VerifyToken()
         {
             Uri client = this.Request.RequestUri;
 
-            if (BAccount.confirmToken(this.Request) == null)
+            if (BAccount.ConfirmToken(this.Request) == null)
             {
                 return new { result = true, data = false };
             }

@@ -1,5 +1,4 @@
 ﻿using CQPROJ.Business.Entities.IAccount;
-using CQPROJ.Business.Entities.Payload;
 using CQPROJ.Data.DB.Models;
 using Jose;
 using Microsoft.AspNet.Identity;
@@ -8,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
 namespace CQPROJ.Business.Queries
@@ -18,13 +16,13 @@ namespace CQPROJ.Business.Queries
         private static DBContextModel db = new DBContextModel();
 
 
-        public static Object Login(ILogin requestUser,Uri client)
+        public static Object Login(Login requestUser,Uri client)
         {
             try
             {
                 var user = db.TblUsers.Select(x => x).Where(x => x.Email == requestUser.Email).FirstOrDefault();
 
-                if (user == null)
+                if (user == null || (bool)!user.IsActive)
                 {
                     return null;
                 }
@@ -69,10 +67,10 @@ namespace CQPROJ.Business.Queries
         }
 
 
-        public static IPayload confirmToken(HttpRequestMessage request)
+        public static Payload ConfirmToken(HttpRequestMessage request)
         {
 
-            IPayload payload;
+            Payload payload;
             try
             {
                 string token = request.Headers.GetValues("Authorization").First();
@@ -83,7 +81,7 @@ namespace CQPROJ.Business.Queries
                 long date = _ToUnixTime(DateTime.Now);
 
                 JavaScriptSerializer jsSerializer = new JavaScriptSerializer();
-                payload = jsSerializer.Deserialize<IPayload>(decoded);
+                payload = jsSerializer.Deserialize<Payload>(decoded);
 
                 if (!payload.iss.Contains(request.RequestUri.Authority))
                 {

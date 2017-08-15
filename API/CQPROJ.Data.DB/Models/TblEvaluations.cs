@@ -14,6 +14,10 @@ namespace CQPROJ.Data.DB.Models
 
         public DateTime? EvaluationDate { get; set; }
 
-        public int? ScheduleFK { get; set; }
+        public int? ClassFK { get; set; }
+
+        public int? SubjectFK { get; set; }
+
+        public int? TeacherFK { get; set; }
     }
 }

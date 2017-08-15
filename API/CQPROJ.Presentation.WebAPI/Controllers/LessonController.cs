@@ -1,30 +1,28 @@
-﻿using CQPROJ.Business.Entities;
-using CQPROJ.Business.Entities.Payload;
+﻿using CQPROJ.Business.Entities.IAccount;
 using CQPROJ.Business.Queries;
+using CQPROJ.Data.DB.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class LessonController : ApiController
     {
-        // GET lesson/schedule/:id
+        // GET lesson/subject/:subjectid
         [HttpGet]
-        [Route("lesson/schedule/{id}")]
-        public Object GetLessonsBySchedule(int id)
+        [Route("lesson/list/{subjectid}/{classid}")]
+        public Object LessonsBySubject(int subjectid, int classid)
         {
-            Payload info = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (info == null)
+            if (payload == null || payload.rol.Contains(4) ||
+                ((payload.rol.Contains(1) || !payload.rol.Contains(2) || !payload.rol.Contains(5)) && !payload.cla.Contains(classid)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var lesson = BLesson.GetAllLessonsBySchedule(id);
+            var lesson = BLesson.GetLessonsBySubject(subjectid, classid);
 
             if (lesson == null)
             {
@@ -34,93 +32,96 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = lesson };
         }
 
-        // GET lesson/student/:id
+        // GET lesson/profile/:lessonid
         [HttpGet]
-        [Route("lesson/student/{lessonid}/{studentid}")]
-        public Object GetLessonsByStudent(int lessonid,int studentid)
-        {
-            Payload info = BAccount.confirmToken(this.Request);
-
-            if (info == null || ((!info.rol.Contains(3) && !info.rol.Contains(6) && !info.rol.Contains(2) && info.aud != studentid && !BParenting.GetGuardians(studentid).Contains(info.aud))))
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-
-            var lesson = BLesson.GetAllLessonsByStudent(lessonid, studentid);
-
-            if (lesson == null)
-            {
-                return new { result = false, info = "Nenhuma lição encontrada." };
-            }
-
-            return new { result = true, data = lesson };
-        }
-
-        // GET lesson/profile/:id
-        [HttpGet]
-        [Route("lesson/profile/{id}")]
-        public Object GetLessonsByID(int id)
+        [Route("lesson/profile/{lessonid}")]
+        public Object GetLessonsByID(int lessonid)
         {
             // Mesmos direitos das schedules
 
-            Payload info = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (info == null)
+            if (payload == null || payload.cla.Contains(4))
             {
                 return new { result = false, info = "Não autorizado." };
             }
-
-            var lesson = BLesson.GetLessonProfile(id);
-
-            if (lesson == null)
+            if (payload.rol.Contains(1) || payload.rol.Contains(5))
             {
-                return new { result = false, info = "Nenhuma lição encontrada." };
+                var lesson = BLesson.GetLessonToStudent(lessonid, payload.aud);
+                if (lesson == null)
+                {
+                    return new { result = false, info = "Nenhuma lição encontrada." };
+                }
+                return new { result = true, data = lesson };
             }
-
-            return new { result = true, data = lesson };
+            else
+            {
+                var lesson = BLesson.GetLessonToTeacher(lessonid);
+                if (lesson == null)
+                {
+                    return new { result = false, info = "Nenhuma lição encontrada." };
+                }
+                return new { result = true, data = lesson };
+            }
         }
 
-        //POST lesson/
+        //POST lesson/profile/
         [HttpPost]
-        [Route("lesson")]
-        public Object PostLesson([FromBody]Lesson lesson)
+        [Route("lesson/summary")]
+        public Object PostLesson([FromBody]TblLessons lesson)
         {
 
-            Payload info = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (info == null)
+            if (payload == null || !payload.rol.Contains(2) || (payload.rol.Contains(2) && !BLesson.VerifyTeacher(lesson, payload.aud)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
-
-            if (!info.rol.Contains(2))
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-
-            BLesson.CreateLesson(lesson);
-            return new { result = true };
+            return new { result = BLesson.CreateLesson(lesson) };
         }
 
-        // PUT lesson/id
-    /*    [HttpPut]
-        [Route("lesson/{id}")]
-        public Object Put(int id, [FromBody]Lesson lesson)
+        //POST lesson/faults/
+        [HttpPost]
+        [Route("lesson/faults")]
+        public Object PostFaults([FromBody]TblLessonStudents lesson)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || !payload.rol.Contains(2) || (payload.rol.Contains(2) && !BLesson.VerifyTeacher(lesson, payload.aud)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            return new { result = BLesson.RegisterFaults(lesson) };
+        }
+
+        // PUT lesson/
+        [HttpPut]
+        [Route("lesson/summary")]
+        public Object PutLesson([FromBody]TblLessons lesson)
         {
 
-            Payload info = BAccount.confirmToken(this.Request);
+            Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (info == null)
+            if (payload == null || !payload.rol.Contains(2) || (payload.rol.Contains(2) && !BLesson.VerifyTeacher(lesson, payload.aud)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
+            return new { result = BLesson.EditLesson(lesson) };
+        }
 
-            if (!info.rol.Contains(3) && !info.rol.Contains(6) ) verifyTeacher no schedule
+        // PUT lesson/
+        [HttpPut]
+        [Route("lesson/faults")]
+        public Object PutFaults([FromBody]TblLessonStudents lesson)
+        {
+
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || !payload.rol.Contains(2) || (payload.rol.Contains(2) && !BLesson.VerifyTeacher(lesson, payload.aud)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
-
-            return BLesson.EditLesson(id, lesson);
-        }*/
+            return new { result = BLesson.EditFaults(lesson) };
+        }
     }
 }
