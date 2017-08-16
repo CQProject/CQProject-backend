@@ -102,7 +102,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            if (payload == null || 
+                (!payload.rol.Contains(3) && !payload.rol.Contains(6)) || 
+                (payload.rol.Contains(3) && (user.RoleID==3 || user.RoleID ==6)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -116,7 +118,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            if (payload == null ||
+                (!payload.rol.Contains(3) && !payload.rol.Contains(6)) ||
+                (payload.rol.Contains(3) && (role.RoleID == 3 || role.RoleID == 6)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -134,7 +138,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            if (payload == null ||
+                (!payload.rol.Contains(3) && !payload.rol.Contains(6)) ||
+                (payload.rol.Contains(3) && (role.RoleID == 3 || role.RoleID == 6)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -148,7 +154,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // PUT user/profile/
         [HttpPut]
         [Route("user/profile")]
-        public Object Put([FromBody]User editeduser)
+        public Object Put([FromBody]User user)
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
@@ -156,17 +162,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (payload.aud != editeduser.ID)
+            if (payload.aud != user.ID || (payload.aud == user.ID && payload.rol.Contains(1)))
             {
-                if (!payload.rol.Contains(3) && payload.rol.Contains(6))
+                if ((!payload.rol.Contains(3) && !payload.rol.Contains(6)) || (payload.rol.Contains(3) && (user.RoleID == 3 || user.RoleID == 6)))
                 {
-                    if (!payload.rol.Contains(5) || (payload.rol.Contains(5) && !BParenting.GetChildren(payload.aud).Contains(editeduser.ID)))
+                    if (!payload.rol.Contains(5) || (payload.rol.Contains(5) && !BParenting.GetChildren(payload.aud).Contains(user.ID)))
                     {
                         return new { result = false, info = "Não autorizado." };
                     }
                 }
             }
-            if (BUser.EditUser(editeduser))
+            if (BUser.EditUser(user))
             {
                 return new { result = true };
             }
@@ -180,7 +186,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            if (payload == null || 
+                (!payload.rol.Contains(3) && !payload.rol.Contains(6)) ||
+                (payload.rol.Contains(3) && (BUser.VerifyRole(userid, 3) || BUser.VerifyRole(userid, 6))))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -191,7 +199,5 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
             return new { result = false, info = "Não foi possível alterar dados do utilizador." };
         }
-
-
     }
 }

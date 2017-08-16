@@ -135,6 +135,11 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return false; }
         }
 
+        public static Boolean VerifyRole(int userID, int roleID)
+        {
+            return db.TblUserRoles.Any(x=>x.RoleFK==roleID && x.UserFK==userID);
+        }
+
         private static Boolean _VerifyUser(String CitizenCard )
         {
             return (db.TblUsers.Any(x => x.CitizenCard == CitizenCard)) ? true : false;

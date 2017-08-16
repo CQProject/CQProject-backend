@@ -110,6 +110,7 @@
     <Compile Include="Models\TblLessonStudents.cs" />
     <Compile Include="Models\TblNotifications.cs" />
     <Compile Include="Models\TblParenting.cs" />
+    <Compile Include="Models\TblRecords.cs" />
     <Compile Include="Models\TblRoles.cs" />
     <Compile Include="Models\TblRooms.cs" />
     <Compile Include="Models\TblSchedules.cs" />

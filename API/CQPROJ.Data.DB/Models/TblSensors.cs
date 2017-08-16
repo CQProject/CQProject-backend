@@ -10,14 +10,12 @@ namespace CQPROJ.Data.DB.Models
     {
         public int ID { get; set; }
 
-        public DateTime? Hour { get; set; }
+        public string Name { get; set; }
 
-        public int? Temperature { get; set; }
+        public int? XCoord { get; set; }
 
-        public int? Luminosity { get; set; }
+        public int? YCoord { get; set; }
 
-        public int? Energy { get; set; }
-
-        public int? RoomFK { get; set; }
+        public int? FloorFK { get; set; }
     }
 }

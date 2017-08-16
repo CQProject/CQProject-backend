@@ -24,6 +24,7 @@ namespace CQPROJ.Data.DB.Models
         public virtual DbSet<TblLessonStudents> TblLessonStudents { get; set; }
         public virtual DbSet<TblNotifications> TblNotifications { get; set; }
         public virtual DbSet<TblParenting> TblParenting { get; set; }
+        public virtual DbSet<TblRecords> TblRecords { get; set; }
         public virtual DbSet<TblRoles> TblRoles { get; set; }
         public virtual DbSet<TblRooms> TblRooms { get; set; }
         public virtual DbSet<TblSchedules> TblSchedules { get; set; }

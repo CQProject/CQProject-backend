@@ -78,11 +78,12 @@
     <Build Include="Tables\TblEvaluationStudents.sql" />
     <Build Include="Tables\TblSchools.sql" />
     <Build Include="Tables\TblRooms.sql" />
-    <Build Include="Tables\TblSensors.sql" />
+    <Build Include="Tables\TblRecords.sql" />
     <Build Include="Tables\TblParenting.sql" />
     <Build Include="Tables\TblDone.sql" />
     <Build Include="Tables\TblFloors.sql" />
     <Build Include="Tables\TblSubjects.sql" />
+    <Build Include="Tables\TblSensors.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="notas.sql" />
