@@ -35,13 +35,13 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info="Não autorizado." };
             }
 
-            var assistant = BUser.GetPageRole(pageid, roleid);
+            var users = BUser.GetPageRole(pageid, roleid);
 
-            if (assistant == null)
+            if (users == null)
             {
                 return new { result = false, info= "Impossível carregar página." };
             }
-            return new { result = true, data = new { page = pageid, info = assistant} };
+            return new { result = true, data = new { page = pageid, info = users } };
         }
 
         // GET user/detail/:userid
