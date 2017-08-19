@@ -11,6 +11,25 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class ParentingController : ApiController
     {
+        //Get guardian/:studentid
+        [HttpPost]
+        [Route("guardian/{studentid}")]
+        public Object GetGuardians(int studentid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(2) && !payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            var guardians = BParenting.GetGuardians(studentid);
+            if (guardians!=null)
+            {
+                return new { result = false, info = "Não foram encontrados Enc.Educação do Estudante." };
+            }
+            return new { result = true, data = guardians};
+        }
+
         //POST guardian/
         [HttpPost]
         [Route("guardian")]

@@ -46,6 +46,20 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = notifications };
         }
 
+        // GET notification/unread/
+        [HttpGet]
+        [Route("notification/unreadcount")]
+        public Object GetUnreadCount()
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            return new { result = true, data = BNotification.GetUnreadCount(payload.aud) };
+        }
+
         // GET notification/message/:notifid
         [HttpGet]
         [Route("notification/message/{notifid}")]
