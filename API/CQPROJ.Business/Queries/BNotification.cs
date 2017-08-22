@@ -24,13 +24,6 @@ namespace CQPROJ.Business.Queries
             return notifications;
         }
 
-        public static Object GetUnreadNotifications(int userID)
-        {
-            var validations = db.TblValidations.Where(x => (x.UserFK == userID) && x.Read == false);
-            if (validations.Count() == 0) { return null; }
-            return validations;
-        }
-
         public static int GetUnreadCount(int userID)
         {
             return db.TblValidations.Where(x => x.UserFK == userID && x.Read == false).Count();

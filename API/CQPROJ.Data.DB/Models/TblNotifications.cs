@@ -18,6 +18,8 @@ namespace CQPROJ.Data.DB.Models
 
         public bool? Urgency { get; set; }
 
+        public bool? Approval { get; set; }
+
         public int? UserFK { get; set; }
     }
 }

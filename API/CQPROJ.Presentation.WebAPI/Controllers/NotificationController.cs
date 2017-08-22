@@ -29,25 +29,6 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET notification/unread/
         [HttpGet]
-        [Route("notification/unread")]
-        public Object GetUnreadNotifs()
-        {
-            Payload payload = BAccount.ConfirmToken(this.Request);
-
-            if (payload == null)
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-            var notifications = BNotification.GetUnreadNotifications(payload.aud);
-            if (notifications == null)
-            {
-                return new { result = false, info = "Não tem mensagens por lêr." };
-            }
-            return new { result = true, data = notifications };
-        }
-
-        // GET notification/unread/
-        [HttpGet]
         [Route("notification/unreadcount")]
         public Object GetUnreadCount()
         {
@@ -63,7 +44,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // GET notification/message/:notifid
         [HttpGet]
         [Route("notification/message/{notifid}")]
-        public Object GetUnreadNotifs(int notifid)
+        public Object GetNotifMessage(int notifid)
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
@@ -82,7 +63,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // GET notification/page/:pageid
         [HttpGet]
         [Route("notification/page/{pageid}")]
-        public Object GetReadNotifs(int pageid)
+        public Object GetAllNotifs(int pageid)
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 

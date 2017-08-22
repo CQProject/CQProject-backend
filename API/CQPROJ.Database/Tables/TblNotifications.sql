@@ -4,7 +4,8 @@
 	[Hour]			DATETIME		NULL, 
 	[Subject]		NVARCHAR(MAX)	NULL, 
     [Description]	NVARCHAR(MAX)	NULL, 
-    [Urgency]		BIT				NULL, 
+    [Urgency]		BIT				NULL,
+	[Approval]		BIT				NULL,
     [UserFK]		INT				NULL ,
 	CONSTRAINT [PK_NotificationID] PRIMARY KEY CLUSTERED ([ID] ASC)
 )
