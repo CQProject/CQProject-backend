@@ -70,7 +70,7 @@ namespace CQPROJ.Business.Queries
                 db.TblUserRoles.Add(userRoles);
                 db.SaveChanges();
 
-                return new { result = true };
+                return new { result = true, data = user.ID };
             }
             catch (Exception) { return new { result = false, info = "Não foi possível registar utilizador." }; }
         }

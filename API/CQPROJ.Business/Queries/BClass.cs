@@ -15,7 +15,7 @@ namespace CQPROJ.Business.Queries
         private static DBContextModel db = new DBContextModel();
 
 
-        public static Object GetClassesByUser(int userID)
+        public static List<int> GetClassesByUser(int userID)
         {
             try
             {
@@ -24,10 +24,9 @@ namespace CQPROJ.Business.Queries
                 return classes;
             }
             catch (Exception) { return null; }
-
         }
 
-        public static Object GetTeachersByClass(int classID)
+        public static List<int> GetTeachersByClass(int classID)
         {
             try
             {
@@ -40,7 +39,7 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return null; }
         }
 
-        public static Object GetStudentsByClass(int classID)
+        public static List<int> GetStudentsByClass(int classID)
         {
             try
             {
@@ -115,6 +114,11 @@ namespace CQPROJ.Business.Queries
                 return true;
             }
             catch { return false; }
+        }
+
+        public static Boolean HasUser(int classID, int userID)
+        {
+            return db.TblClassUsers.Any(x => x.UserFK == userID && x.ClassFK == classID);
         }
     }
 }

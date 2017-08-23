@@ -26,16 +26,24 @@ namespace CQPROJ.Business.Queries
 
         public static int GetUnreadCount(int userID)
         {
-            return db.TblValidations.Where(x => x.UserFK == userID && x.Read == false).Count();
+            return db.TblValidations.Where(x => x.ReceiverFK == userID && x.Read == false).Count();
         }
 
         public static Object GetReceivedNotifications(int pageID, int userID)
         {
             var validations = db.TblValidations
-                .Where(x => x.UserFK == userID)
+                .Where(x => x.ReceiverFK == userID)
                 .OrderByDescending(x => x.NotificationFK)
                 .Skip(50 * pageID)
                 .Take(50);
+            if (validations.Count() == 0) { return null; }
+            return validations;
+        }
+
+        public static Object GetValidationsByNotification(int notifID)
+        {
+            var validations = db.TblValidations
+                .Where(x => x.NotificationFK == notifID);
             if (validations.Count() == 0) { return null; }
             return validations;
         }
@@ -49,28 +57,59 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return null; }
         }
 
-        public static Boolean SendNotification(Notification notification)
+        public static Boolean SendNotificationToUser(NotificationUser notification)
         {
             try
             {
-                var date = DateTime.Now;
                 TblNotifications notif = new TblNotifications
                 {
                     Description = notification.Description,
-                    Hour = date,
+                    Hour = DateTime.Now,
                     Subject = notification.Subject,
                     Urgency = notification.Urgency,
+                    Approval = notification.Approval,
                     UserFK = notification.SenderFK
                 };
                 db.TblNotifications.Add(notif);
                 db.SaveChanges();
 
-                foreach (var receiver in notification.ReceiverFK)
+                TblValidations valid = new TblValidations
+                {
+                    ReceiverFK = notification.ReceiverFK,
+                    Accepted = false,
+                    Read = false
+                };
+                db.TblValidations.Add(valid);
+                db.SaveChanges();
+
+                return true;
+            }
+            catch (Exception) { return false; }
+        }
+
+        public static Boolean SendNotificationToClass(NotificationClass notification)
+        {
+            try
+            {
+                TblNotifications notif = new TblNotifications
+                {
+                    Description = notification.Description,
+                    Hour = DateTime.Now,
+                    Subject = notification.Subject,
+                    Urgency = notification.Urgency,
+                    Approval= notification.Approval,
+                    UserFK = notification.SenderFK
+                };
+                db.TblNotifications.Add(notif);
+                db.SaveChanges();
+
+                var students = BClass.GetStudentsByClass(notification.ClassFK);
+                foreach(var student in students)
                 {
                     TblValidations valid = new TblValidations
                     {
-                        NotificationFK = notif.ID,
-                        UserFK = receiver,
+                        ReceiverFK = BParenting.GetGuardians(student).FirstOrDefault(),
+                        StudentFK = student,
                         Accepted = false,
                         Read = false
                     };
@@ -86,7 +125,7 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var valid=db.TblValidations.Find(userID, notifID);
+                var valid = db.TblValidations.Find(userID, notifID);
                 valid.Read = true;
                 db.Entry(valid).State = EntityState.Modified;
                 db.SaveChanges();
