@@ -27,7 +27,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // POST school/
         [HttpPost]
-        [Route("school/")]
+        [Route("school")]
         public Object Post([FromBody]TblSchools school)
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
@@ -46,7 +46,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // PUT school/
         [HttpPut]
-        [Route("school/")]
+        [Route("school")]
         public Object Put([FromBody]TblSchools school)
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
