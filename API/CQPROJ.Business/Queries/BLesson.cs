@@ -14,7 +14,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var schedules = db.TblSchedules.Where(x => x.ClassFK == classID && x.SubjectFK == subjectID);
+                    var schedules = db.TblSchedules.ToList().Where(x => x.ClassFK == classID && x.SubjectFK == subjectID);
                     var lessons = new List<TblLessons>();
                     foreach (var schedule in schedules)
                     {
@@ -60,7 +60,7 @@ namespace CQPROJ.Business.Queries
                 using (var db = new DBContextModel())
                 {
                     var lesson = db.TblLessons.Find(lessonID);
-                    var lessonUser = db.TblLessonStudents.Where(x => x.LessonFK == lessonID);
+                    var lessonUser = db.TblLessonStudents.ToList().Where(x => x.LessonFK == lessonID);
                     return new
                     {
                         lesson = lesson,

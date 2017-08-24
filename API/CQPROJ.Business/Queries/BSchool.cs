@@ -14,7 +14,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    return new { result = true, data = db.TblSchools };
+                    return new { result = true, data = db.TblSchools.ToList() };
                 }
             }
             catch (Exception) { return new { result = true, info = "Não foram encontradas escolas" }; }

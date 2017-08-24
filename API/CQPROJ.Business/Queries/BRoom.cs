@@ -16,7 +16,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var floors = db.TblFloors.Where(y => y.SchoolFK == schoolID);
+                    var floors = db.TblFloors.ToList().Where(y => y.SchoolFK == schoolID);
                     List<TblRooms> rooms = new List<TblRooms>();
                     foreach (var floor in floors)
                     {
@@ -35,7 +35,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var rooms = db.TblRooms.Where(x => x.FloorFK == floorID);
+                    var rooms = db.TblRooms.ToList().Where(x => x.FloorFK == floorID);
                     if (rooms.Count() == 0) { return null; }
                     return rooms;
                 }
