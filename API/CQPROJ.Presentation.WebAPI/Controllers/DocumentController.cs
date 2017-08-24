@@ -24,6 +24,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
             
             var docs = BDocument.GetDocumentsbyUser(userid);
+
             if (docs == null)
             {
                 return new { result = true, info="Não foram encontrados documentos do utilizador." };

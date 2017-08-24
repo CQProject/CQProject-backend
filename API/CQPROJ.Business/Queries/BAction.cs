@@ -14,7 +14,14 @@ namespace CQPROJ.Business.Queries
 
         public static Object GetPagesByUser(int userID)
         {
-            return Math.Ceiling((float)db.TblActions.Where(x => x.UserFK == userID).Count() / 50);
+            try
+            {
+                return Math.Ceiling((float)db.TblActions.Where(x => x.UserFK == userID).Count() / 50);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
         
         public static Object GetActionsbyUser(int userID, int pageID)

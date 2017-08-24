@@ -22,6 +22,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
             var notifications = BNotification.GetSentNotifications(payload.aud, pageid);
+
             if (notifications == null)
             {
                 return new { result = false, info = "Não enviou mensagens." };
@@ -40,7 +41,15 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            return new { result = true, data = BNotification.GetUnreadCount(payload.aud) };
+
+            var notifications = BNotification.GetUnreadCount(payload.aud);
+
+            if( notifications == 0)
+            {
+                return new { result = false, info = "Não foram encontrados resultados." };
+            }
+
+            return new { result = true, data = notifications };
         }
 
         // GET notification/message/:notifid
@@ -55,6 +64,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
             var notifications = BNotification.GetNotification(notifid);
+
             if (notifications == null)
             {
                 return new { result = false, info = "Não tem mensagens por lêr." };
@@ -74,6 +84,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
             var notifications = BNotification.GetReceivedNotifications(pageid, payload.aud);
+
             if (notifications == null)
             {
                 return new { result = false, info = "Não recebeu mensagens." };
@@ -93,6 +104,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
             var validations = BNotification.GetValidationsByNotification(notifid);
+
             if (validations == null)
             {
                 return new { result = false, info = "Não foram encontrados destinatários." };

@@ -15,37 +15,65 @@ namespace CQPROJ.Business.Queries
 
         public static Object GetSentNotifications(int userID, int pageID)
         {
-            var notifications = db.TblNotifications
-                .Where(x => x.UserFK == userID)
-                .OrderByDescending(x => x.ID)
-                .Skip(50 * pageID)
-                .Take(50);
-            if (notifications.Count() == 0) { return null; }
-            return notifications;
+            try
+            {
+                var notifications = db.TblNotifications
+                    .Where(x => x.UserFK == userID)
+                    .OrderByDescending(x => x.ID)
+                    .Skip(50 * pageID)
+                    .Take(50);
+                if (notifications.Count() == 0) { return null; }
+                return notifications;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public static int GetUnreadCount(int userID)
         {
-            return db.TblValidations.Where(x => x.ReceiverFK == userID && x.Read == false).Count();
+            try
+            {
+                return db.TblValidations.Where(x => x.ReceiverFK == userID && x.Read == false).Count();
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
         }
 
         public static Object GetReceivedNotifications(int pageID, int userID)
         {
-            var validations = db.TblValidations
-                .Where(x => x.ReceiverFK == userID)
-                .OrderByDescending(x => x.NotificationFK)
-                .Skip(50 * pageID)
-                .Take(50);
-            if (validations.Count() == 0) { return null; }
-            return validations;
+            try
+            {
+                var validations = db.TblValidations
+                    .Where(x => x.ReceiverFK == userID)
+                    .OrderByDescending(x => x.NotificationFK)
+                    .Skip(50 * pageID)
+                    .Take(50);
+                if (validations.Count() == 0) { return null; }
+                return validations;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public static Object GetValidationsByNotification(int notifID)
         {
-            var validations = db.TblValidations
-                .Where(x => x.NotificationFK == notifID);
-            if (validations.Count() == 0) { return null; }
-            return validations;
+            try
+            {
+                var validations = db.TblValidations
+                    .Where(x => x.NotificationFK == notifID);
+                if (validations.Count() == 0) { return null; }
+                return validations;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public static Object GetNotification(int notifID)

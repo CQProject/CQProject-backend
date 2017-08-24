@@ -20,7 +20,14 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
 
-            return new { result = true, data = BAction.GetPagesByUser(userid) };
+            var actions = BAction.GetPagesByUser(userid);
+
+            if (actions == null)
+            {
+                return new { result = false, info = "Impossível carregar página." };
+            }
+
+            return new { result = true, data = actions };
         }
 
         // GET action/page/:userid/:pageid

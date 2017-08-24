@@ -12,24 +12,44 @@ namespace CQPROJ.Business.Queries
 
         public static Object GetMyTasks(int userID)
         {
+            try { 
             var today = DateTime.Now;
             var tasks = db.TblTasks.Where(x => x.DayOfWeek == (int)today.DayOfWeek && x.UserFK == userID);
             if (tasks.Count() == 0) { return null; }
             return tasks;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public static Object GetTasks(int userID, int dayofweek)
         {
-            var tasks = db.TblTasks.Where(x => x.DayOfWeek == dayofweek && x.UserFK == userID);
-            if (tasks.Count() == 0) { return null; }
-            return tasks;
+            try
+            {
+                var tasks = db.TblTasks.Where(x => x.DayOfWeek == dayofweek && x.UserFK == userID);
+                if (tasks.Count() == 0) { return null; }
+                return tasks;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public static Object GetRealizations(int taskID)
         {
-            var realizations = db.TblDone.Where(x => x.TaskFK == taskID);
-            if (realizations.Count() == 0) { return null; }
-            return realizations;
+            try
+            {
+                var realizations = db.TblDone.Where(x => x.TaskFK == taskID);
+                if (realizations.Count() == 0) { return null; }
+                return realizations;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public static Boolean CreateTask(TblTasks task)
