@@ -10,21 +10,21 @@ namespace CQPROJ.Business.Queries
 {
     public class BRoom
     {
-
-        private static DBContextModel db = new DBContextModel();
-
         public static Object GetRoomsBySchool(int schoolID)
         {
             try
             {
-                var floors = db.TblFloors.Where(y => y.SchoolFK == schoolID);
-                List<TblRooms> rooms = new List<TblRooms>();
-                foreach (var floor in floors)
+                using (var db = new DBContextModel())
                 {
-                    rooms.Concat(db.TblRooms.Where(x => x.FloorFK == floor.ID));
+                    var floors = db.TblFloors.Where(y => y.SchoolFK == schoolID);
+                    List<TblRooms> rooms = new List<TblRooms>();
+                    foreach (var floor in floors)
+                    {
+                        rooms.Concat(db.TblRooms.Where(x => x.FloorFK == floor.ID));
+                    }
+                    if (rooms.Count() == 0) { return null; }
+                    return rooms;
                 }
-                if (rooms.Count() == 0) { return null; }
-                return rooms;
             }
             catch (Exception) { return null; }
         }
@@ -33,9 +33,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var rooms = db.TblRooms.Where(x => x.FloorFK == floorID);
-                if (rooms.Count() == 0) { return null; }
-                return rooms;
+                using (var db = new DBContextModel())
+                {
+                    var rooms = db.TblRooms.Where(x => x.FloorFK == floorID);
+                    if (rooms.Count() == 0) { return null; }
+                    return rooms;
+                }
             }
             catch (Exception) { return null; }
         }
@@ -44,7 +47,10 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                return db.TblRooms.Find(roomID);
+                using (var db = new DBContextModel())
+                {
+                    return db.TblRooms.Find(roomID);
+                }
             }
             catch (Exception) { return null; }
         }
@@ -53,9 +59,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.TblRooms.Add(room);
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.TblRooms.Add(room);
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }
@@ -64,9 +73,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.Entry(room).State = EntityState.Modified;
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.Entry(room).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }

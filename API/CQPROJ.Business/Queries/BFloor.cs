@@ -10,15 +10,16 @@ namespace CQPROJ.Business.Queries
 {
     public class BFloor
     {
-        private static DBContextModel db = new DBContextModel();
-
         public static Object GetFloorsBySchool(int schoolID)
         {
             try
             {
-                var floors = db.TblFloors.Where(x => x.SchoolFK == schoolID);
-                if (floors.Count() == 0) { return null; }
-                return floors;
+                using (var db = new DBContextModel())
+                {
+                    var floors = db.TblFloors.Where(x => x.SchoolFK == schoolID);
+                    if (floors.Count() == 0) { return null; }
+                    return floors;
+                }
             }
             catch (Exception) { return null; }
         }
@@ -27,7 +28,10 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                return db.TblFloors.Find(floorID);
+                using (var db = new DBContextModel())
+                {
+                    return db.TblFloors.Find(floorID);
+                }
             }
             catch (Exception) { return null; }
         }
@@ -36,9 +40,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.TblFloors.Add(floor);
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.TblFloors.Add(floor);
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }
@@ -47,9 +54,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.Entry(floor).State = EntityState.Modified;
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.Entry(floor).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }

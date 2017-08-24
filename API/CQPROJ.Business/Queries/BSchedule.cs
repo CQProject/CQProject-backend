@@ -8,15 +8,16 @@ namespace CQPROJ.Business.Queries
 {
     public class BSchedule
     {
-        private static DBContextModel db = new DBContextModel();
-
         public static Object GetScheduleByTeacher(int teacherID)
         {
             try
             {
-                var schedules = db.TblSchedules.Select(x => x).Where(x => x.TeacherFK == teacherID);
-                if (schedules.Count() == 0) { return null; }
-                return schedules;
+                using (var db = new DBContextModel())
+                {
+                    var schedules = db.TblSchedules.Select(x => x).Where(x => x.TeacherFK == teacherID);
+                    if (schedules.Count() == 0) { return null; }
+                    return schedules;
+                }
             }
             catch (Exception) { return null; }
         }
@@ -25,9 +26,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var schedules = db.TblSchedules.Select(x => x).Where(x => x.ClassFK == classID);
-                if (schedules.Count() == 0) { return null; }
-                return schedules;
+                using (var db = new DBContextModel())
+                {
+                    var schedules = db.TblSchedules.Select(x => x).Where(x => x.ClassFK == classID);
+                    if (schedules.Count() == 0) { return null; }
+                    return schedules;
+                }
             }
             catch (Exception) { return null; }
         }
@@ -36,9 +40,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var schedules = db.TblSchedules.Select(x => x).Where(x => x.RoomFK == roomID);
-                if (schedules.Count() == 0) { return null; }
-                return schedules;
+                using (var db = new DBContextModel())
+                {
+                    var schedules = db.TblSchedules.Select(x => x).Where(x => x.RoomFK == roomID);
+                    if (schedules.Count() == 0) { return null; }
+                    return schedules;
+                }
             }
             catch (Exception) { return null; }
         }
@@ -47,9 +54,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.TblSchedules.Add(schedule);
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.TblSchedules.Add(schedule);
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }
@@ -58,9 +68,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.Entry(schedule).State = EntityState.Modified;
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.Entry(schedule).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }

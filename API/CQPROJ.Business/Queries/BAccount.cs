@@ -13,41 +13,41 @@ namespace CQPROJ.Business.Queries
 {
     public class BAccount
     {
-        private static DBContextModel db = new DBContextModel();
-
 
         public static Object Login(Login requestUser,Uri client)
         {
             try
             {
-                var user = db.TblUsers.Select(x => x).Where(x => x.Email == requestUser.Email).FirstOrDefault();
-
-                if (user == null || (bool)!user.IsActive)
+                using (var db = new DBContextModel())
                 {
-                    return null;
-                }
+                    var user = db.TblUsers.Select(x => x).Where(x => x.Email == requestUser.Email).FirstOrDefault();
 
-                var password = new PasswordHasher();
-                if (password.VerifyHashedPassword(user.Password, requestUser.Password).ToString() != "Success")
-                {
-                    return null;
-                }
-
-                byte[] secretKey = Encoding.ASCII.GetBytes("vMDUMFlFl6jUANQZezAu4bAmwBD9IyYl");
-
-                DateTime issued = DateTime.Now;
-                DateTime expire = DateTime.Now.AddHours(10);
-                var roles = db.TblUserRoles.Where(x => x.UserFK == user.ID).Select(x => x.RoleFK);
-                var classes = db.TblClassUsers.Where(x => x.UserFK == user.ID).Select(x => x.ClassFK);
-                if (roles.Contains(5))
-                {
-                    foreach(int child in BParenting.GetChildren(user.ID))
+                    if (user == null || (bool)!user.IsActive)
                     {
-                        classes = classes.Concat(db.TblClassUsers.Where(x => x.UserFK == child).Select(x => x.ClassFK));
+                        return null;
                     }
-                }
 
-                Dictionary<string, object> payload = new Dictionary<string, object>(){
+                    var password = new PasswordHasher();
+                    if (password.VerifyHashedPassword(user.Password, requestUser.Password).ToString() != "Success")
+                    {
+                        return null;
+                    }
+
+                    byte[] secretKey = Encoding.ASCII.GetBytes("vMDUMFlFl6jUANQZezAu4bAmwBD9IyYl");
+
+                    DateTime issued = DateTime.Now;
+                    DateTime expire = DateTime.Now.AddHours(10);
+                    var roles = db.TblUserRoles.Where(x => x.UserFK == user.ID).Select(x => x.RoleFK);
+                    var classes = db.TblClassUsers.Where(x => x.UserFK == user.ID).Select(x => x.ClassFK);
+                    if (roles.Contains(5))
+                    {
+                        foreach (int child in BParenting.GetChildren(user.ID))
+                        {
+                            classes = classes.Concat(db.TblClassUsers.Where(x => x.UserFK == child).Select(x => x.ClassFK));
+                        }
+                    }
+
+                    Dictionary<string, object> payload = new Dictionary<string, object>(){
                     {"iss",client.Authority },
                     {"aud",user.ID },
                     {"iat",_ToUnixTime(issued).ToString() },
@@ -56,14 +56,12 @@ namespace CQPROJ.Business.Queries
                     {"cla",classes }
                 };
 
-                var token= JWT.Encode(payload, secretKey, JwsAlgorithm.HS256);
+                    var token = JWT.Encode(payload, secretKey, JwsAlgorithm.HS256);
 
-                return new { token=token, userID=user.ID, roles=roles, name = user.Name, photo = user.Photo };
+                    return new { token = token, userID = user.ID, roles = roles, name = user.Name, photo = user.Photo };
+                }
             }
-            catch (Exception)
-            {
-                return null;
-            }
+            catch (Exception) { return null; }
         }
 
 

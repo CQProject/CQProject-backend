@@ -11,16 +11,16 @@ namespace CQPROJ.Business.Queries
 {
     public class BDocument
     {
-        private static DBContextModel db = new DBContextModel();
-        
-
         public static Object GetDocumentsbyUser(int userID)
         {
             try
             {
-                var docs = db.TblDocuments.Where(x => x.UserFK == userID);
-                if (docs.Count() == 0) { return null; }
-                return docs;
+                using (var db = new DBContextModel())
+                {
+                    var docs = db.TblDocuments.Where(x => x.UserFK == userID);
+                    if (docs.Count() == 0) { return null; }
+                    return docs;
+                }
             }
             catch (ArgumentException) { return null; }
         }
@@ -30,9 +30,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var docs = db.TblDocuments.Where(x => x.ClassFK == classID);
-                if (docs.Count() == 0) { return null; }
-                return docs;
+                using (var db = new DBContextModel())
+                {
+                    var docs = db.TblDocuments.Where(x => x.ClassFK == classID);
+                    if (docs.Count() == 0) { return null; }
+                    return docs;
+                }
             }
             catch (ArgumentException) { return null; }
         }
@@ -42,9 +45,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var docs = db.TblDocuments.Where(x => x.ClassFK == classID && x.IsVisible == true);
-                if (docs.Count() == 0) { return null; }
-                return docs;
+                using (var db = new DBContextModel())
+                {
+                    var docs = db.TblDocuments.Where(x => x.ClassFK == classID && x.IsVisible == true);
+                    if (docs.Count() == 0) { return null; }
+                    return docs;
+                }
             }
             catch (ArgumentException) { return null; }
         }
@@ -54,10 +60,13 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                document.SubmitedIn = DateTime.Now;
-                db.TblDocuments.Add(document);
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    document.SubmitedIn = DateTime.Now;
+                    db.TblDocuments.Add(document);
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }
@@ -67,9 +76,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.Entry(document).State = EntityState.Modified;
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.Entry(document).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }

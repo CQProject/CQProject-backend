@@ -8,20 +8,21 @@ namespace CQPROJ.Business.Queries
 {
     public class BLesson
     {
-        private static DBContextModel db = new DBContextModel();
-        
         public static Object GetLessonsBySubject(int subjectID, int classID)
         {
             try
             {
-                var schedules = db.TblSchedules.Where(x => x.ClassFK == classID && x.SubjectFK == subjectID);
-                var lessons = new List<TblLessons>();
-                foreach (var schedule in schedules)
+                using (var db = new DBContextModel())
                 {
-                    lessons.Concat(db.TblLessons.Where(x => x.ScheduleFK == schedule.ID));
+                    var schedules = db.TblSchedules.Where(x => x.ClassFK == classID && x.SubjectFK == subjectID);
+                    var lessons = new List<TblLessons>();
+                    foreach (var schedule in schedules)
+                    {
+                        lessons.Concat(db.TblLessons.Where(x => x.ScheduleFK == schedule.ID));
+                    }
+                    if (lessons.Count() == 0) { return null; }
+                    return lessons;
                 }
-                if (lessons.Count() == 0) { return null; }
-                return lessons;
             }
             catch (Exception) { return null; }
         }
@@ -31,20 +32,23 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var lesson= db.TblLessons.Find(lessonID);
-                var lessonUser = db.TblLessonStudents.Find(lessonID, studentID);
-                return new
+                using (var db = new DBContextModel())
                 {
-                    ID = lesson.ID,
-                    Day = lesson.Day,
-                    Summary = lesson.Summary,
-                    Observations = lesson.Observations,
-                    Homework = lesson.Homework,
-                    Presence = lessonUser.Presence,
-                    Behavior = lessonUser.Behavior,
-                    Material = lessonUser.Material,
-                    ScheduleFK = lesson.ScheduleFK
-                };
+                    var lesson = db.TblLessons.Find(lessonID);
+                    var lessonUser = db.TblLessonStudents.Find(lessonID, studentID);
+                    return new
+                    {
+                        ID = lesson.ID,
+                        Day = lesson.Day,
+                        Summary = lesson.Summary,
+                        Observations = lesson.Observations,
+                        Homework = lesson.Homework,
+                        Presence = lessonUser.Presence,
+                        Behavior = lessonUser.Behavior,
+                        Material = lessonUser.Material,
+                        ScheduleFK = lesson.ScheduleFK
+                    };
+                }
             }
             catch (Exception) { return null; }
         }
@@ -53,13 +57,16 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var lesson = db.TblLessons.Find(lessonID);
-                var lessonUser = db.TblLessonStudents.Where(x=>x.LessonFK==lessonID);
-                return new
+                using (var db = new DBContextModel())
                 {
-                    lesson = lesson,
-                    students= lessonUser
-                };
+                    var lesson = db.TblLessons.Find(lessonID);
+                    var lessonUser = db.TblLessonStudents.Where(x => x.LessonFK == lessonID);
+                    return new
+                    {
+                        lesson = lesson,
+                        students = lessonUser
+                    };
+                }
             }
             catch (Exception) { return null; }
         }
@@ -68,9 +75,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.TblLessons.Add(lesson);
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.TblLessons.Add(lesson);
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }
@@ -79,9 +89,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.TblLessonStudents.Add(lesson);
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.TblLessonStudents.Add(lesson);
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }
@@ -90,9 +103,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.Entry(lesson).State = EntityState.Modified;
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.Entry(lesson).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }
@@ -101,9 +117,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.Entry(lesson).State = EntityState.Modified;
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.Entry(lesson).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }
@@ -112,7 +131,10 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                return db.TblSchedules.Find(lesson.ScheduleFK).TeacherFK == teacherID ? true : false;
+                using (var db = new DBContextModel())
+                {
+                    return db.TblSchedules.Find(lesson.ScheduleFK).TeacherFK == teacherID ? true : false;
+                }
             }
             catch (Exception) { return false; }
         }
@@ -121,7 +143,10 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                return db.TblSchedules.Find(db.TblLessons.Find(lesson.LessonFK).ScheduleFK).TeacherFK == teacherID ? true : false;
+                using (var db = new DBContextModel())
+                {
+                    return db.TblSchedules.Find(db.TblLessons.Find(lesson.LessonFK).ScheduleFK).TeacherFK == teacherID ? true : false;
+                }
             }
             catch (Exception) { return false; }
         }

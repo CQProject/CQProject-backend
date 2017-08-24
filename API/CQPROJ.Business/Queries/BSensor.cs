@@ -10,15 +10,16 @@ namespace CQPROJ.Business.Queries
 {
     public class BSensor
     {
-        private static DBContextModel db = new DBContextModel();
-
         public static Object GetSensorsByFloor(int floorID)
         {
             try
             {
-                var sensors = db.TblSensors.Where(x => x.FloorFK == floorID);
-                if (sensors.Count() == 0) { return null; }
-                return sensors;
+                using (var db = new DBContextModel())
+                {
+                    var sensors = db.TblSensors.Where(x => x.FloorFK == floorID);
+                    if (sensors.Count() == 0) { return null; }
+                    return sensors;
+                }
             }
             catch (Exception) { return null; }
         }
@@ -27,9 +28,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var sensor = db.TblRecords.Where(x => x.SensorFK == sensorID).LastOrDefault();
-                if (sensor.Hour == null) { return null; }
-                return sensor;
+                using (var db = new DBContextModel())
+                {
+                    var sensor = db.TblRecords.Where(x => x.SensorFK == sensorID).LastOrDefault();
+                    if (sensor.Hour == null) { return null; }
+                    return sensor;
+                }
             }
             catch (Exception) { return null; }
         }
@@ -38,9 +42,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var sensors = db.TblRecords.Where(x => x.SensorFK == sensorID).OrderByDescending(x => x.ID).Take(60);
-                if (sensors.Count() == 0) { return null; }
-                return sensors;
+                using (var db = new DBContextModel())
+                {
+                    var sensors = db.TblRecords.Where(x => x.SensorFK == sensorID).OrderByDescending(x => x.ID).Take(60);
+                    if (sensors.Count() == 0) { return null; }
+                    return sensors;
+                }
             }
             catch (Exception) { return null; }
         }
@@ -49,16 +56,19 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var sensors = db.TblRecords.Where(x => x.SensorFK == sensorID).OrderByDescending(x => x.ID).Take(60);
-                if (sensors.Count() == 0) { return null; }
-
-                return new
+                using (var db = new DBContextModel())
                 {
-                    LuminosityAVG = Math.Round((float)(sensors.Sum(x => x.Luminosity) / 60), 2),
-                    TemperatureAVG = Math.Round((float)(sensors.Sum(x => x.Temperature) / 60), 2),
-                    EnergyAVG = Math.Round((float)(sensors.Sum(x => x.Energy) / 60), 2),
-                    HumidityAVG = Math.Round((float)(sensors.Sum(x => x.Humidity) / 60), 2),
-                };
+                    var sensors = db.TblRecords.Where(x => x.SensorFK == sensorID).OrderByDescending(x => x.ID).Take(60);
+                    if (sensors.Count() == 0) { return null; }
+
+                    return new
+                    {
+                        LuminosityAVG = Math.Round((float)(sensors.Sum(x => x.Luminosity) / 60), 2),
+                        TemperatureAVG = Math.Round((float)(sensors.Sum(x => x.Temperature) / 60), 2),
+                        EnergyAVG = Math.Round((float)(sensors.Sum(x => x.Energy) / 60), 2),
+                        HumidityAVG = Math.Round((float)(sensors.Sum(x => x.Humidity) / 60), 2),
+                    };
+                }
             }
             catch (Exception) { return null; }
         }
@@ -67,9 +77,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.TblSensors.Add(sensor);
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.TblSensors.Add(sensor);
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }
@@ -78,9 +91,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.Entry(sensor).State = EntityState.Modified;
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.Entry(sensor).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }
@@ -89,9 +105,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.TblSensors.Remove(db.TblSensors.Find(sensorID));
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.TblSensors.Remove(db.TblSensors.Find(sensorID));
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch { return false; }
         }

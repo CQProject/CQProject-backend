@@ -12,16 +12,16 @@ namespace CQPROJ.Business.Queries
 {
     public class BClass
     {
-        private static DBContextModel db = new DBContextModel();
-
-
         public static List<int> GetClassesByUser(int userID)
         {
             try
             {
-                var classes = db.TblClassUsers.Where(x => x.UserFK == userID).Select(x => x.ClassFK).ToList();
-                if (classes.Count() == 0) { return null; }
-                return classes;
+                using (var db = new DBContextModel())
+                {
+                    var classes = db.TblClassUsers.Where(x => x.UserFK == userID).Select(x => x.ClassFK).ToList();
+                    if (classes.Count() == 0) { return null; }
+                    return classes;
+                }
             }
             catch (Exception) { return null; }
         }
@@ -30,11 +30,14 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var classes = db.TblClassUsers
+                using (var db = new DBContextModel())
+                {
+                    var classes = db.TblClassUsers
                     .Where(x => x.ClassFK == classID && db.TblUserRoles.Any(y => y.UserFK == x.UserFK && y.RoleFK == 2))
                     .Select(x => x.UserFK).ToList();
-                if (classes.Count() == 0) { return null; }
-                return classes;
+                    if (classes.Count() == 0) { return null; }
+                    return classes;
+                }
             }
             catch (Exception) { return null; }
         }
@@ -43,11 +46,14 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var students = db.TblClassUsers
+                using (var db = new DBContextModel())
+                {
+                    var students = db.TblClassUsers
                     .Where(x => x.ClassFK == classID && db.TblUserRoles.Any(y => y.UserFK == x.UserFK && y.RoleFK == 1))
                     .Select(x => x.UserFK).ToList();
-                if (students.Count() == 0) { return null; }
-                return students;
+                    if (students.Count() == 0) { return null; }
+                    return students;
+                }
             }
             catch (Exception) { return null; }
         }
@@ -56,9 +62,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                var classes = db.TblClasses.Where(x => x.SchoolFK == schoolID).ToList();
-                if (classes.Count() == 0) { return null; }
-                return classes;
+                using (var db = new DBContextModel())
+                {
+                    var classes = db.TblClasses.Where(x => x.SchoolFK == schoolID).ToList();
+                    if (classes.Count() == 0) { return null; }
+                    return classes;
+                }
             }
             catch (Exception) { return null; }
         }
@@ -67,7 +76,10 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                return db.TblClasses.Where(x => x.ID == classID).ToList();
+                using (var db = new DBContextModel())
+                {
+                    return db.TblClasses.Where(x => x.ID == classID).ToList();
+                }
             }
             catch (Exception) { return null; }
         }
@@ -76,9 +88,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.TblClasses.Add(newClass);
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.TblClasses.Add(newClass);
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }
@@ -87,9 +102,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.Entry(alteredClass).State = EntityState.Modified;
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.Entry(alteredClass).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch (Exception) { return false; }
         }
@@ -98,9 +116,12 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.TblClassUsers.Add(new TblClassUsers { ClassFK = classID, UserFK = userID });
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.TblClassUsers.Add(new TblClassUsers { ClassFK = classID, UserFK = userID });
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch { return false; }
         }
@@ -109,16 +130,26 @@ namespace CQPROJ.Business.Queries
         {
             try
             {
-                db.TblClassUsers.Remove(db.TblClassUsers.Find(classID, userID));
-                db.SaveChanges();
-                return true;
+                using (var db = new DBContextModel())
+                {
+                    db.TblClassUsers.Remove(db.TblClassUsers.Find(classID, userID));
+                    db.SaveChanges();
+                    return true;
+                }
             }
             catch { return false; }
         }
 
         public static Boolean HasUser(int classID, int userID)
         {
-            return db.TblClassUsers.Any(x => x.UserFK == userID && x.ClassFK == classID);
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    return db.TblClassUsers.Any(x => x.UserFK == userID && x.ClassFK == classID);
+                }
+            }
+            catch { return false; }
         }
     }
 }

@@ -9,37 +9,30 @@ namespace CQPROJ.Business.Queries
 {
     public class BAction
     {
-
-        private static DBContextModel db = new DBContextModel();
-
         public static Object GetPagesByUser(int userID)
         {
             try
             {
-                return Math.Ceiling((float)db.TblActions.Where(x => x.UserFK == userID).Count() / 50);
+                using (var db = new DBContextModel())
+                {
+                    return Math.Ceiling((float)db.TblActions.Where(x => x.UserFK == userID).Count() / 50);
+                }
             }
-            catch (Exception)
-            {
-                return null;
-            }
+            catch (Exception) { return null; }
         }
-        
+
         public static Object GetActionsbyUser(int userID, int pageID)
         {
             try
             {
-                List<TblActions> actions = db.TblActions.Where(x => x.UserFK == userID).OrderByDescending(x => x.ID).Skip(50 * pageID).Take(50).ToList();
-                
-                if (actions.Count() == 0)
+                using (var db = new DBContextModel())
                 {
-                    return null;
+                    List<TblActions> actions = db.TblActions.Where(x => x.UserFK == userID).OrderByDescending(x => x.ID).Skip(50 * pageID).Take(50).ToList();
+                    if (actions.Count() == 0) { return null; }
+                    return actions;
                 }
-                return actions;
             }
-            catch (ArgumentException)
-            {
-                return null;
-            }
+            catch (ArgumentException) { return null; }
         }
     }
 }
