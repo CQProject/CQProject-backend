@@ -16,7 +16,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var sensors = db.TblSensors.Where(x => x.FloorFK == floorID);
+                    var sensors = db.TblSensors.ToList().Where(x => x.FloorFK == floorID);
                     if (sensors.Count() == 0) { return null; }
                     return sensors;
                 }
@@ -30,7 +30,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var sensor = db.TblRecords.Where(x => x.SensorFK == sensorID).LastOrDefault();
+                    var sensor = db.TblRecords.ToList().Where(x => x.SensorFK == sensorID).LastOrDefault();
                     if (sensor.Hour == null) { return null; }
                     return sensor;
                 }
@@ -44,7 +44,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var sensors = db.TblRecords.Where(x => x.SensorFK == sensorID).OrderByDescending(x => x.ID).Take(60);
+                    var sensors = db.TblRecords.ToList().Where(x => x.SensorFK == sensorID).OrderByDescending(x => x.ID).Take(60);
                     if (sensors.Count() == 0) { return null; }
                     return sensors;
                 }
@@ -58,7 +58,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var sensors = db.TblRecords.Where(x => x.SensorFK == sensorID).OrderByDescending(x => x.ID).Take(60);
+                    var sensors = db.TblRecords.ToList().Where(x => x.SensorFK == sensorID).OrderByDescending(x => x.ID).Take(60);
                     if (sensors.Count() == 0) { return null; }
 
                     return new

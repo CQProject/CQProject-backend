@@ -37,8 +37,8 @@ namespace CQPROJ.Business.Queries
 
                     DateTime issued = DateTime.Now;
                     DateTime expire = DateTime.Now.AddHours(10);
-                    var roles = db.TblUserRoles.Where(x => x.UserFK == user.ID).Select(x => x.RoleFK);
-                    var classes = db.TblClassUsers.Where(x => x.UserFK == user.ID).Select(x => x.ClassFK);
+                    var roles = db.TblUserRoles.ToList().Where(x => x.UserFK == user.ID).Select(x => x.RoleFK);
+                    var classes = db.TblClassUsers.ToList().Where(x => x.UserFK == user.ID).Select(x => x.ClassFK);
                     if (roles.Contains(5))
                     {
                         foreach (int child in BParenting.GetChildren(user.ID))

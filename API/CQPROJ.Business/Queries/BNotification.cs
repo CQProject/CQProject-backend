@@ -18,6 +18,7 @@ namespace CQPROJ.Business.Queries
                 using (var db = new DBContextModel())
                 {
                     var notifications = db.TblNotifications
+                    .ToList()
                     .Where(x => x.UserFK == userID)
                     .OrderByDescending(x => x.ID)
                     .Skip(50 * pageID)
@@ -35,7 +36,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    return db.TblValidations.Where(x => x.ReceiverFK == userID && x.Read == false).Count();
+                    return db.TblValidations.ToList().Where(x => x.ReceiverFK == userID && x.Read == false).Count();
                 }
             }
             catch (Exception) { return 0; }
@@ -48,6 +49,7 @@ namespace CQPROJ.Business.Queries
                 using (var db = new DBContextModel())
                 {
                     var validations = db.TblValidations
+                    .ToList()
                     .Where(x => x.ReceiverFK == userID)
                     .OrderByDescending(x => x.NotificationFK)
                     .Skip(50 * pageID)
@@ -66,6 +68,7 @@ namespace CQPROJ.Business.Queries
                 using (var db = new DBContextModel())
                 {
                     var validations = db.TblValidations
+                    .ToList()
                     .Where(x => x.NotificationFK == notifID);
                     if (validations.Count() == 0) { return null; }
                     return validations;

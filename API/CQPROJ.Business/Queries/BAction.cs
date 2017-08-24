@@ -15,7 +15,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    return Math.Ceiling((float)db.TblActions.Where(x => x.UserFK == userID).Count() / 50);
+                    return Math.Ceiling((float)db.TblActions.ToList().Where(x => x.UserFK == userID).Count() / 50);
                 }
             }
             catch (Exception) { return null; }
