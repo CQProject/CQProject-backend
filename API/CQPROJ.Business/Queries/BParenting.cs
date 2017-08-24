@@ -13,16 +13,30 @@ namespace CQPROJ.Business.Queries
 
         public static List<int> GetGuardians(int studentID)
         {
-            var guardians = db.TblParenting.Where(x => x.StudentFK == studentID).Select(x => x.GuardianFK).ToList();
-            if (guardians.Count() == 0) { return null; }
-            return guardians;
+            try
+            {
+                var guardians = db.TblParenting.Where(x => x.StudentFK == studentID).Select(x => x.GuardianFK).ToList();
+                if (guardians.Count() == 0) { return null; }
+                return guardians;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public static List<int> GetChildren(int guardianID)
         {
-            var children = db.TblParenting.Where(x => x.GuardianFK == guardianID).Select(x => x.StudentFK).ToList();
-            if (children.Count() == 0) { return null; }
-            return children;
+            try
+            {
+                var children = db.TblParenting.Where(x => x.GuardianFK == guardianID).Select(x => x.StudentFK).ToList();
+                if (children.Count() == 0) { return null; }
+                return children;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public static Object CreateGuardian(Guardian guardian)
@@ -83,7 +97,15 @@ namespace CQPROJ.Business.Queries
 
         private static Boolean _VerifyUser(String CitizenCard)
         {
-            return (db.TblUsers.Any(x => x.CitizenCard == CitizenCard)) ? true : false;
+            try
+            {
+                return (db.TblUsers.Any(x => x.CitizenCard == CitizenCard)) ? true : false;
+
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

@@ -19,8 +19,16 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            
-            return new { result = true, data = BUser.GetPagesCountByRole(roleid) };
+
+            var user =  BUser.GetPagesCountByRole(roleid);
+
+            if (user == null)
+            {
+                return new { result = false, info = "Impossível carregar página." };
+            }
+
+
+            return new { result = true, data = user };
         }
 
         // GET role/page/:roleid/:pageid
@@ -176,7 +184,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = true };
             }
-            return new { result = false, info = "Não foi possível alterar dados do utilizador." };
+            return new { result = false, info = "Não foi possível alterar dados do utilizador."};
         }
 
         // PUT user/activate/:userid

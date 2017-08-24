@@ -14,7 +14,14 @@ namespace CQPROJ.Business.Queries
 
         public static Object GetPagesCountByRole(int roleID)
         {
-            return Math.Ceiling((float)db.TblUserRoles.Where(x => x.RoleFK == roleID).Count() / 50);
+            try
+            {
+                return Math.Ceiling((float)db.TblUserRoles.Where(x => x.RoleFK == roleID).Count() / 50);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public static Object GetPageRole(int pageID, int roleID)
@@ -137,12 +144,26 @@ namespace CQPROJ.Business.Queries
 
         public static Boolean VerifyRole(int userID, int roleID)
         {
-            return db.TblUserRoles.Any(x=>x.RoleFK==roleID && x.UserFK==userID);
+            try
+            {
+                return db.TblUserRoles.Any(x => x.RoleFK == roleID && x.UserFK == userID);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         private static Boolean _VerifyUser(String CitizenCard )
         {
-            return (db.TblUsers.Any(x => x.CitizenCard == CitizenCard)) ? true : false;
+            try
+            {
+                return (db.TblUsers.Any(x => x.CitizenCard == CitizenCard)) ? true : false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }
