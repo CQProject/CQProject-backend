@@ -19,7 +19,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null)
+            if (payload == null || (!payload.rol.Contains(6) && !payload.rol.Contains(4)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -38,7 +38,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null)
+            if (payload == null || (!payload.rol.Contains(6) && !payload.rol.Contains(4)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -57,7 +57,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null)
+            if (payload == null || !payload.rol.Contains(6))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -76,7 +76,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null)
+            if (payload == null || !payload.rol.Contains(6))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -113,7 +113,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            if (payload == null || !payload.rol.Contains(6))
             {
                 return new { result = false, info = "Não autorizado." };
             }
