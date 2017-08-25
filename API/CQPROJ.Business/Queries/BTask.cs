@@ -85,7 +85,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    if (db.TblTasks.Any(x => x.ID == taskID && x.UserFK == userID).ToList())
+                    if (db.TblTasks.Any(x => x.ID == taskID && x.UserFK == userID))
                     {
                         db.TblDone.Add(new TblDone { Hour = DateTime.Now, TaskFK = taskID });
                         db.SaveChanges();

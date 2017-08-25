@@ -165,7 +165,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ActionController.cs" />
-    <Compile Include="Controllers\FileUploadController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\FloorController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\SensorController.cs" />
@@ -199,7 +199,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Files\doc\" />
+    <Folder Include="Files\img\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
