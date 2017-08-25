@@ -14,11 +14,11 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var schedules = db.TblSchedules.ToList().Where(x => x.ClassFK == classID && x.SubjectFK == subjectID);
+                    var schedules = db.TblSchedules.Where(x => x.ClassFK == classID && x.SubjectFK == subjectID).ToList();
                     var lessons = new List<TblLessons>();
                     foreach (var schedule in schedules)
                     {
-                        lessons.Concat(db.TblLessons.Where(x => x.ScheduleFK == schedule.ID));
+                        lessons.Concat(db.TblLessons.Where(x => x.ScheduleFK == schedule.ID).ToList());
                     }
                     if (lessons.Count() == 0) { return null; }
                     return lessons;
@@ -60,7 +60,7 @@ namespace CQPROJ.Business.Queries
                 using (var db = new DBContextModel())
                 {
                     var lesson = db.TblLessons.Find(lessonID);
-                    var lessonUser = db.TblLessonStudents.ToList().Where(x => x.LessonFK == lessonID);
+                    var lessonUser = db.TblLessonStudents.Where(x => x.LessonFK == lessonID).ToList();
                     return new
                     {
                         lesson = lesson,

@@ -17,7 +17,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var docs = db.TblDocuments.ToList().Where(x => x.UserFK == userID);
+                    var docs = db.TblDocuments.Where(x => x.UserFK == userID).ToList();
                     if (docs.Count() == 0) { return null; }
                     return docs;
                 }
@@ -32,7 +32,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var docs = db.TblDocuments.ToList().Where(x => x.ClassFK == classID);
+                    var docs = db.TblDocuments.Where(x => x.ClassFK == classID).ToList();
                     if (docs.Count() == 0) { return null; }
                     return docs;
                 }
@@ -47,7 +47,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var docs = db.TblDocuments.ToList().Where(x => x.ClassFK == classID && x.IsVisible == true);
+                    var docs = db.TblDocuments.Where(x => x.ClassFK == classID && x.IsVisible == true).ToList();
                     if (docs.Count() == 0) { return null; }
                     return docs;
                 }

@@ -15,7 +15,7 @@ namespace CQPROJ.Business.Queries
                 using (var db = new DBContextModel())
                 {
                     var today = DateTime.Now;
-                    var tasks = db.TblTasks.ToList().Where(x => x.DayOfWeek == (int)today.DayOfWeek && x.UserFK == userID);
+                    var tasks = db.TblTasks.Where(x => x.DayOfWeek == (int)today.DayOfWeek && x.UserFK == userID).ToList();
                     if (tasks.Count() == 0) { return null; }
                     return tasks;
                 }
@@ -29,7 +29,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var tasks = db.TblTasks.ToList().Where(x => x.DayOfWeek == dayofweek && x.UserFK == userID);
+                    var tasks = db.TblTasks.Where(x => x.DayOfWeek == dayofweek && x.UserFK == userID).ToList();
                     if (tasks.Count() == 0) { return null; }
                     return tasks;
                 }
@@ -43,7 +43,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var realizations = db.TblDone.ToList().Where(x => x.TaskFK == taskID);
+                    var realizations = db.TblDone.Where(x => x.TaskFK == taskID).ToList();
                     if (realizations.Count() == 0) { return null; }
                     return realizations;
                 }
@@ -85,7 +85,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    if (db.TblTasks.ToList().Any(x => x.ID == taskID && x.UserFK == userID))
+                    if (db.TblTasks.Any(x => x.ID == taskID && x.UserFK == userID).ToList())
                     {
                         db.TblDone.Add(new TblDone { Hour = DateTime.Now, TaskFK = taskID });
                         db.SaveChanges();

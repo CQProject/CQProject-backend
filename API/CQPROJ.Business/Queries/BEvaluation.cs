@@ -17,7 +17,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var eval = db.TblEvaluations.ToList().Where(x => x.ClassFK == classID);
+                    var eval = db.TblEvaluations.Where(x => x.ClassFK == classID).ToList();
                     if (eval.Count() == 0) { return null; }
                     return eval;
                 }
@@ -31,7 +31,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var eval = db.TblEvaluations.ToList().Where(x => x.TeacherFK == teacherID);
+                    var eval = db.TblEvaluations.Where(x => x.TeacherFK == teacherID).ToList();
                     if (eval.Count() == 0) { return null; }
                     return eval;
                 }

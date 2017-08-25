@@ -16,7 +16,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var floors = db.TblFloors.ToList().Where(x => x.SchoolFK == schoolID);
+                    var floors = db.TblFloors.Where(x => x.SchoolFK == schoolID).ToList();
                     if (floors.Count() == 0) { return null; }
                     return floors;
                 }

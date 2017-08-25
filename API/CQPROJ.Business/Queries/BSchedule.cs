@@ -14,7 +14,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var schedules = db.TblSchedules.Select(x => x).Where(x => x.TeacherFK == teacherID);
+                    var schedules = db.TblSchedules.Where(x => x.TeacherFK == teacherID).ToList();
                     if (schedules.Count() == 0) { return null; }
                     return schedules;
                 }
@@ -28,7 +28,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var schedules = db.TblSchedules.Select(x => x).Where(x => x.ClassFK == classID);
+                    var schedules = db.TblSchedules.Where(x => x.ClassFK == classID).ToList();
                     if (schedules.Count() == 0) { return null; }
                     return schedules;
                 }
@@ -42,7 +42,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var schedules = db.TblSchedules.Select(x => x).Where(x => x.RoomFK == roomID);
+                    var schedules = db.TblSchedules.Where(x => x.RoomFK == roomID).ToList();
                     if (schedules.Count() == 0) { return null; }
                     return schedules;
                 }

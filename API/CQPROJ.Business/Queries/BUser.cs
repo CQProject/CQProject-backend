@@ -15,7 +15,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    return Math.Ceiling((float)db.TblUserRoles.ToList().Where(x => x.RoleFK == roleID).Count() / 50);
+                    return Math.Ceiling((float)db.TblUserRoles.Where(x => x.RoleFK == roleID).Count() / 50);
                 }
             }
             catch (Exception) { return null; }
@@ -40,7 +40,7 @@ namespace CQPROJ.Business.Queries
             try
             {
                 using (var db = new DBContextModel())
-                { return db.TblUsers.ToList().Where(x => x.ID == userID).Select(x => new { x.ID, x.Photo, x.FiscalNumber, x.CitizenCard, x.PhoneNumber, x.Address, x.Name, x.Email, x.RegisterDate, x.Function, x.Curriculum, x.DateOfBirth, x.IsActive }).FirstOrDefault(); }
+                { return db.TblUsers.Where(x => x.ID == userID).Select(x => new { x.ID, x.Photo, x.FiscalNumber, x.CitizenCard, x.PhoneNumber, x.Address, x.Name, x.Email, x.RegisterDate, x.Function, x.Curriculum, x.DateOfBirth, x.IsActive }).FirstOrDefault(); }
             }
             catch (Exception) { return null; }
         }
@@ -51,7 +51,7 @@ namespace CQPROJ.Business.Queries
             try
             {
                 using (var db = new DBContextModel())
-                { return db.TblUsers.ToList().Where(x => x.ID == userID).Select(x => new { x.ID, x.Photo, x.Name, x.Email, x.IsActive }).FirstOrDefault(); }
+                { return db.TblUsers.Where(x => x.ID == userID).Select(x => new { x.ID, x.Photo, x.Name, x.Email, x.IsActive }).FirstOrDefault(); }
             }
             catch (Exception) { return null; }
 
@@ -173,7 +173,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    return db.TblUserRoles.ToList().Any(x => x.RoleFK == roleID && x.UserFK == userID);
+                    return db.TblUserRoles.Any(x => x.RoleFK == roleID && x.UserFK == userID);
                 }
             }
             catch (Exception) { return false; }
@@ -185,7 +185,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    return (db.TblUsers.ToList().Any(x => x.CitizenCard == CitizenCard)) ? true : false;
+                    return db.TblUsers.Any(x => x.CitizenCard == CitizenCard);
                 }
             }
             catch (Exception) { return false; }
