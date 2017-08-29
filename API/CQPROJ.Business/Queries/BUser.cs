@@ -51,7 +51,7 @@ namespace CQPROJ.Business.Queries
             try
             {
                 using (var db = new DBContextModel())
-                { return db.TblUsers.Where(x => x.ID == userID).Select(x => new { x.ID, x.Photo, x.Name, x.Email, x.IsActive }).FirstOrDefault(); }
+                { return db.TblUsers.Where(x => x.ID == userID).Select(x => new { x.ID, x.Photo, x.Name, x.Email, x.IsActive, x.Function }).FirstOrDefault(); }
             }
             catch (Exception) { return null; }
 
