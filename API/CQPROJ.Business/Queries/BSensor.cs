@@ -30,7 +30,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var sensor = db.TblRecords.Where(x => x.SensorFK == sensorID).LastOrDefault();
+                    var sensor = db.TblRecords.Where(x => x.SensorFK == sensorID).OrderByDescending(x => x.ID).FirstOrDefault();
                     if (sensor.Hour == null) { return null; }
                     return sensor;
                 }
