@@ -16,7 +16,31 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class FileController : ApiController
     {
-        //GET filedowload/:filename
+        //GET /download/public/:filename
+        [HttpGet]
+        [Route("download/public/{*filename}")]
+        public Object DownloadPublicImages(string filename)
+        {
+            try
+            {
+                var fileFolder = HttpContext.Current.Server.MapPath("~/Files/public");
+                var filePath = Path.Combine(fileFolder, filename);
+
+                HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+                var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+
+                result.Content = new StreamContent(stream);
+
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue(MimeMapping.GetMimeMapping(filename));
+                return result;
+            }
+            catch (Exception)
+            {
+                return new HttpResponseMessage(HttpStatusCode.ServiceUnavailable);
+            }
+        }
+
+        //GET /download/image/:filename
         [HttpGet]
         [Route("download/image/{*filename}")]
         public Object DownloadImage(string filename)
@@ -47,7 +71,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
         }
 
-        //GET filedowload/:filename
+        //GET /download/doc/:filename
         [HttpGet]
         [Route("download/doc/{*filename}")]
         public Object DownloadFile(string filename)
@@ -115,7 +139,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
         }
 
-        //POST /upload/image
+        //POST /upload/doc
         [HttpPost]
         [Route("upload/doc")]
         public Object UploadFile()

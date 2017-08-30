@@ -50,7 +50,8 @@ namespace CQPROJ.Business.Queries
                 {
                     var students = db.TblClassUsers
                     .Where(x => x.ClassFK == classID && db.TblUserRoles.Any(y => y.UserFK == x.UserFK && y.RoleFK == 1))
-                    .Select(x => x.UserFK).ToList();
+                    .Select(x => x.UserFK)
+                    .ToList();
                     if (students.Count() == 0) { return null; }
                     return students;
                 }
@@ -78,7 +79,7 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    return db.TblClasses.Where(x => x.ID == classID).ToList();
+                    return db.TblClasses.Find(classID);
                 }
             }
             catch (Exception) { return null; }

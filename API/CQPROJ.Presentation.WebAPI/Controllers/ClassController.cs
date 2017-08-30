@@ -91,13 +91,35 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var classes = BClass.GetStudentsByClass(classid);
+            var students = BClass.GetStudentsByClass(classid);
 
-            if (classes == null)
+            if (students == null)
             {
-                return new { result = false, info = "Sem turma atribuída." };
+                return new { result = false, info = "Turma sem alunos." };
             }
-            return new { result = true, data = classes };
+            return new { result = true, data = students };
+        }
+
+        // GET teacher/class/:classid
+        [HttpGet]
+        [Route("teacher/class/{classid}")]
+        public Object TeachersByClass(int classid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || payload.rol.Contains(4) ||
+               ((payload.rol.Contains(1) || payload.rol.Contains(2) || payload.rol.Contains(5)) && !payload.cla.Contains(classid)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var teachers = BClass.GetTeachersByClass(classid);
+
+            if (teachers == null)
+            {
+                return new { result = false, info = "Turma sem professores." };
+            }
+            return new { result = true, data = teachers };
         }
 
         // GET class/profile/:classid
