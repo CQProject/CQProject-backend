@@ -139,6 +139,44 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
         }
 
+        //POST /upload/image
+        [HttpPost]
+        [Route("publicUpload/image")]
+        public Object UploadPublicImage()
+        {
+            try
+            {
+                Payload payload = BAccount.ConfirmToken(this.Request);
+
+                if (payload == null)
+                {
+                    return new { result = false, info = "Não autorizado." };
+                }
+
+                if (HttpContext.Current.Request.Files.Count > 0)
+                {
+                    var image = HttpContext.Current.Request.Files["image"];
+
+                    if (image != null && image.ContentType.Contains("image/"))
+                    {
+                        var fileFolder = HttpContext.Current.Server.MapPath("~/Files/public");
+                        var fileName = Path.GetFileName(Guid.NewGuid() + "." + image.FileName);
+                        var filePath = Path.Combine(fileFolder, fileName);
+                        image.SaveAs(filePath);
+
+                        return new { result = true, data = fileName };
+                    }
+                    return new { result = false, info = "Key inválida ou formato inaceitável." };
+
+                }
+                return new { result = false, info = "Não submeteu nenhuma imagem" };
+            }
+            catch (Exception)
+            {
+                return new { result = false, info = "Não foi possivel proceder ao upload." };
+            }
+        }
+
         //POST /upload/doc
         [HttpPost]
         [Route("upload/doc")]
