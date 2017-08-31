@@ -79,6 +79,28 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = schedule };
         }
 
+        // GET subject/:subjectid
+        [HttpGet]
+        [Route("subject/{subjectid}")]
+        public Object GetSubjectById(int subjectid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var subject = BSchedule.GetSubject(subjectid);
+
+            if (subject == null)
+            {
+                return new { result = false, info = "Disciplina não encontrada." };
+            }
+
+            return new { result = true, data = subject };
+        }
+
         //POST schedule
         [HttpPost]
         [Route("schedule")]

@@ -77,5 +77,17 @@ namespace CQPROJ.Business.Queries
             }
             catch (Exception) { return false; }
         }
+
+        public static Object GetSubject(int subjectID)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    return db.TblSubjects.Find(subjectID);
+                }
+            }
+            catch (Exception) { return null; }
+        }
     }
 }
