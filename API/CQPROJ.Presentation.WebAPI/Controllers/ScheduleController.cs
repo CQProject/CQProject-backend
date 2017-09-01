@@ -28,7 +28,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (schedule == null)
             {
-                return new { result = false, info = "Aula não encontrada." };
+                return new { result = false, info = "Aulas não encontradas." };
             }
 
             return new { result = true, data = schedule };
@@ -51,7 +51,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
             if (schedule == null)
             {
-                return new { result = false, info = "Aula não encontrada." };
+                return new { result = false, info = "Aulas não encontradas." };
             }
 
             return new { result = true, data = schedule };
@@ -70,6 +70,28 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
 
             var schedule = BSchedule.GetScheduleByRoom(roomid);
+
+            if (schedule == null)
+            {
+                return new { result = false, info = "Aulas não encontradas." };
+            }
+
+            return new { result = true, data = schedule };
+        }
+
+        // GET schedule/room/:roomid
+        [HttpGet]
+        [Route("schedule/profile/{scheduleid}")]
+        public Object GetSchedule(int scheduleid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var schedule = BSchedule.GetSchedule(scheduleid);
 
             if (schedule == null)
             {

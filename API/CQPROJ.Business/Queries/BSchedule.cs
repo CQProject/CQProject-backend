@@ -50,6 +50,18 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return null; }
         }
 
+        public static Object GetSchedule(int scheduleID)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    return db.TblSchedules.Find(scheduleID);
+                }
+            }
+            catch (Exception) { return null; }
+        }
+
         public static Boolean CreateSchedule(TblSchedules schedule)
         {
             try

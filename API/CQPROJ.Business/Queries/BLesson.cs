@@ -18,7 +18,7 @@ namespace CQPROJ.Business.Queries
                     var lessons = new List<TblLessons>();
                     foreach (var schedule in schedules)
                     {
-                        lessons.Concat(db.TblLessons.Where(x => x.ScheduleFK == schedule.ID).ToList());
+                        lessons = lessons.Concat(db.TblLessons.Where(x => x.ScheduleFK == schedule.ID).ToList()).ToList();
                     }
                     if (lessons.Count() == 0) { return null; }
                     return lessons;
