@@ -28,44 +28,25 @@ namespace CQPROJ.Business.Queries
         }
 
 
-        public static Object GetLessonToStudent(int lessonID, int studentID)
+        public static TblLessonStudents GetLessonToStudent(int lessonID, int studentID)
         {
             try
             {
                 using (var db = new DBContextModel())
                 {
-                    var lesson = db.TblLessons.Find(lessonID);
-                    var lessonUser = db.TblLessonStudents.Find(lessonID, studentID);
-                    return new
-                    {
-                        ID = lesson.ID,
-                        Day = lesson.Day,
-                        Summary = lesson.Summary,
-                        Observations = lesson.Observations,
-                        Homework = lesson.Homework,
-                        Presence = lessonUser.Presence,
-                        Behavior = lessonUser.Behavior,
-                        Material = lessonUser.Material,
-                        ScheduleFK = lesson.ScheduleFK
-                    };
+                    return db.TblLessonStudents.Find(lessonID, studentID);
                 }
             }
             catch (Exception) { return null; }
         }
 
-        public static Object GetLessonToTeacher(int lessonID)
+        public static List<TblLessonStudents> GetLessonToTeacher(int lessonID)
         {
             try
             {
                 using (var db = new DBContextModel())
                 {
-                    var lesson = db.TblLessons.Find(lessonID);
-                    var lessonUser = db.TblLessonStudents.Where(x => x.LessonFK == lessonID).ToList();
-                    return new
-                    {
-                        lesson = lesson,
-                        students = lessonUser
-                    };
+                    return db.TblLessonStudents.Where(x => x.LessonFK == lessonID).ToList();
                 }
             }
             catch (Exception) { return null; }
@@ -149,6 +130,18 @@ namespace CQPROJ.Business.Queries
                 }
             }
             catch (Exception) { return false; }
+        }
+
+        public static int GetClassbyLesson(TblLessonStudents lesson)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    return db.TblSchedules.Find(db.TblLessons.Find(lesson.LessonFK).ScheduleFK).ClassFK ?? default(int);
+                }
+            }
+            catch (Exception) { return 0; }
         }
     }
 }

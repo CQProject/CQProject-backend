@@ -6,5 +6,6 @@
 	[SubmitedIn]	DATETIME		NULL, 
 	[ClassFK]		INT				NULL, 
     [UserFK]		INT				NULL, 
+	[SubjectFK]		INT				NULL,
     CONSTRAINT [PK_DocumentID] PRIMARY KEY CLUSTERED ([ID] ASC),
 )
