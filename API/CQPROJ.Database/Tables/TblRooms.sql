@@ -5,5 +5,6 @@
 	[XCoord]	INT				NULL,
 	[YCoord]	INT				NULL,
 	[FloorFK]	INT				NULL,
+	[HasSensor]	BIT				NULL,
 	CONSTRAINT [PK_RoomID] PRIMARY KEY CLUSTERED ([ID] ASC)
 )

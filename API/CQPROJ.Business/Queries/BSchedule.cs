@@ -8,6 +8,20 @@ namespace CQPROJ.Business.Queries
 {
     public class BSchedule
     {
+        public static Object GetTimeSchedule(int schoolID)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    var time = db.TblTimes.Where(x => x.SchoolFK==schoolID).ToList();
+                    if (time.Count() == 0) { return null; }
+                    return time;
+                }
+            }
+            catch (Exception) { return null; }
+        }
+
         public static Object GetScheduleByTeacher(int teacherID)
         {
             try

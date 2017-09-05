@@ -19,5 +19,7 @@ namespace CQPROJ.Data.DB.Models
         public int? ClassFK { get; set; }
 
         public int? UserFK { get; set; }
+
+        public int? SubjectFK { get; set; }
     }
 }

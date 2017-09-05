@@ -59,13 +59,27 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return null; }
         }
 
-        public static Object GetClassesBySchool(int schoolID)
+        public static Object GetClassesPrimaryBySchool(int schoolID)
         {
             try
             {
                 using (var db = new DBContextModel())
                 {
-                    var classes = db.TblClasses.Where(x => x.SchoolFK == schoolID).ToList();
+                    var classes = db.TblClasses.Where(x => x.SchoolFK == schoolID && x.Year!=null).ToList();
+                    if (classes.Count() == 0) { return null; }
+                    return classes;
+                }
+            }
+            catch (Exception) { return null; }
+        }
+
+        public static Object GetClassesKindergartenBySchool(int schoolID)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    var classes = db.TblClasses.Where(x => x.SchoolFK == schoolID && x.Year==null).ToList();
                     if (classes.Count() == 0) { return null; }
                     return classes;
                 }

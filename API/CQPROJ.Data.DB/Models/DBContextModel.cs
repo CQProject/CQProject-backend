@@ -32,6 +32,7 @@ namespace CQPROJ.Data.DB.Models
         public virtual DbSet<TblSensors> TblSensors { get; set; }
         public virtual DbSet<TblSubjects> TblSubjects { get; set; }
         public virtual DbSet<TblTasks> TblTasks { get; set; }
+        public virtual DbSet<TblTimes> TblTimes { get; set; }
         public virtual DbSet<TblUserRoles> TblUserRoles { get; set; }
         public virtual DbSet<TblUsers> TblUsers { get; set; }
         public virtual DbSet<TblValidations> TblValidations { get; set; }

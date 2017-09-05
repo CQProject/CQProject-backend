@@ -10,7 +10,7 @@ namespace CQPROJ.Data.DB.Models
     {
         public int ID { get; set; }
 
-        public int? StartingTime { get; set; }
+        public int? TimeFK { get; set; }
 
         public int? Duration { get; set; }
 

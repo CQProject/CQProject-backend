@@ -9,10 +9,6 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class ClassController : ApiController
     {
-
-        // todos os profs, secretarios e admins
-
-
         // GET class/teacher/:teacherid
         [HttpGet]
         [Route("class/teacher/{teacherid}")]
@@ -57,10 +53,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = classes };
         }
 
-        // GET class/school/:schoolid
+        // GET class/primary/:schoolid
         [HttpGet]
-        [Route("class/school/{schoolid}")]
-        public Object ClassesBySchool(int schoolid)
+        [Route("class/primary/{schoolid}")]
+        public Object ClassesPrimaryBySchool(int schoolid)
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
@@ -69,11 +65,32 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var classes = BClass.GetClassesBySchool(schoolid);
+            var classes = BClass.GetClassesPrimaryBySchool(schoolid);
 
             if (classes == null)
             {
-                return new { result = false, info = "Escola sem turmas." };
+                return new { result = false, info = "Escola 1º ciclo sem turmas." };
+            }
+            return new { result = true, data = classes };
+        }
+
+        // GET class/kindergarten/:schoolid
+        [HttpGet]
+        [Route("class/kindergarten/{schoolid}")]
+        public Object ClassesKindergartenBySchool(int schoolid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var classes = BClass.GetClassesKindergartenBySchool(schoolid);
+
+            if (classes == null)
+            {
+                return new { result = false, info = "Jardim de infância sem turmas." };
             }
             return new { result = true, data = classes };
         }

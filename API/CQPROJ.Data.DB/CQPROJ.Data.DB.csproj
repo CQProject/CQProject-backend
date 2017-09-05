@@ -118,6 +118,7 @@
     <Compile Include="Models\TblSensors.cs" />
     <Compile Include="Models\TblSubjects.cs" />
     <Compile Include="Models\TblTasks.cs" />
+    <Compile Include="Models\TblTimes.cs" />
     <Compile Include="Models\TblUserRoles.cs" />
     <Compile Include="Models\TblUsers.cs" />
     <Compile Include="Models\TblValidations.cs" />

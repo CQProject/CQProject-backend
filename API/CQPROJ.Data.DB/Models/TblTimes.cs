@@ -6,18 +6,14 @@ namespace CQPROJ.Data.DB.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class TblRooms
+    public partial class TblTimes
     {
         public int ID { get; set; }
 
-        public string Name { get; set; }
+        public int? SchoolFK { get; set; }
 
-        public int? XCoord { get; set; }
+        public string StartTime { get; set; }
 
-        public int? YCoord { get; set; }
-
-        public int? FloorFK { get; set; }
-
-        public bool? HasSensor { get; set; }
+        public string EndTime { get; set; }
     }
 }

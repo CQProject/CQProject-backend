@@ -10,13 +10,13 @@ namespace CQPROJ.Business.Queries
 {
     public class BSensor
     {
-        public static Object GetSensorsByFloor(int floorID)
+        public static Object GetSensorsByRoom(int roomID)
         {
             try
             {
                 using (var db = new DBContextModel())
                 {
-                    var sensors = db.TblSensors.Where(x => x.FloorFK == floorID).ToList();
+                    var sensors = db.TblSensors.Where(x => x.RoomFK == roomID).ToList();
                     if (sensors.Count() == 0) { return null; }
                     return sensors;
                 }

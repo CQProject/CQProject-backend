@@ -14,8 +14,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET sensor/floor/:floorid
         [HttpGet]
-        [Route("sensor/floor/{floorid}")]
-        public Object SensorByFloor(int floorid)
+        [Route("sensor/room/{roomid}")]
+        public Object SensorByFloor(int roomid)
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
@@ -23,10 +23,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            var sensors = BSensor.GetSensorsByFloor(floorid);
+            var sensors = BSensor.GetSensorsByRoom(roomid);
             if (sensors == null)
             {
-                return new { result = false, info = "Não existem sensores no piso." };
+                return new { result = false, info = "Não existem sensores na sala." };
             }
             return new { result = true, data = sensors };
         }
