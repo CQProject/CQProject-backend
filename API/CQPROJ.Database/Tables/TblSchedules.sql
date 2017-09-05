@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[TblSchedules]
 (
 	[ID]			INT				NOT NULL IDENTITY(1,1), 
-    [TimeFK]	INT				NULL, 
+    [TimeFK]		INT				NULL, 
     [Duration]		INT				NULL, 
 	[DayOfWeek]		INT				NULL, 
 	[SubjectFK]		INT				NULL, 

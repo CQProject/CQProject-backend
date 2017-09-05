@@ -94,6 +94,7 @@
     <Compile Include="Queries\BRoom.cs" />
     <Compile Include="Queries\BSensor.cs" />
     <Compile Include="Queries\BTask.cs" />
+    <Compile Include="Queries\BTime.cs" />
     <Compile Include="Queries\BUser.cs" />
     <Compile Include="Queries\BClass.cs" />
     <Compile Include="Queries\BDocument.cs" />

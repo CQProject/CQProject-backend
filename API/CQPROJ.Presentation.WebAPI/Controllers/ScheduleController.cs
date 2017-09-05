@@ -9,29 +9,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class ScheduleController : ApiController
     {
-
-        // GET schedule/time/{schoolid}
-        [HttpGet]
-        [Route("schedule/time/{schoolid}")]
-        public Object ScheduleTime(int schoolid)
-        {
-            Payload payload = BAccount.ConfirmToken(this.Request);
-
-            if (payload == null )
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-
-            var time = BSchedule.GetTimeSchedule(schoolid);
-
-            if (time == null)
-            {
-                return new { result = false, info = "Horário não encontrado." };
-            }
-
-            return new { result = true, data = time };
-        }
-
+        
         // GET schedule/teacher/{teacherid}
         [HttpGet]
         [Route("schedule/teacher/{teacherid}")]
