@@ -12,7 +12,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class ParentingController : ApiController
     {
         //Get guardian/:studentid
-        [HttpPost]
+        [HttpGet]
         [Route("guardian/{studentid}")]
         public Object GetGuardians(int studentid)
         {
@@ -23,7 +23,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
             var guardians = BParenting.GetGuardians(studentid);
-            if (guardians!=null)
+            if (guardians==null)
             {
                 return new { result = false, info = "Não foram encontrados Enc.Educação do Estudante." };
             }

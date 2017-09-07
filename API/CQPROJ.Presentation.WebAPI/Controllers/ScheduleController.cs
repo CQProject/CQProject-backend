@@ -9,7 +9,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 {
     public class ScheduleController : ApiController
     {
-        
+
         // GET schedule/teacher/{teacherid}
         [HttpGet]
         [Route("schedule/teacher/{teacherid}")]
@@ -42,7 +42,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             Payload payload = BAccount.ConfirmToken(this.Request);
 
             if (payload == null || payload.rol.Contains(4) ||
-                ((payload.rol.Contains(1) || payload.rol.Contains(5) && !payload.cla.Contains(classid))))
+                ((payload.rol.Contains(1) || payload.rol.Contains(5)) && !payload.cla.Contains(classid)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -84,18 +84,18 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("schedule/profile/{scheduleid}")]
         public Object GetSchedule(int scheduleid)
         {
-            Payload payload = BAccount.ConfirmToken(this.Request);
-
-            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-
             var schedule = BSchedule.GetSchedule(scheduleid);
-
             if (schedule == null)
             {
                 return new { result = false, info = "Aula não encontrada." };
+            }
+
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || payload.rol.Contains(4) ||
+                !payload.cla.Contains((schedule.ClassFK) ?? default(int)))
+            {
+                return new { result = false, info = "Não autorizado." };
             }
 
             return new { result = true, data = schedule };

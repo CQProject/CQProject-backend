@@ -50,7 +50,7 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return null; }
         }
 
-        public static Object GetSchedule(int scheduleID)
+        public static TblSchedules GetSchedule(int scheduleID)
         {
             try
             {

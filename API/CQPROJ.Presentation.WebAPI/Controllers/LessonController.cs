@@ -23,12 +23,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
 
             var lesson = BLesson.GetLessonsBySubject(subjectid, classid);
-
             if (lesson == null)
             {
                 return new { result = false, info = "Nenhuma lição encontrada." };
             }
-
             return new { result = true, data = lesson };
         }
 
@@ -38,22 +36,17 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         public Object GetLessonsByStudent(int lessonid)
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
-            var lesson = BLesson.GetLessonToStudent(lessonid, payload.aud);
+            if (payload == null || !payload.rol.Contains(1))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
 
+            var lesson = BLesson.GetLessonToStudent(lessonid, payload.aud);
             if (lesson == null)
             {
                 return new { result = false, info = "Nenhuma lição encontrada." };
             }
-
-            if (payload == null || payload.cla.Contains(4) || 
-                (payload.rol.Contains(2) && !BLesson.VerifyTeacher(lesson, payload.aud)) ||
-                ((payload.rol.Contains(1) || payload.rol.Contains(5)) && !payload.cla.Contains(BLesson.GetClassbyLesson(lesson))))
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-            
             return new { result = true, data = lesson };
-
         }
 
         // GET lesson/teacher/:lessonid
@@ -63,6 +56,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
             var lesson = BLesson.GetLessonToTeacher(lessonid);
+
             if (lesson == null)
             {
                 return new { result = false, info = "Nenhuma lição encontrada." };
@@ -74,6 +68,28 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
             return new { result = true, data = lesson };
+        }
+
+        // GET lesson/guardian/:lessonid
+        [HttpGet]
+        [Route("lesson/guardian/{lessonid}")]
+        public Object GetLessonsByGuardian(int lessonid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+            if (payload == null || !payload.rol.Contains(5))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var lesson = BLesson.GetLessonToGuardian(lessonid, payload.aud);
+
+            if (lesson == null)
+            {
+                return new { result = false, info = "Nenhuma lição encontrada." };
+            }
+
+            return new { result = true, data = lesson };
+
         }
 
         //POST lesson/profile/

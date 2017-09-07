@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 
 namespace CQPROJ.Business.Queries
@@ -46,7 +47,34 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    return db.TblLessonStudents.Where(x => x.LessonFK == lessonID).ToList();
+                    var students = db.TblLessonStudents.Where(x => x.LessonFK == lessonID).ToList();
+                    if (students.Count() == 0) { return null; }
+                    return students;
+                }
+            }
+            catch (Exception) { return null; }
+        }
+
+        public static List<TblLessonStudents> GetLessonToGuardian(int lessonID, int guardianID)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    var availableStudents = BParenting.GetChildren(guardianID);
+                    Debug.WriteLine(availableStudents);
+                    List<TblLessonStudents> students = new List<TblLessonStudents>();
+                    availableStudents.ForEach(studentID =>
+                    {
+                        var aux=db.TblLessonStudents.Where(x=> x.LessonFK==lessonID && x.StudentFK == studentID).FirstOrDefault();
+                        if (aux != null)
+                        {
+                            students.Add(aux);
+                            Debug.WriteLine(aux.StudentFK);
+                        }
+                    });
+                    if (students.Count() == 0) { return null; }
+                    return students;
                 }
             }
             catch (Exception) { return null; }

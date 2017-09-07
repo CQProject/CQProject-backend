@@ -38,12 +38,14 @@ namespace CQPROJ.Business.Queries
                     DateTime issued = DateTime.Now;
                     DateTime expire = DateTime.Now.AddHours(10);
                     var roles = db.TblUserRoles.Where(x => x.UserFK == user.ID).Select(x => x.RoleFK).ToList();
-                    var classes = db.TblClassUsers.Where(x => x.UserFK == user.ID).ToList().Select(x => x.ClassFK);
+
+                    List<int> classes = new List<int>();
+                    classes = db.TblClassUsers.Where(x => x.UserFK == user.ID).Select(x => x.ClassFK).ToList();
                     if (roles.Contains(5))
                     {
                         foreach (int child in BParenting.GetChildren(user.ID))
                         {
-                            classes = classes.Concat(db.TblClassUsers.Where(x => x.UserFK == child).ToList().Select(x => x.ClassFK));
+                            classes = classes.Concat(db.TblClassUsers.Where(x => x.UserFK == child).Select(x => x.ClassFK)).ToList();
                         }
                     }
 
@@ -58,7 +60,7 @@ namespace CQPROJ.Business.Queries
 
                     var token = JWT.Encode(payload, secretKey, JwsAlgorithm.HS256);
 
-                    return new { token = token, userID = user.ID, roles = roles, name = user.Name, photo = user.Photo };
+                    return new { token = token, userID = user.ID, roles = roles, name = user.Name, photo = user.Photo, classes= classes };
                 }
             }
             catch (Exception) { return null; }
