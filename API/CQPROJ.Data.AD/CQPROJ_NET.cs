@@ -11,7 +11,7 @@ namespace CQPROJ.Data.AD
     {
         public static Principal GetUser(string SamAccountName)
         {
-            using (var context = new PrincipalContext(ContextType.Domain, "192.168.10.110", "CQPROJ\\teste", "zaq1\"WSX"))
+            using (var context = new PrincipalContext(ContextType.Domain, "192.168.10.110", "CQPROJ\\Administrator", "PASS.queiroz2017"))
             {
                 using(var searcher=new PrincipalSearcher(new UserPrincipal(context)))
                 {
@@ -20,5 +20,18 @@ namespace CQPROJ.Data.AD
                 }
             }
         }
+
+        public static Principal CreateUser(string SamAccountName, string Password)
+        {
+            using (var context = new PrincipalContext(ContextType.Domain, "192.168.1.124", "CQPROJ\\Administrator", "PASS.queiroz2017"))
+            {
+                using (var user = new UserPrincipal(context, SamAccountName, Password, true))
+                {
+                    user.Save();
+                    return user;
+                }
+            }
+        }
+
     }
 }
