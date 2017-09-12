@@ -91,6 +91,7 @@
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.0\lib\net45\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -212,6 +213,10 @@
     <ProjectReference Include="..\CQPROJ.Business\CQPROJ.Business.csproj">
       <Project>{0eb08608-7fd5-4221-871c-08efc107839c}</Project>
       <Name>CQPROJ.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CQPROJ.Data.AD\CQPROJ.Data.AD.csproj">
+      <Project>{82AD63C3-ABEB-4365-AC38-009D5EC6418D}</Project>
+      <Name>CQPROJ.Data.AD</Name>
     </ProjectReference>
     <ProjectReference Include="..\CQPROJ.Data.DB\CQPROJ.Data.DB.csproj">
       <Project>{7DCF14F4-03E7-4A9F-A7E8-2556D4C0D695}</Project>

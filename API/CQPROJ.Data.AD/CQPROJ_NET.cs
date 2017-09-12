@@ -20,5 +20,24 @@ namespace CQPROJ.Data.AD
                 }
             }
         }
+
+        public static Object CreateUser(string SamAccountName, string Password)
+        {
+            using (var context = new PrincipalContext(ContextType.Domain, "192.168.1.124", "CQPROJ\\Administrator", "PASS.queiroz2017"))
+            {
+                try
+                {
+                    using (var user = new UserPrincipal(context, SamAccountName, Password, true))
+                    {
+                        user.Save();
+                        return user;
+                    }
+                }
+                catch (Exception)
+                {
+                    return new { result = false, data = "Password demasiado curta" };
+                }
+            }
+        }
     }
 }
