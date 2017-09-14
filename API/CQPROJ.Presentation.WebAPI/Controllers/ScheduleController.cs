@@ -93,7 +93,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             Payload payload = BAccount.ConfirmToken(this.Request);
 
             if (payload == null || payload.rol.Contains(4) ||
-                !payload.cla.Contains((schedule.ClassFK) ?? default(int)))
+                ((!payload.rol.Contains(3) && !payload.rol.Contains(6)) && !payload.cla.Contains((schedule.ClassFK) ?? default(int))))
             {
                 return new { result = false, info = "Não autorizado." };
             }

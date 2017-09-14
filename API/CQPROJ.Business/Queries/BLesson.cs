@@ -62,7 +62,6 @@ namespace CQPROJ.Business.Queries
                 using (var db = new DBContextModel())
                 {
                     var availableStudents = BParenting.GetChildren(guardianID);
-                    Debug.WriteLine(availableStudents);
                     List<TblLessonStudents> students = new List<TblLessonStudents>();
                     availableStudents.ForEach(studentID =>
                     {
@@ -70,7 +69,6 @@ namespace CQPROJ.Business.Queries
                         if (aux != null)
                         {
                             students.Add(aux);
-                            Debug.WriteLine(aux.StudentFK);
                         }
                     });
                     if (students.Count() == 0) { return null; }

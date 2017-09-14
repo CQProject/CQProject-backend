@@ -41,7 +41,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             Payload payload = BAccount.ConfirmToken(this.Request);
 
             if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6) && !payload.rol.Contains(2)) ||
-                (payload.rol.Contains(2) && payload.aud!=id))
+                (payload.rol.Contains(2) && payload.aud != id))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -52,6 +52,56 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não foram encontradas avaliações para esta disciplina." };
             }
             return new { result = true, data = evaluations };
+        }
+
+        // GET evaluations/teacher/:id
+        [HttpGet]
+        [Route("grades/evaluation/{evaluationid}")]
+        public Object GetGradesBybyTeacher(int evaluationid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || payload.rol.Contains(4))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            if (payload.rol.Contains(1))
+            {
+                var grade = BEvaluation.GetGradeToStudent(evaluationid, payload.aud);
+                if (grade == null)
+                {
+                    return new { result = false, info = "Não foi encontrada avaliação." };
+                }
+                return new { result = true, data = grade };
+            }
+            else
+            {
+                if (payload.rol.Contains(5))
+                {
+                    var grades = BEvaluation.GetGradesToGuardian(evaluationid, payload.aud);
+                    if (grades == null)
+                    {
+                        return new { result = false, info = "Não foi encontrada avaliação." };
+                    }
+                    return new { result = true, data = grades };
+                }
+                else
+                {
+                    if (payload.rol.Contains(2))
+                    {
+                        if (!BEvaluation.VerifyTeacher(evaluationid, payload.aud))
+                        {
+                            return new { result = false, info = "Não foi encontrada avaliação." };
+                        }
+                    }
+                    var grades = BEvaluation.GetGradesToTeacher(evaluationid);
+                    if (grades == null)
+                    {
+                        return new { result = false, info = "Não foi encontrada avaliação." };
+                    }
+                    return new { result = true, data = grades };
+                }
+            }
         }
 
 
@@ -84,7 +134,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (BEvaluation.EditEvaluation( evaluation))
+            if (BEvaluation.EditEvaluation(evaluation))
             {
                 return new { result = true };
             }
