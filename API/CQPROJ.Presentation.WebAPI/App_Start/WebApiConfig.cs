@@ -12,21 +12,12 @@ namespace CQPROJ.Presentation.WebAPI
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/json"));
             config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
 
-            var corsAttr = new EnableCorsAttribute(origins:"http://localhost:4200", headers:"Content-Type, Authorization", methods:"GET, POST, PUT, DELETE");
+            var corsAttr = new EnableCorsAttribute(origins: "http://localhost:4200", headers: "Content-Type, Authorization", methods: "GET, POST, PUT, DELETE");
             config.EnableCors(corsAttr);
 
             // Web API routes
             config.MapHttpAttributeRoutes();
-
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "{controller}/{action}/{id}",
-                defaults: new
-                {
-                    id = RouteParameter.Optional,
-                    action = RouteParameter.Optional
-                }
-            );
+            
         }
     }
 }
