@@ -10,6 +10,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class LessonController : ApiController
     {
         // GET lesson/subject/:subjectid
+        /// <summary>
+        /// Teste do comentário
+        /// </summary>
+        /// <param name="subjectid"></param>
+        /// <param name="classid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("lesson/list/{subjectid}/{classid}")]
         public Object LessonsBySubject(int subjectid, int classid)
