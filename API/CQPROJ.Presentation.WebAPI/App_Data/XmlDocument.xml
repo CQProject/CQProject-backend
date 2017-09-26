@@ -481,12 +481,673 @@
             </summary>
             <param name="documentPath">The physical path to XML document.</param>
         </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.AccountController.Login(CQPROJ.Business.Entities.IAccount.Login)">
+            <summary>
+            Autenticação de um utilizador
+            </summary>
+            <param name="userRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.AccountController.VerifyToken">
+            <summary>
+            Verifica a validade do token de um utilizador
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ActionController.Page(System.Int32)">
+            <summary>
+            Ações de um utilizador paginadas
+            </summary>
+            <param name="userid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ActionController.GetByUser(System.Int32,System.Int32)">
+            <summary>
+            Página específica das ações de um utilizador
+            </summary>
+            <param name="userid"></param>
+            <param name="pageid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FileController.DownloadPublicImages(System.String)">
+            <summary>
+            Download do ficheiro público selecionado
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FileController.DownloadImage(System.String)">
+            <summary>
+            Download da imagem pública selecionada
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FileController.DownloadFile(System.String)">
+            <summary>
+            Download do documento selecionado
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FileController.UploadImage">
+            <summary>
+            Cria uma nova imagem
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FileController.UploadPublicImage">
+            <summary>
+            Cria uma nova imagem pública
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FileController.UploadFile">
+            <summary>
+            Cria um novo documento
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FloorController.FloorBySchool(System.Int32)">
+            <summary>
+            Mostra todos os andares de uma escola
+            </summary>
+            <param name="schoolid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FloorController.Single(System.Int32)">
+            <summary>
+            Mostra os detalhes de um andar selecionado
+            </summary>
+            <param name="floorid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FloorController.Post(CQPROJ.Data.DB.Models.TblFloors)">
+            <summary>
+            Cria um novo andar
+            </summary>
+            <param name="floor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FloorController.Put(CQPROJ.Data.DB.Models.TblFloors)">
+            <summary>
+            Altera um andar
+            </summary>
+            <param name="floor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.RoomController.RoomBySchool(System.Int32)">
+            <summary>
+            Mostra todos as salas de uma escola
+            </summary>
+            <param name="schoolid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.RoomController.RoomByFloor(System.Int32)">
+            <summary>
+            Mostra todas as salas de um andar
+            </summary>
+            <param name="floorid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.RoomController.Single(System.Int32)">
+            <summary>
+            Mostra os detalhes de uma sala
+            </summary>
+            <param name="roomid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.RoomController.Post(CQPROJ.Data.DB.Models.TblRooms)">
+            <summary>
+            Cria uma nova sala
+            </summary>
+            <param name="room"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.RoomController.Put(CQPROJ.Data.DB.Models.TblRooms)">
+            <summary>
+            Altera uma sala
+            </summary>
+            <param name="room"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SensorController.SensorByFloor(System.Int32)">
+            <summary>
+            Mostra os detalhes do sensor de uma sala
+            </summary>
+            <param name="roomid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SensorController.LastRecord(System.Int32)">
+            <summary>
+            Mostra os últimos valores registados por um sensor
+            </summary>
+            <param name="sensorid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SensorController.History(System.Int32)">
+            <summary>
+            Mostra os registos do histórico de um sensor
+            </summary>
+            <param name="sensorid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SensorController.Resume(System.Int32)">
+            <summary>
+            Mostra o resumo dos registos de um sensor
+            </summary>
+            <param name="sensorid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SensorController.Post(CQPROJ.Data.DB.Models.TblSensors)">
+            <summary>
+            Cria um novo sensor
+            </summary>
+            <param name="sensor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SensorController.PutProfile(CQPROJ.Data.DB.Models.TblSensors)">
+            <summary>
+            Altera um sensor
+            </summary>
+            <param name="sensor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SensorController.RemoveUser(System.Int32)">
+            <summary>
+            Apaga o sensor selecionado
+            </summary>
+            <param name="sensorid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TaskController.GetSentNotifs">
+            <summary>
+            Mostra todas as tarefas de um utilizador
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TaskController.GetTasks(System.Int32,System.Int32)">
+            <summary>
+            Mostra as tarefas de um dia para o utilizador
+            </summary>
+            <param name="userid"></param>
+            <param name="dayweek"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TaskController.GetRealizations(System.Int32)">
+            <summary>
+            Lista detalhes de uma tarefa já feita
+            </summary>
+            <param name="taskid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TaskController.Post(CQPROJ.Data.DB.Models.TblTasks)">
+            <summary>
+            Cria uma nova tarefa
+            </summary>
+            <param name="task"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TaskController.Done(System.Int32)">
+            <summary>
+            Marca uma tarefa como feita
+            </summary>
+            <param name="taskid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TaskController.Put(CQPROJ.Data.DB.Models.TblTasks)">
+            <summary>
+            Altera uma tarefa
+            </summary>
+            <param name="task"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TimeController.TimeByPrimary(System.Int32)">
+            <summary>
+            Mostra o horário de uma escola primária
+            </summary>
+            <param name="schoolid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TimeController.TimeByKindergarten(System.Int32)">
+            <summary>
+            Mostra o horário de um jardim escola
+            </summary>
+            <param name="schoolid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TimeController.SingleTime(System.Int32)">
+            <summary>
+            Retorna o tempo com o ID selecionado
+            </summary>
+            <param name="timeid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.UserController.Count(System.Int32)">
+            <summary>
+            Número de páginas por role (50 por página) 
+            </summary>
+            <param name="roleid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.UserController.Page(System.Int32,System.Int32)">
+            <summary>
+            Lista os utilizadores com um role específico na página selecionado
+            </summary>
+            <param name="roleid"></param>
+            <param name="pageid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.UserController.Detail(System.Int32)">
+            <summary>
+            Mostra os detalhes de um utilizador
+            </summary>
+            <param name="userid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.UserController.Profile(System.Int32)">
+            <summary>
+            Mostra o perfil de um utilizador
+            </summary>
+            <param name="userid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.UserController.Post(CQPROJ.Business.Entities.IAccount.User)">
+            <summary>
+            Cria um novo utilizador
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.UserController.AddRole(CQPROJ.Business.Entities.IAccount.RoleUser)">
+            <summary>
+            Define o role de um utilizador
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.UserController.RemoveRole(CQPROJ.Business.Entities.IAccount.RoleUser)">
+            <summary>
+            Apaga o relaciomento entre um utilizador e um role
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.UserController.Put(CQPROJ.Business.Entities.IAccount.User)">
+            <summary>
+            Altera o perfil do utilizador
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.UserController.Activate(System.Int32)">
+            <summary>
+            Ativa um utilizador
+            </summary>
+            <param name="userid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.ClassesByTeacher(System.Int32)">
+            <summary>
+            Mostra as turmas de um professor
+            </summary>
+            <param name="teacherid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.ClassesByStudent(System.Int32)">
+            <summary>
+            Mostra a turma de estudante
+            </summary>
+            <param name="studentid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.ClassesPrimaryBySchool(System.Int32)">
+            <summary>
+            Mostra todas as turmas de uma escola primária
+            </summary>
+            <param name="schoolid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.ClassesKindergartenBySchool(System.Int32)">
+            <summary>
+            Mostra todas as turmas de um jardim de infância
+            </summary>
+            <param name="schoolid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.StudentsByClass(System.Int32)">
+            <summary>
+            Mostra todos os alunos de uma turma
+            </summary>
+            <param name="classid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.TeachersByClass(System.Int32)">
+            <summary>
+            Mostra os professores de uma turma
+            </summary>
+            <param name="classid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.Profile(System.Int32)">
+            <summary>
+            Mostra o perfil de uma turma
+            </summary>
+            <param name="classid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.Post(CQPROJ.Data.DB.Models.TblClasses)">
+            <summary>
+            Cria uma nova turma
+            </summary>
+            <param name="newclass"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.AddUser(CQPROJ.Business.Entities.IAccount.ClassUser)">
+            <summary>
+            Adiciona um utilizador a uma turma
+            </summary>
+            <param name="classuser"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.RemoveUser(CQPROJ.Business.Entities.IAccount.ClassUser)">
+            <summary>
+            Remove um utilizador de uma turma
+            </summary>
+            <param name="classuser"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.PutProfile(CQPROJ.Data.DB.Models.TblClasses)">
+            <summary>
+            Altera os dados de uma turma
+            </summary>
+            <param name="editedclass"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.DocumentController.DocumentsbyUser(System.Int32)">
+            <summary>
+            Mostra os documentos de um utilizador
+            </summary>
+            <param name="userid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.DocumentController.DocumentsbyClass(System.Int32)">
+            <summary>
+            Mostra os documentos de uma turma
+            </summary>
+            <param name="classid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.DocumentController.Post(CQPROJ.Data.DB.Models.TblDocuments)">
+            <summary>
+            Cria um documento novo
+            </summary>
+            <param name="document"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.DocumentController.Put(CQPROJ.Data.DB.Models.TblDocuments)">
+            <summary>
+            Altera um documento
+            </summary>
+            <param name="document"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.EvaluationController.GetbyClass(System.Int32)">
+            <summary>
+            Mostra as avaliações de uma turma
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.EvaluationController.GetbyTeacher(System.Int32)">
+            <summary>
+            Mostra as avaliações de uma disciplina
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.EvaluationController.GetGradesBybyTeacher(System.Int32)">
+            <summary>
+            Mostra a nota numa avaliação de um utilizador
+            </summary>
+            <param name="evaluationid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.EvaluationController.Post(CQPROJ.Data.DB.Models.TblEvaluations)">
+            <summary>
+            Cria uma avaliação
+            </summary>
+            <param name="evaluation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.EvaluationController.Put(CQPROJ.Data.DB.Models.TblEvaluations)">
+            <summary>
+            Altera uma avaliação
+            </summary>
+            <param name="evaluation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ParentingController.GetGuardians(System.Int32)">
+            <summary>
+            Mostra os encarregados de educação de um estudante 
+            </summary>
+            <param name="studentid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ParentingController.Create(CQPROJ.Business.Entities.IAccount.Guardian)">
+            <summary>
+            Cria um novo encarregado de educação
+            </summary>
+            <param name="guardian"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ParentingController.Add(CQPROJ.Business.Entities.IAccount.Parenting)">
+            <summary>
+            Cria uma relação entre o encarregado de educação e o estudante
+            </summary>
+            <param name="parenting"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ParentingController.Remove(CQPROJ.Business.Entities.IAccount.Parenting)">
+            <summary>
+            Apaga a relação entre o encarregado de educação e o estudante
+            </summary>
+            <param name="parenting"></param>
+            <returns></returns>
+        </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.LessonController.LessonsBySubject(System.Int32,System.Int32)">
             <summary>
-            Teste do comentário
+            Mostra as lições de uma disciplina de uma turma
             </summary>
             <param name="subjectid"></param>
             <param name="classid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.LessonController.GetLessonsByStudent(System.Int32)">
+            <summary>
+            Mostra a lição selecionada, vista de estudante
+            </summary>
+            <param name="lessonid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.LessonController.GetLessonsByTeacher(System.Int32)">
+            <summary>
+            Mostra a lição selecionada, vista de professor
+            </summary>
+            <param name="lessonid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.LessonController.GetLessonsByGuardian(System.Int32)">
+            <summary>
+            Mostra a lição selecionada, vista de encarregado de educação
+            </summary>
+            <param name="lessonid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.LessonController.PostLesson(CQPROJ.Data.DB.Models.TblLessons)">
+            <summary>
+            Cria uma lição
+            </summary>
+            <param name="lesson"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.LessonController.PostFaults(CQPROJ.Data.DB.Models.TblLessonStudents)">
+            <summary>
+            Marca as faltas numa lição
+            </summary>
+            <param name="lesson"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.LessonController.PutLesson(CQPROJ.Data.DB.Models.TblLessons)">
+            <summary>
+            Altera os detalhes de uma lição
+            </summary>
+            <param name="lesson"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.LessonController.PutFaults(CQPROJ.Data.DB.Models.TblLessonStudents)">
+            <summary>
+            Altera as faltas marcadas para uma lição
+            </summary>
+            <param name="lesson"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.NotificationController.NotifsSent(System.Int32)">
+            <summary>
+            Lista as notificações enviadas de forma paginada
+            </summary>
+            <param name="pageid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.NotificationController.NotifsUnreadCount">
+            <summary>
+            Retorna o número de notificações por ler
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.NotificationController.NotifMessage(System.Int32)">
+            <summary>
+            Mostra os detalhes de uma notificação selecionada
+            </summary>
+            <param name="notifid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.NotificationController.NotifsReceived(System.Int32)">
+            <summary>
+            Mostra as notificações recebidade de forma paginada
+            </summary>
+            <param name="pageid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.NotificationController.ValidsByNotif(System.Int32)">
+            <summary>
+            Mostra as validações enviadas numa notificação
+            </summary>
+            <param name="notifid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.NotificationController.SendToUser(CQPROJ.Business.Entities.NotificationUser)">
+            <summary>
+            Envia notificações
+            </summary>
+            <param name="notification"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.NotificationController.SendToClass(CQPROJ.Business.Entities.NotificationClass)">
+            <summary>
+            Envia uma notificação para todos os membros de uma turma
+            </summary>
+            <param name="notification"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.NotificationController.Read(System.Int32)">
+            <summary>
+            Marca como lida uma notificação
+            </summary>
+            <param name="notifid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.NotificationController.Accept(System.Int32)">
+            <summary>
+            Aceita a validação de uma notificação
+            </summary>
+            <param name="notifid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.ScheduleByTeacher(System.Int32)">
+            <summary>
+            Retorna o horário de um professor
+            </summary>
+            <param name="teacherid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.ScheduleByClass(System.Int32)">
+            <summary>
+            Mostra o horário de uma turma
+            </summary>
+            <param name="classid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.GetScheduleByRoom(System.Int32)">
+            <summary>
+            Mostra o horário de aulas de uma sala
+            </summary>
+            <param name="roomid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.GetSchedule(System.Int32)">
+            <summary>
+            Mostra os detalhes de um horário
+            </summary>
+            <param name="scheduleid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.GetSubjectById(System.Int32)">
+            <summary>
+            Mostra o horário de uma disciplina
+            </summary>
+            <param name="subjectid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.Post(CQPROJ.Data.DB.Models.TblSchedules)">
+            <summary>
+            Cria um novo horário
+            </summary>
+            <param name="schedule"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.PutProfile(CQPROJ.Data.DB.Models.TblSchedules)">
+            <summary>
+            Altera um horário
+            </summary>
+            <param name="schedule"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SchoolController.Get">
+            <summary>
+            Mostra todas as escolas
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SchoolController.Get(System.Int32)">
+            <summary>
+            Mostra os detalhes de uma escola
+            </summary>
+            <param name="schoolID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SchoolController.Post(CQPROJ.Data.DB.Models.TblSchools)">
+            <summary>
+            Cria uma nova escola
+            </summary>
+            <param name="school"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SchoolController.Put(CQPROJ.Data.DB.Models.TblSchools)">
+            <summary>
+            Altera uma escola
+            </summary>
+            <param name="school"></param>
             <returns></returns>
         </member>
     </members>

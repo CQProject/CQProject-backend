@@ -13,6 +13,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class RoomController : ApiController
     {
         // GET room/school/:schoolid
+        /// <summary>
+        /// Mostra todos as salas de uma escola
+        /// </summary>
+        /// <param name="schoolid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("room/school/{schoolid}")]
         public Object RoomBySchool(int schoolid)
@@ -32,6 +37,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET room/floor/:floorid
+        /// <summary>
+        /// Mostra todas as salas de um andar
+        /// </summary>
+        /// <param name="floorid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("room/floor/{floorid}")]
         public Object RoomByFloor(int floorid)
@@ -51,6 +61,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET room/single/:roomid
+        /// <summary>
+        /// Mostra os detalhes de uma sala
+        /// </summary>
+        /// <param name="roomid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("room/single/{roomid}")]
         public Object Single(int roomid)
@@ -70,6 +85,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // POST room/
+        /// <summary>
+        /// Cria uma nova sala
+        /// </summary>
+        /// <param name="room"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("room")]
         public Object Post([FromBody]TblRooms room)
@@ -88,6 +108,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // PUT room/
+        /// <summary>
+        /// Altera uma sala
+        /// </summary>
+        /// <param name="room"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("room")]
         public Object Put([FromBody]TblRooms room)

@@ -10,6 +10,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class DocumentController : ApiController
     {
         // GET document/user/:id
+        /// <summary>
+        /// Mostra os documentos de um utilizador
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("document/user/{userid}")]
         public Object DocumentsbyUser(int userid)
@@ -33,6 +38,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET document/user/:id
+        /// <summary>
+        /// Mostra os documentos de uma turma
+        /// </summary>
+        /// <param name="classid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("document/class/{classid}")]
         public Object DocumentsbyClass(int classid)
@@ -65,6 +75,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST document/
+        /// <summary>
+        /// Cria um documento novo
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("document")]
         public Object Post([FromBody]TblDocuments document)
@@ -83,6 +98,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // PUT document/
+        /// <summary>
+        /// Altera um documento
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("document")]
         public Object Put([FromBody]TblDocuments document)

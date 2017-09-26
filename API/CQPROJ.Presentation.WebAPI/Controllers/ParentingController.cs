@@ -12,6 +12,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class ParentingController : ApiController
     {
         //Get guardian/:studentid
+        /// <summary>
+        /// Mostra os encarregados de educação de um estudante 
+        /// </summary>
+        /// <param name="studentid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("guardian/{studentid}")]
         public Object GetGuardians(int studentid)
@@ -31,6 +36,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST guardian/
+        /// <summary>
+        /// Cria um novo encarregado de educação
+        /// </summary>
+        /// <param name="guardian"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("guardian")]
         public Object Create([FromBody]Guardian guardian)
@@ -45,6 +55,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST parenting/
+        /// <summary>
+        /// Cria uma relação entre o encarregado de educação e o estudante
+        /// </summary>
+        /// <param name="parenting"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("parenting")]
         public Object Add([FromBody]Parenting parenting)
@@ -63,6 +78,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //DELETE parenting/
+        /// <summary>
+        /// Apaga a relação entre o encarregado de educação e o estudante
+        /// </summary>
+        /// <param name="parenting"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("parenting")]
         public Object Remove([FromBody]Parenting parenting)

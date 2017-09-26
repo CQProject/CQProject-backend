@@ -12,6 +12,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class TimeController : ApiController
     {
         // GET /time/primary/{schoolid}
+        /// <summary>
+        /// Mostra o horário de uma escola primária
+        /// </summary>
+        /// <param name="schoolid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("time/primary/{schoolid}")]
         public Object TimeByPrimary(int schoolid)
@@ -34,6 +39,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET /time/kindergarten/{schoolid}
+        /// <summary>
+        /// Mostra o horário de um jardim escola
+        /// </summary>
+        /// <param name="schoolid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("time/kindergarten/{schoolid}")]
         public Object TimeByKindergarten(int schoolid)
@@ -56,6 +66,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET /time/single/{timeid}
+        /// <summary>
+        /// Retorna o tempo com o ID selecionado
+        /// </summary>
+        /// <param name="timeid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("time/single/{timeid}")]
         public Object SingleTime(int timeid)

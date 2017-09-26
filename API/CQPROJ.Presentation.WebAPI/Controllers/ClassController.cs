@@ -10,6 +10,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class ClassController : ApiController
     {
         // GET class/teacher/:teacherid
+        /// <summary>
+        /// Mostra as turmas de um professor
+        /// </summary>
+        /// <param name="teacherid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("class/teacher/{teacherid}")]
         public Object ClassesByTeacher(int teacherid)
@@ -31,6 +36,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET class/student/:studentid
+        /// <summary>
+        /// Mostra a turma de estudante
+        /// </summary>
+        /// <param name="studentid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("class/student/{studentid}")]
         public Object ClassesByStudent(int studentid)
@@ -54,6 +64,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET class/primary/:schoolid
+        /// <summary>
+        /// Mostra todas as turmas de uma escola primária
+        /// </summary>
+        /// <param name="schoolid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("class/primary/{schoolid}")]
         public Object ClassesPrimaryBySchool(int schoolid)
@@ -75,6 +90,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET class/kindergarten/:schoolid
+        /// <summary>
+        /// Mostra todas as turmas de um jardim de infância
+        /// </summary>
+        /// <param name="schoolid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("class/kindergarten/{schoolid}")]
         public Object ClassesKindergartenBySchool(int schoolid)
@@ -96,6 +116,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET student/class/:classid
+        /// <summary>
+        /// Mostra todos os alunos de uma turma
+        /// </summary>
+        /// <param name="classid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("student/class/{classid}")]
         public Object StudentsByClass(int classid)
@@ -118,6 +143,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET teacher/class/:classid
+        /// <summary>
+        /// Mostra os professores de uma turma
+        /// </summary>
+        /// <param name="classid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("teacher/class/{classid}")]
         public Object TeachersByClass(int classid)
@@ -140,6 +170,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET class/profile/:classid
+        /// <summary>
+        /// Mostra o perfil de uma turma
+        /// </summary>
+        /// <param name="classid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("class/profile/{classid}")]
         public Object Profile(int classid)
@@ -162,6 +197,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST class/profile
+        /// <summary>
+        /// Cria uma nova turma
+        /// </summary>
+        /// <param name="newclass"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("class/profile")]
         public Object Post([FromBody]TblClasses newclass)
@@ -180,6 +220,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // POST class/user/
+        /// <summary>
+        /// Adiciona um utilizador a uma turma
+        /// </summary>
+        /// <param name="classuser"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("class/user")]
         public Object AddUser([FromBody]ClassUser classuser)
@@ -198,6 +243,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // DELETE class/user/
+        /// <summary>
+        /// Remove um utilizador de uma turma
+        /// </summary>
+        /// <param name="classuser"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("class/user")]
         public Object RemoveUser([FromBody]ClassUser classuser)
@@ -216,6 +266,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // PUT class/profile/
+        /// <summary>
+        /// Altera os dados de uma turma
+        /// </summary>
+        /// <param name="editedclass"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("class/profile")]
         public Object PutProfile([FromBody]TblClasses editedclass)

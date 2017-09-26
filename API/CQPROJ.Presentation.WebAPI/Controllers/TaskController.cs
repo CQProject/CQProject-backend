@@ -13,6 +13,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class TaskController : ApiController
     {
         // GET task/todo
+        /// <summary>
+        /// Mostra todas as tarefas de um utilizador
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("task/todo")]
         public Object GetSentNotifs()
@@ -32,6 +36,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET task/user/:userid/:dayweek
+        /// <summary>
+        /// Mostra as tarefas de um dia para o utilizador
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="dayweek"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("task/user/{userid}/{dayweek}")]
         public Object GetTasks(int userid, int dayweek)
@@ -51,6 +61,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET task/done/:taskid
+        /// <summary>
+        /// Lista detalhes de uma tarefa já feita
+        /// </summary>
+        /// <param name="taskid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("task/done/{taskid}")]
         public Object GetRealizations(int taskid)
@@ -70,6 +85,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST task
+        /// <summary>
+        /// Cria uma nova tarefa
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("task")]
         public Object Post([FromBody]TblTasks task)
@@ -84,6 +104,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST done
+        /// <summary>
+        /// Marca uma tarefa como feita
+        /// </summary>
+        /// <param name="taskid"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("done")]
         public Object Done(int taskid)
@@ -98,6 +123,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //PUT task
+        /// <summary>
+        /// Altera uma tarefa
+        /// </summary>
+        /// <param name="task"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("task")]
         public Object Put([FromBody]TblTasks task)

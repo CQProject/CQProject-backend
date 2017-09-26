@@ -13,6 +13,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class SensorController : ApiController
     {
         // GET sensor/floor/:floorid
+        /// <summary>
+        /// Mostra os detalhes do sensor de uma sala
+        /// </summary>
+        /// <param name="roomid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("sensor/room/{roomid}")]
         public Object SensorByFloor(int roomid)
@@ -32,6 +37,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET sensor/last/:sensorid
+        /// <summary>
+        /// Mostra os últimos valores registados por um sensor
+        /// </summary>
+        /// <param name="sensorid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("sensor/last/{sensorid}")]
         public Object LastRecord(int sensorid)
@@ -51,6 +61,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET room/history/:sensorid
+        /// <summary>
+        /// Mostra os registos do histórico de um sensor
+        /// </summary>
+        /// <param name="sensorid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("sensor/history/{sensorid}")]
         public Object History(int sensorid)
@@ -70,6 +85,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET sensor/resume/:sensorid
+        /// <summary>
+        /// Mostra o resumo dos registos de um sensor
+        /// </summary>
+        /// <param name="sensorid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("sensor/resume/{sensorid}")]
         public Object Resume(int sensorid)
@@ -89,6 +109,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST sensor/
+        /// <summary>
+        /// Cria um novo sensor
+        /// </summary>
+        /// <param name="sensor"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("sensor")]
         public Object Post([FromBody]TblSensors sensor)
@@ -107,6 +132,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // PUT sensor/
+        /// <summary>
+        /// Altera um sensor
+        /// </summary>
+        /// <param name="sensor"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("sensor")]
         public Object PutProfile([FromBody]TblSensors sensor)
@@ -125,6 +155,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // DELETE sesnor/:sensorid
+        /// <summary>
+        /// Apaga o sensor selecionado
+        /// </summary>
+        /// <param name="sensorid"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("sensor/{sensorid}")]
         public Object RemoveUser(int sensorid)

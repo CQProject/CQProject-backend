@@ -11,6 +11,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class NotificationController : ApiController
     {
         // GET notification/sent/:pageid
+        /// <summary>
+        /// Lista as notificações enviadas de forma paginada
+        /// </summary>
+        /// <param name="pageid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("notification/sent/{pageid}")]
         public Object NotifsSent(int pageid)
@@ -31,6 +36,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET notification/unread/
+        /// <summary>
+        /// Retorna o número de notificações por ler
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("notification/unreadcount")]
         public Object NotifsUnreadCount()
@@ -53,6 +62,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET notification/message/:notifid
+        /// <summary>
+        /// Mostra os detalhes de uma notificação selecionada
+        /// </summary>
+        /// <param name="notifid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("notification/message/{notifid}")]
         public Object NotifMessage(int notifid)
@@ -73,6 +87,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET notification/received/:pageid
+        /// <summary>
+        /// Mostra as notificações recebidade de forma paginada
+        /// </summary>
+        /// <param name="pageid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("notification/received/{pageid}")]
         public Object NotifsReceived(int pageid)
@@ -93,6 +112,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET notification/page/:pageid
+        /// <summary>
+        /// Mostra as validações enviadas numa notificação
+        /// </summary>
+        /// <param name="notifid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("validation/notification/{notifid}")]
         public Object ValidsByNotif(int notifid)
@@ -114,6 +138,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
 
         //POST notification/send
+        /// <summary>
+        /// Envia notificações
+        /// </summary>
+        /// <param name="notification"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("notification/user")]
         public Object SendToUser([FromBody]NotificationUser notification)
@@ -133,6 +162,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST notification/send
+        /// <summary>
+        /// Envia uma notificação para todos os membros de uma turma
+        /// </summary>
+        /// <param name="notification"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("notification/class")]
         public Object SendToClass([FromBody]NotificationClass notification)
@@ -152,6 +186,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //PUT notification/read/:notifid
+        /// <summary>
+        /// Marca como lida uma notificação
+        /// </summary>
+        /// <param name="notifid"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("notification/read/{notifid}")]
         public Object Read(int notifid)
@@ -171,6 +210,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //PUT notification/accept/:notifid
+        /// <summary>
+        /// Aceita a validação de uma notificação
+        /// </summary>
+        /// <param name="notifid"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("notification/accept/{notifid}")]
         public Object Accept(int notifid)

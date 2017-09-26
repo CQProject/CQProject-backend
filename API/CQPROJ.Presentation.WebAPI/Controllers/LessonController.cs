@@ -11,7 +11,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET lesson/subject/:subjectid
         /// <summary>
-        /// Teste do comentário
+        /// Mostra as lições de uma disciplina de uma turma
         /// </summary>
         /// <param name="subjectid"></param>
         /// <param name="classid"></param>
@@ -37,6 +37,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET lesson/student/:lessonid
+        /// <summary>
+        /// Mostra a lição selecionada, vista de estudante
+        /// </summary>
+        /// <param name="lessonid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("lesson/student/{lessonid}")]
         public Object GetLessonsByStudent(int lessonid)
@@ -56,6 +61,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET lesson/teacher/:lessonid
+        /// <summary>
+        /// Mostra a lição selecionada, vista de professor
+        /// </summary>
+        /// <param name="lessonid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("lesson/teacher/{lessonid}")]
         public Object GetLessonsByTeacher(int lessonid)
@@ -77,6 +87,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET lesson/guardian/:lessonid
+        /// <summary>
+        /// Mostra a lição selecionada, vista de encarregado de educação
+        /// </summary>
+        /// <param name="lessonid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("lesson/guardian/{lessonid}")]
         public Object GetLessonsByGuardian(int lessonid)
@@ -99,6 +114,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST lesson/profile/
+        /// <summary>
+        /// Cria uma lição
+        /// </summary>
+        /// <param name="lesson"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("lesson/summary")]
         public Object PostLesson([FromBody]TblLessons lesson)
@@ -114,6 +134,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST lesson/faults/
+        /// <summary>
+        /// Marca as faltas numa lição
+        /// </summary>
+        /// <param name="lesson"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("lesson/faults")]
         public Object PostFaults([FromBody]TblLessonStudents lesson)
@@ -128,6 +153,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // PUT lesson/
+        /// <summary>
+        /// Altera os detalhes de uma lição
+        /// </summary>
+        /// <param name="lesson"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("lesson/summary")]
         public Object PutLesson([FromBody]TblLessons lesson)
@@ -143,6 +173,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // PUT lesson/
+        /// <summary>
+        /// Altera as faltas marcadas para uma lição
+        /// </summary>
+        /// <param name="lesson"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("lesson/faults")]
         public Object PutFaults([FromBody]TblLessonStudents lesson)

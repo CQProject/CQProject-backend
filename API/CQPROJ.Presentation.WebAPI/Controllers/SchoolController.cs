@@ -10,6 +10,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class SchoolController : ApiController
     {
         // GET school/
+        /// <summary>
+        /// Mostra todas as escolas
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("school/")]
         public Object Get()
@@ -18,6 +22,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET school/:schoolID
+        /// <summary>
+        /// Mostra os detalhes de uma escola
+        /// </summary>
+        /// <param name="schoolID"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("school/{schoolID}")]
         public Object Get(int schoolID)
@@ -26,6 +35,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // POST school/
+        /// <summary>
+        /// Cria uma nova escola
+        /// </summary>
+        /// <param name="school"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("school")]
         public Object Post([FromBody]TblSchools school)
@@ -45,6 +59,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // PUT school/
+        /// <summary>
+        /// Altera uma escola
+        /// </summary>
+        /// <param name="school"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("school")]
         public Object Put([FromBody]TblSchools school)

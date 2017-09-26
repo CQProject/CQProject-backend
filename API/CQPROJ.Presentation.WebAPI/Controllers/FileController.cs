@@ -17,6 +17,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class FileController : ApiController
     {
         //GET /download/public/:filename
+        /// <summary>
+        /// Download do ficheiro público selecionado
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("download/public/{*filename}")]
         public Object DownloadPublicImages(string filename)
@@ -41,6 +46,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //GET /download/image/:filename
+        /// <summary>
+        /// Download da imagem pública selecionada
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("download/image/{*filename}")]
         public Object DownloadImage(string filename)
@@ -72,6 +82,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //GET /download/doc/:filename
+        /// <summary>
+        /// Download do documento selecionado
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("download/doc/{*filename}")]
         public Object DownloadFile(string filename)
@@ -102,6 +117,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
 
         //POST /upload/image
+        /// <summary>
+        /// Cria uma nova imagem
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("upload/image")]
         public Object UploadImage()
@@ -140,6 +159,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST /upload/image
+        /// <summary>
+        /// Cria uma nova imagem pública
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("publicUpload/image")]
         public Object UploadPublicImage()
@@ -178,6 +201,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST /upload/doc
+        /// <summary>
+        /// Cria um novo documento
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("upload/doc")]
         public Object UploadFile()

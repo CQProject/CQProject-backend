@@ -13,6 +13,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class FloorController : ApiController
     {
         // GET room/school/:schoolid
+        /// <summary>
+        /// Mostra todos os andares de uma escola
+        /// </summary>
+        /// <param name="schoolid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("floor/school/{schoolid}")]
         public Object FloorBySchool(int schoolid)
@@ -32,6 +37,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET floor/single/:floorid
+        /// <summary>
+        /// Mostra os detalhes de um andar selecionado
+        /// </summary>
+        /// <param name="floorid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("floor/single/{floorid}")]
         public Object Single(int floorid)
@@ -51,6 +61,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // POST floor/
+        /// <summary>
+        /// Cria um novo andar
+        /// </summary>
+        /// <param name="floor"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("floor")]
         public Object Post([FromBody]TblFloors floor)
@@ -69,6 +84,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // PUT floor/
+        /// <summary>
+        /// Altera um andar
+        /// </summary>
+        /// <param name="floor"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("floor")]
         public Object Put([FromBody]TblFloors floor)

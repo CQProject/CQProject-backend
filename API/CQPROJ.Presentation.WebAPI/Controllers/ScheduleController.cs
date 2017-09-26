@@ -11,6 +11,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
 
         // GET schedule/teacher/{teacherid}
+        /// <summary>
+        /// Retorna o horário de um professor
+        /// </summary>
+        /// <param name="teacherid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("schedule/teacher/{teacherid}")]
         public Object ScheduleByTeacher(int teacherid)
@@ -35,6 +40,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET schedule/class/:classid
+        /// <summary>
+        /// Mostra o horário de uma turma
+        /// </summary>
+        /// <param name="classid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("schedule/class/{classid}")]
         public Object ScheduleByClass(int classid)
@@ -58,6 +68,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET schedule/room/:roomid
+        /// <summary>
+        /// Mostra o horário de aulas de uma sala
+        /// </summary>
+        /// <param name="roomid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("schedule/room/{roomid}")]
         public Object GetScheduleByRoom(int roomid)
@@ -80,6 +95,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET schedule/room/:roomid
+        /// <summary>
+        /// Mostra os detalhes de um horário
+        /// </summary>
+        /// <param name="scheduleid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("schedule/profile/{scheduleid}")]
         public Object GetSchedule(int scheduleid)
@@ -102,6 +122,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET subject/:subjectid
+        /// <summary>
+        /// Mostra o horário de uma disciplina
+        /// </summary>
+        /// <param name="subjectid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("subject/{subjectid}")]
         public Object GetSubjectById(int subjectid)
@@ -124,6 +149,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST schedule
+        /// <summary>
+        /// Cria um novo horário
+        /// </summary>
+        /// <param name="schedule"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("schedule")]
         public Object Post([FromBody]TblSchedules schedule)
@@ -142,6 +172,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // PUT schedule
+        /// <summary>
+        /// Altera um horário
+        /// </summary>
+        /// <param name="schedule"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("schedule")]
         public Object PutProfile([FromBody]TblSchedules schedule)

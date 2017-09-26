@@ -13,6 +13,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         // MESMOS rights que schedules
 
         // GET evaluations/class/:id
+        /// <summary>
+        /// Mostra as avaliações de uma turma
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("evaluations/class/{id}")]
         public Object GetbyClass(int id)
@@ -34,6 +39,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET evaluations/teacher/:id
+        /// <summary>
+        /// Mostra as avaliações de uma disciplina
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("evaluations/teacher/{id}")]
         public Object GetbyTeacher(int id)
@@ -54,7 +64,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = evaluations };
         }
 
-        // GET evaluations/teacher/:id
+        // GET grades/evaluation/:evaluationid
+        /// <summary>
+        /// Mostra a nota numa avaliação de um utilizador
+        /// </summary>
+        /// <param name="evaluationid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("grades/evaluation/{evaluationid}")]
         public Object GetGradesBybyTeacher(int evaluationid)
@@ -106,6 +121,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
 
         //POST evaluation/
+        /// <summary>
+        /// Cria uma avaliação
+        /// </summary>
+        /// <param name="evaluation"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("evaluation")]
         public Object Post([FromBody]TblEvaluations evaluation)
@@ -124,6 +144,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // PUT evaluation/
+        /// <summary>
+        /// Altera uma avaliação
+        /// </summary>
+        /// <param name="evaluation"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("evaluation")]
         public Object Put([FromBody]TblEvaluations evaluation)

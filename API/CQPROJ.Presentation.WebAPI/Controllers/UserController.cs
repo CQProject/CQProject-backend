@@ -10,6 +10,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class UserController : ApiController
     {
         // GET role/pages/:id
+        /// <summary>
+        /// Número de páginas por role (50 por página) 
+        /// </summary>
+        /// <param name="roleid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("role/pages/{roleid}")]
         public Object Count(int roleid)
@@ -33,6 +38,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET role/page/:roleid/:pageid
+        /// <summary>
+        /// Lista os utilizadores com um role específico na página selecionado
+        /// </summary>
+        /// <param name="roleid"></param>
+        /// <param name="pageid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("role/page/{roleid}/{pageid}")]
         public Object Page(int roleid, int pageid)
@@ -54,6 +65,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET user/detail/:userid
+        /// <summary>
+        /// Mostra os detalhes de um utilizador
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("user/detail/{userid}")]
         public Object Detail(int userid)
@@ -84,6 +100,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET user/profile/:userid
+        /// <summary>
+        /// Mostra o perfil de um utilizador
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("user/profile/{userid}")]
         public Object Profile(int userid)
@@ -105,6 +126,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST user/
+        /// <summary>
+        /// Cria um novo utilizador
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("user")]
         public Object Post([FromBody]User user)
@@ -122,6 +148,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //POST role
+        /// <summary>
+        /// Define o role de um utilizador
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("role")]
         public Object AddRole([FromBody]RoleUser role)
@@ -142,6 +173,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         //DELETE role
+        /// <summary>
+        /// Apaga o relaciomento entre um utilizador e um role
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("role")]
         public Object RemoveRole([FromBody]RoleUser role)
@@ -162,6 +198,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // PUT user/profile/
+        /// <summary>
+        /// Altera o perfil do utilizador
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("user/profile")]
         public Object Put([FromBody]User user)
@@ -190,6 +231,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // PUT user/activate/:userid
+        /// <summary>
+        /// Ativa um utilizador
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("user/activate/{userid}")]
         public Object Activate(int userid)

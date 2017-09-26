@@ -9,6 +9,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
 
         // POST account/login/
+        /// <summary>
+        /// Autenticação de um utilizador
+        /// </summary>
+        /// <param name="userRequest"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("account/login")]
         public Object Login([FromBody]Login userRequest)
@@ -27,6 +32,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET account/verifytoken/
+        /// <summary>
+        /// Verifica a validade do token de um utilizador
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("account/verifytoken")]
         public Object VerifyToken()

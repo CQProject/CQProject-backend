@@ -9,6 +9,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     public class ActionController : ApiController
     {
         // GET action/pages/:userid
+        /// <summary>
+        /// Ações de um utilizador paginadas
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("action/pages/{userid}")]
         public Object Page(int userid)
@@ -31,6 +36,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         }
 
         // GET action/page/:userid/:pageid
+        /// <summary>
+        /// Página específica das ações de um utilizador
+        /// </summary>
+        /// <param name="userid"></param>
+        /// <param name="pageid"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("action/page/{userid}/{pageid}")]
         public Object GetByUser(int userid, int pageid)
