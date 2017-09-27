@@ -11,7 +11,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET school/
         /// <summary>
-        /// Mostra todas as escolas
+        /// Mostra todas as escolas  ||
+        /// Autenticação: Não
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -23,7 +24,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET school/:schoolID
         /// <summary>
-        /// Mostra os detalhes de uma escola
+        /// Mostra os detalhes de uma escola ||
+        /// Autenticação: Não
         /// </summary>
         /// <param name="schoolID"></param>
         /// <returns></returns>
@@ -36,7 +38,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // POST school/
         /// <summary>
-        /// Cria uma nova escola
+        /// Cria uma nova escola ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary
+        /// ]
         /// </summary>
         /// <param name="school"></param>
         /// <returns></returns>
@@ -60,7 +67,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // PUT school/
         /// <summary>
-        /// Altera uma escola
+        /// Altera uma escola ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin
+        /// ]
         /// </summary>
         /// <param name="school"></param>
         /// <returns></returns>

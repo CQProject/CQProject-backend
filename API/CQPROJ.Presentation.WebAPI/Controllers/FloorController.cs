@@ -14,7 +14,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET room/school/:schoolid
         /// <summary>
-        /// Mostra todos os andares de uma escola
+        /// Mostra todos os andares de uma escola ||
+        /// Autenticação: Sim [
+        /// admin,
+        /// assistant
+        /// ]
         /// </summary>
         /// <param name="schoolid"></param>
         /// <returns></returns>
@@ -38,7 +42,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET floor/single/:floorid
         /// <summary>
-        /// Mostra os detalhes de um andar selecionado
+        /// Mostra os detalhes de um andar selecionado ||
+        /// Autenticação: Sim [
+        /// admin,
+        /// assistant
+        /// ]
         /// </summary>
         /// <param name="floorid"></param>
         /// <returns></returns>
@@ -62,7 +70,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // POST floor/
         /// <summary>
-        /// Cria um novo andar
+        /// Cria um novo andar ||
+        /// Autenticação: Sim [
+        /// admin
+        /// ]
         /// </summary>
         /// <param name="floor"></param>
         /// <returns></returns>
@@ -85,7 +96,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // PUT floor/
         /// <summary>
-        /// Altera um andar
+        /// Altera um andar ||
+        /// Autenticação: Sim [
+        /// admin
+        /// ]
         /// </summary>
         /// <param name="floor"></param>
         /// <returns></returns>

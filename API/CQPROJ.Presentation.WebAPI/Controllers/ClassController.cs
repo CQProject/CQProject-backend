@@ -11,7 +11,13 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET class/teacher/:teacherid
         /// <summary>
-        /// Mostra as turmas de um professor
+        /// Mostra as turmas de um professor ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary,
+        ///     teacher (se for o próprio)
+        /// ]
         /// </summary>
         /// <param name="teacherid"></param>
         /// <returns></returns>
@@ -37,7 +43,14 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET class/student/:studentid
         /// <summary>
-        /// Mostra a turma de estudante
+        /// Mostra as turmas de um estudante ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary,
+        ///     student (se for o próprio),
+        ///     guardian (se o estudante for um educando seu)
+        /// ]
         /// </summary>
         /// <param name="studentid"></param>
         /// <returns></returns>
@@ -65,7 +78,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET class/primary/:schoolid
         /// <summary>
-        /// Mostra todas as turmas de uma escola primária
+        /// Mostra todas as turmas de ensino primário de um centro escolar ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary
+        /// ]
         /// </summary>
         /// <param name="schoolid"></param>
         /// <returns></returns>
@@ -91,7 +109,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET class/kindergarten/:schoolid
         /// <summary>
-        /// Mostra todas as turmas de um jardim de infância
+        /// Mostra todas as turmas de jardim de infância de um centro escolar ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary
+        /// ]
         /// </summary>
         /// <param name="schoolid"></param>
         /// <returns></returns>
@@ -117,7 +140,15 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET student/class/:classid
         /// <summary>
-        /// Mostra todos os alunos de uma turma
+        /// Mostra todos os alunos de uma turma ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary,
+        ///     student (se pertencer à turma), 
+        ///     teacher (se pertencer à turma), 
+        ///     guardian (se tiver educandos na turma) 
+        /// ]
         /// </summary>
         /// <param name="classid"></param>
         /// <returns></returns>
@@ -144,7 +175,15 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET teacher/class/:classid
         /// <summary>
-        /// Mostra os professores de uma turma
+        /// Mostra os professores de uma turma  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary,
+        ///     student (se pertencer à turma), 
+        ///     teacher (se pertencer à turma), 
+        ///     guardian (se tiver educandos na turma) 
+        /// ]
         /// </summary>
         /// <param name="classid"></param>
         /// <returns></returns>
@@ -171,7 +210,15 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET class/profile/:classid
         /// <summary>
-        /// Mostra o perfil de uma turma
+        /// Mostra o perfil de uma turma  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary,
+        ///     student (se pertencer à turma), 
+        ///     teacher (se pertencer à turma), 
+        ///     guardian (se tiver educandos na turma) 
+        /// ]
         /// </summary>
         /// <param name="classid"></param>
         /// <returns></returns>
@@ -198,7 +245,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST class/profile
         /// <summary>
-        /// Cria uma nova turma
+        /// Cria uma nova turma  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary 
+        /// ]
         /// </summary>
         /// <param name="newclass"></param>
         /// <returns></returns>
@@ -221,7 +273,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // POST class/user/
         /// <summary>
-        /// Adiciona um utilizador a uma turma
+        /// Adiciona um utilizador a uma turma  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary 
+        /// ]
         /// </summary>
         /// <param name="classuser"></param>
         /// <returns></returns>
@@ -244,7 +301,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // DELETE class/user/
         /// <summary>
-        /// Remove um utilizador de uma turma
+        /// Remove um utilizador de uma turma  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary 
+        /// ]
         /// </summary>
         /// <param name="classuser"></param>
         /// <returns></returns>
@@ -267,7 +329,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // PUT class/profile/
         /// <summary>
-        /// Altera os dados de uma turma
+        /// Altera os dados de uma turma  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary 
+        /// ]
         /// </summary>
         /// <param name="editedclass"></param>
         /// <returns></returns>

@@ -18,7 +18,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         //GET /download/public/:filename
         /// <summary>
-        /// Download do ficheiro público selecionado
+        /// Download de imagem pública ||
+        /// Autenticação: Não
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
@@ -47,7 +48,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //GET /download/image/:filename
         /// <summary>
-        /// Download da imagem pública selecionada
+        /// Download da imagem ||
+        /// Autenticação: Sim
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
@@ -83,7 +85,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //GET /download/doc/:filename
         /// <summary>
-        /// Download do documento selecionado
+        /// Download de documento ||
+        /// Autenticação: Sim 
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>
@@ -118,7 +121,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST /upload/image
         /// <summary>
-        /// Cria uma nova imagem
+        /// Cria uma nova imagem||
+        /// Autenticação: Sim
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -160,7 +164,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST /upload/image
         /// <summary>
-        /// Cria uma nova imagem pública
+        /// Cria uma nova imagem pública ||
+        /// Autenticação: Sim
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -202,7 +207,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST /upload/doc
         /// <summary>
-        /// Cria um novo documento
+        /// Cria um novo documento ||
+        /// Autenticação: Sim [
+        /// admin,
+        /// secretary,
+        /// teacher ]
         /// </summary>
         /// <returns></returns>
         [HttpPost]

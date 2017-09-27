@@ -14,7 +14,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET sensor/floor/:floorid
         /// <summary>
-        /// Mostra os detalhes do sensor de uma sala
+        /// Mostra os detalhes do sensor de uma sala  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     assistant
+        /// ]
         /// </summary>
         /// <param name="roomid"></param>
         /// <returns></returns>
@@ -38,7 +43,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET sensor/last/:sensorid
         /// <summary>
-        /// Mostra os últimos valores registados por um sensor
+        /// Mostra os últimos valores registados por um sensor ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     assistant
+        /// ]
         /// </summary>
         /// <param name="sensorid"></param>
         /// <returns></returns>
@@ -62,7 +72,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET room/history/:sensorid
         /// <summary>
-        /// Mostra os registos do histórico de um sensor
+        /// Mostra os registos do histórico de um sensor ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin
+        /// ]
         /// </summary>
         /// <param name="sensorid"></param>
         /// <returns></returns>
@@ -86,7 +100,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET sensor/resume/:sensorid
         /// <summary>
-        /// Mostra o resumo dos registos de um sensor
+        /// Mostra o resumo dos registos de um sensor ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     assistant
+        /// ]
         /// </summary>
         /// <param name="sensorid"></param>
         /// <returns></returns>
@@ -96,7 +115,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null || !payload.rol.Contains(6))
+            if (payload == null || (!payload.rol.Contains(6) && !payload.rol.Contains(4)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -110,7 +129,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST sensor/
         /// <summary>
-        /// Cria um novo sensor
+        /// Cria um novo sensor ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin
+        /// ]
         /// </summary>
         /// <param name="sensor"></param>
         /// <returns></returns>
@@ -133,7 +156,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // PUT sensor/
         /// <summary>
-        /// Altera um sensor
+        /// Altera um sensor ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin
+        /// ]
         /// </summary>
         /// <param name="sensor"></param>
         /// <returns></returns>
@@ -156,7 +183,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // DELETE sesnor/:sensorid
         /// <summary>
-        /// Apaga o sensor selecionado
+        /// Apaga o sensor selecionado ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin
+        /// ]
         /// </summary>
         /// <param name="sensorid"></param>
         /// <returns></returns>

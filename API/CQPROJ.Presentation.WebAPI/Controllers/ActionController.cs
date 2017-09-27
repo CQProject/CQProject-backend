@@ -10,7 +10,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET action/pages/:userid
         /// <summary>
-        /// Ações de um utilizador paginadas
+        /// Numero de páginas das ações de um utilizador ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary
+        /// ]
         /// </summary>
         /// <param name="userid"></param>
         /// <returns></returns>
@@ -37,7 +42,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET action/page/:userid/:pageid
         /// <summary>
-        /// Página específica das ações de um utilizador
+        /// Página específica das ações de um utilizador ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary
+        /// ]
         /// </summary>
         /// <param name="userid"></param>
         /// <param name="pageid"></param>

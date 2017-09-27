@@ -13,7 +13,13 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         //Get guardian/:studentid
         /// <summary>
-        /// Mostra os encarregados de educação de um estudante 
+        /// Mostra os encarregados de educação de um estudante ||
+        /// Autenticação: Sim
+        /// [
+        ///     admin,
+        ///     secretary,
+        ///     teacher  
+        /// ]
         /// </summary>
         /// <param name="studentid"></param>
         /// <returns></returns>
@@ -37,7 +43,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST guardian/
         /// <summary>
-        /// Cria um novo encarregado de educação
+        /// Cria um novo encarregado de educação ||
+        /// Autenticação: Sim
+        /// [
+        ///     admin,
+        ///     secretary
+        /// ]
         /// </summary>
         /// <param name="guardian"></param>
         /// <returns></returns>
@@ -56,7 +67,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST parenting/
         /// <summary>
-        /// Cria uma relação entre o encarregado de educação e o estudante
+        /// Cria uma relação entre o encarregado de educação e o estudante ||
+        /// Autenticação: Sim
+        /// [
+        ///     admin,
+        ///     secretary 
+        /// ]
         /// </summary>
         /// <param name="parenting"></param>
         /// <returns></returns>
@@ -79,7 +95,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //DELETE parenting/
         /// <summary>
-        /// Apaga a relação entre o encarregado de educação e o estudante
+        /// Apaga a relação entre o encarregado de educação e o estudante ||
+        /// Autenticação: Sim
+        /// [
+        ///     admin,
+        ///     secretary 
+        /// ]
         /// </summary>
         /// <param name="parenting"></param>
         /// <returns></returns>

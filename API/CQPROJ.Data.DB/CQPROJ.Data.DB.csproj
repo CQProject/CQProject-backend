@@ -23,6 +23,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -108,6 +109,7 @@
     <Compile Include="Models\TblFloors.cs" />
     <Compile Include="Models\TblLessons.cs" />
     <Compile Include="Models\TblLessonStudents.cs" />
+    <Compile Include="Models\TblNotices.cs" />
     <Compile Include="Models\TblNotifications.cs" />
     <Compile Include="Models\TblParenting.cs" />
     <Compile Include="Models\TblRecords.cs" />

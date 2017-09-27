@@ -10,7 +10,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // POST account/login/
         /// <summary>
-        /// Autenticação de um utilizador
+        /// Autenticação de um utilizador ||
+        /// Autenticação: Não
         /// </summary>
         /// <param name="userRequest"></param>
         /// <returns></returns>
@@ -33,7 +34,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET account/verifytoken/
         /// <summary>
-        /// Verifica a validade do token de um utilizador
+        /// Verifica a validade do token de um utilizador ||
+        /// Autenticação: Não
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -47,12 +49,6 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = true, data = false };
             }
             return new { result = true, data = true };
-        }
-
-        // PUT account/:id
-        public void Put(int id, [FromBody]string value)
-        {
-
         }
     }
 }

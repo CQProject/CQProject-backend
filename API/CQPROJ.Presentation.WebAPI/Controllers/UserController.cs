@@ -11,7 +11,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET role/pages/:id
         /// <summary>
-        /// Número de páginas por role (50 por página) 
+        /// Número de páginas por role (50 por página) ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     secretary
+        /// ]
         /// </summary>
         /// <param name="roleid"></param>
         /// <returns></returns>
@@ -39,7 +44,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET role/page/:roleid/:pageid
         /// <summary>
-        /// Lista os utilizadores com um role específico na página selecionado
+        /// Lista os utilizadores com um role específico na página selecionado ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     secretary
+        /// ]
         /// </summary>
         /// <param name="roleid"></param>
         /// <param name="pageid"></param>
@@ -50,7 +60,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null  || payload.rol.Contains(1) || payload.rol.Contains(4) || payload.rol.Contains(5))
+            if (payload == null  || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
                 return new { result = false, info="Não autorizado." };
             }
@@ -66,7 +76,16 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET user/detail/:userid
         /// <summary>
-        /// Mostra os detalhes de um utilizador
+        /// Mostra os detalhes de um utilizador ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     secretary,
+        ///     teacher (se for o proprio),
+        ///     student (se for o proprio),
+        ///     assistant (se for o proprio),
+        ///     guardian (se for o proprio ou um educando seu)
+        /// ]
         /// </summary>
         /// <param name="userid"></param>
         /// <returns></returns>
@@ -101,7 +120,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET user/profile/:userid
         /// <summary>
-        /// Mostra o perfil de um utilizador
+        /// Mostra o perfil básico de um utilizador ||
+        /// Autenticação: Sim
         /// </summary>
         /// <param name="userid"></param>
         /// <returns></returns>
@@ -127,7 +147,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST user/
         /// <summary>
-        /// Cria um novo utilizador
+        /// Cria um novo utilizador ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     secretary (excepto se tentar criar um secretario ou administrador)
+        /// ]
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
@@ -149,7 +174,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST role
         /// <summary>
-        /// Define o role de um utilizador
+        /// Define o role de um utilizador ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     secretary (excepto se tentar editar um secretario ou administrador)
+        /// ]
         /// </summary>
         /// <param name="role"></param>
         /// <returns></returns>
@@ -174,7 +204,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //DELETE role
         /// <summary>
-        /// Apaga o relaciomento entre um utilizador e um role
+        /// Apaga o relaciomento entre um utilizador e um role ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     secretary (excepto se tentar eliminar um secretario ou administrador)
+        /// ]
         /// </summary>
         /// <param name="role"></param>
         /// <returns></returns>
@@ -199,7 +234,15 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // PUT user/profile/
         /// <summary>
-        /// Altera o perfil do utilizador
+        /// Altera o perfil do utilizador ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     secretary,
+        ///     teacher (se for o proprio),
+        ///     assistant (se for o proprio),
+        ///     guardian (se for o proprio ou um educando seu)
+        /// ]
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
@@ -232,7 +275,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // PUT user/activate/:userid
         /// <summary>
-        /// Ativa um utilizador
+        /// Ativa um utilizador ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     secretary (excepto se tentar ativar um secretario ou administrador)
+        /// ]
         /// </summary>
         /// <param name="userid"></param>
         /// <returns></returns>

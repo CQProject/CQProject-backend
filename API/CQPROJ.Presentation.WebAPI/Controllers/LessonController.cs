@@ -11,7 +11,14 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET lesson/subject/:subjectid
         /// <summary>
-        /// Mostra as lições de uma disciplina de uma turma
+        /// Mostra as lições de uma disciplina de uma turma ||
+        /// Autenticação: Sim
+        /// [   admin, 
+        ///     secretary, 
+        ///     student (se pertencer à turma), 
+        ///     teacher (se pertencer à turma), 
+        ///     guardian (se tiver educandos na turma) 
+        /// ]
         /// </summary>
         /// <param name="subjectid"></param>
         /// <param name="classid"></param>
@@ -38,7 +45,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET lesson/student/:lessonid
         /// <summary>
-        /// Mostra a lição selecionada, vista de estudante
+        /// Mostra a lição selecionada, vista de estudante ||
+        /// Autenticação: Sim
+        /// [ 
+        ///     student
+        /// ]
         /// </summary>
         /// <param name="lessonid"></param>
         /// <returns></returns>
@@ -62,7 +73,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET lesson/teacher/:lessonid
         /// <summary>
-        /// Mostra a lição selecionada, vista de professor
+        /// Mostra a lição selecionada, vista de professor ||
+        /// Autenticação: Sim
+        /// [   admin, 
+        ///     secretary, 
+        ///     teacher (se pertencer à turma da lição)
+        /// ]
         /// </summary>
         /// <param name="lessonid"></param>
         /// <returns></returns>
@@ -88,7 +104,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET lesson/guardian/:lessonid
         /// <summary>
-        /// Mostra a lição selecionada, vista de encarregado de educação
+        /// Mostra a lição selecionada, vista de encarregado de educação ||
+        /// Autenticação: Sim
+        /// [
+        ///     guardian (se tiver educandos na turma da lição)
+        /// ]
         /// </summary>
         /// <param name="lessonid"></param>
         /// <returns></returns>
@@ -115,7 +135,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST lesson/profile/
         /// <summary>
-        /// Cria uma lição
+        /// Cria uma lição ||
+        /// Autenticação: Sim
+        /// [
+        ///     teacher (se pertencer à turma da lição)  
+        /// ]
         /// </summary>
         /// <param name="lesson"></param>
         /// <returns></returns>
@@ -135,7 +159,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST lesson/faults/
         /// <summary>
-        /// Marca as faltas numa lição
+        /// Marca as faltas numa lição ||
+        /// Autenticação: Sim
+        /// [
+        ///     teacher (se pertencer à turma da lição)  
+        /// ]
         /// </summary>
         /// <param name="lesson"></param>
         /// <returns></returns>
@@ -154,7 +182,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // PUT lesson/
         /// <summary>
-        /// Altera os detalhes de uma lição
+        /// Altera os detalhes de uma lição ||
+        /// Autenticação: Sim
+        /// [
+        ///     teacher (se pertencer à turma da lição)  
+        /// ]
         /// </summary>
         /// <param name="lesson"></param>
         /// <returns></returns>
@@ -174,7 +206,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // PUT lesson/
         /// <summary>
-        /// Altera as faltas marcadas para uma lição
+        /// Altera as faltas marcadas para uma lição ||
+        /// Autenticação: Sim
+        /// [
+        ///     teacher (se pertencer à turma da lição)
+        /// ]
         /// </summary>
         /// <param name="lesson"></param>
         /// <returns></returns>

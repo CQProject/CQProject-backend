@@ -198,6 +198,7 @@
     <Compile Include="Controllers\ActionController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\FloorController.cs" />
+    <Compile Include="Controllers\NoticeController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\SensorController.cs" />
     <Compile Include="Controllers\TaskController.cs" />

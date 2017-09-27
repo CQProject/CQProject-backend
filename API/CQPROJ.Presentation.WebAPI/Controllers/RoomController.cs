@@ -14,7 +14,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET room/school/:schoolid
         /// <summary>
-        /// Mostra todos as salas de uma escola
+        /// Mostra todos as salas de uma escola ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     assistant 
+        /// ]
         /// </summary>
         /// <param name="schoolid"></param>
         /// <returns></returns>
@@ -38,7 +43,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET room/floor/:floorid
         /// <summary>
-        /// Mostra todas as salas de um andar
+        /// Mostra todas as salas de um andar ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     assistant 
+        /// ]
         /// </summary>
         /// <param name="floorid"></param>
         /// <returns></returns>
@@ -62,7 +72,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET room/single/:roomid
         /// <summary>
-        /// Mostra os detalhes de uma sala
+        /// Mostra os detalhes de uma sala ||
+        /// Autenticação: Sim
         /// </summary>
         /// <param name="roomid"></param>
         /// <returns></returns>
@@ -86,7 +97,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // POST room/
         /// <summary>
-        /// Cria uma nova sala
+        /// Cria uma nova sala ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin 
+        /// ]
         /// </summary>
         /// <param name="room"></param>
         /// <returns></returns>
@@ -109,7 +124,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // PUT room/
         /// <summary>
-        /// Altera uma sala
+        /// Altera uma sala ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin
+        /// ]
         /// </summary>
         /// <param name="room"></param>
         /// <returns></returns>

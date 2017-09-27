@@ -14,7 +14,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET task/todo
         /// <summary>
-        /// Mostra todas as tarefas de um utilizador
+        /// Mostra as tarefas de um utilizador a realizar no presente dia ||
+        /// Autenticação: Sim
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -37,7 +38,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET task/user/:userid/:dayweek
         /// <summary>
-        /// Mostra as tarefas de um dia para o utilizador
+        /// Mostra as tarefas de um dia de um utilizador ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     secretary
+        /// ]
         /// </summary>
         /// <param name="userid"></param>
         /// <param name="dayweek"></param>
@@ -62,7 +68,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET task/done/:taskid
         /// <summary>
-        /// Lista detalhes de uma tarefa já feita
+        /// Lista detalhes de uma tarefa já feita ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     secretary
+        /// ]
         /// </summary>
         /// <param name="taskid"></param>
         /// <returns></returns>
@@ -86,7 +97,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST task
         /// <summary>
-        /// Cria uma nova tarefa
+        /// Cria uma nova tarefa ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     secretary
+        /// ]
         /// </summary>
         /// <param name="task"></param>
         /// <returns></returns>
@@ -105,7 +121,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST done
         /// <summary>
-        /// Marca uma tarefa como feita
+        /// Marca uma tarefa como feita ||
+        /// Autenticação: Sim
         /// </summary>
         /// <param name="taskid"></param>
         /// <returns></returns>
@@ -124,7 +141,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //PUT task
         /// <summary>
-        /// Altera uma tarefa
+        /// Altera uma tarefa ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     secretary
+        /// ]
         /// </summary>
         /// <param name="task"></param>
         /// <returns></returns>

@@ -13,7 +13,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET /time/primary/{schoolid}
         /// <summary>
-        /// Mostra o horário de uma escola primária
+        /// Mostra o horário de uma escola primária ||
+        /// Autenticação: Sim
         /// </summary>
         /// <param name="schoolid"></param>
         /// <returns></returns>
@@ -40,7 +41,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET /time/kindergarten/{schoolid}
         /// <summary>
-        /// Mostra o horário de um jardim escola
+        /// Mostra o horário de um jardim escola ||
+        /// Autenticação: Sim
         /// </summary>
         /// <param name="schoolid"></param>
         /// <returns></returns>
@@ -67,7 +69,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET /time/single/{timeid}
         /// <summary>
-        /// Retorna o tempo com o ID selecionado
+        /// Retorna o tempo com o ID selecionado ||
+        /// Autenticação: Sim
         /// </summary>
         /// <param name="timeid"></param>
         /// <returns></returns>

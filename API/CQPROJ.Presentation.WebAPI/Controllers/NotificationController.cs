@@ -139,7 +139,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST notification/send
         /// <summary>
-        /// Envia notificações
+        /// Envia notificações para um utilizador
         /// </summary>
         /// <param name="notification"></param>
         /// <returns></returns>

@@ -14,7 +14,14 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET evaluations/class/:id
         /// <summary>
-        /// Mostra as avaliações de uma turma
+        /// Mostra as avaliações de uma turma  ||
+        /// Autenticação: Sim
+        /// [   admin, 
+        ///     secretary, 
+        ///     student (se pertencer à turma), 
+        ///     teacher (se pertencer à turma), 
+        ///     guardian (se tiver educandos na turma) 
+        /// ]
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -40,7 +47,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET evaluations/teacher/:id
         /// <summary>
-        /// Mostra as avaliações de uma disciplina
+        /// Mostra as avaliações de uma disciplina  ||
+        /// Autenticação: Sim
+        /// [   admin, 
+        ///     secretary, 
+        ///     teacher (se for o próprio)
+        /// ]
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -66,13 +78,20 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET grades/evaluation/:evaluationid
         /// <summary>
-        /// Mostra a nota numa avaliação de um utilizador
+        /// Mostra a nota numa avaliação de um utilizador  ||
+        /// Autenticação: Sim
+        /// [   admin, 
+        ///     secretary, 
+        ///     student, 
+        ///     teacher, 
+        ///     guardian 
+        /// ]
         /// </summary>
         /// <param name="evaluationid"></param>
         /// <returns></returns>
         [HttpGet]
         [Route("grades/evaluation/{evaluationid}")]
-        public Object GetGradesBybyTeacher(int evaluationid)
+        public Object GetGrades(int evaluationid)
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
@@ -122,7 +141,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST evaluation/
         /// <summary>
-        /// Cria uma avaliação
+        /// Cria uma avaliação  ||
+        /// Autenticação: Sim
+        /// [   teacher
+        /// ]
         /// </summary>
         /// <param name="evaluation"></param>
         /// <returns></returns>
@@ -145,7 +167,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // PUT evaluation/
         /// <summary>
-        /// Altera uma avaliação
+        /// Altera uma avaliação  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     teacher (se for uma avaliação criada pelo próprio), 
+        /// ]
         /// </summary>
         /// <param name="evaluation"></param>
         /// <returns></returns>
@@ -155,7 +181,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null || !payload.rol.Contains(2))
+            if (payload == null || !payload.rol.Contains(2) || (payload.rol.Contains(2) && evaluation.TeacherFK!=payload.aud))
             {
                 return new { result = false, info = "Não autorizado." };
             }

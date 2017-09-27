@@ -11,7 +11,13 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET document/user/:id
         /// <summary>
-        /// Mostra os documentos de um utilizador
+        /// Mostra os documentos de um utilizador ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary,
+        ///     teacher (se for o próprio), 
+        /// ]
         /// </summary>
         /// <param name="userid"></param>
         /// <returns></returns>
@@ -39,7 +45,14 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET document/user/:id
         /// <summary>
-        /// Mostra os documentos de uma turma
+        /// Mostra os documentos de uma turma ||
+        /// Autenticação: Sim
+        /// [   admin, 
+        ///     secretary, 
+        ///     student (se pertencer à turma), 
+        ///     teacher (se pertencer à turma), 
+        ///     guardian (se tiver educandos na turma) 
+        /// ]
         /// </summary>
         /// <param name="classid"></param>
         /// <returns></returns>
@@ -76,7 +89,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         //POST document/
         /// <summary>
-        /// Cria um documento novo
+        /// Cria um documento novo ||
+        /// Autenticação: Sim
+        /// [   admin, 
+        ///     secretary,  
+        ///     teacher
+        /// ]
         /// </summary>
         /// <param name="document"></param>
         /// <returns></returns>
@@ -86,7 +104,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null || !payload.rol.Contains(2))
+            if (payload == null || (!payload.rol.Contains(2) && !payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -99,7 +117,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // PUT document/
         /// <summary>
-        /// Altera um documento
+        /// Altera um documento ||
+        /// Autenticação: Sim
+        /// [   admin (se o tiver inserido), 
+        ///     secretary (se o tiver inserido),  
+        ///     teacher (se o tiver inserido)
+        /// ]
         /// </summary>
         /// <param name="document"></param>
         /// <returns></returns>
@@ -109,7 +132,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null || !payload.rol.Contains(2))
+            if (payload == null || (!payload.rol.Contains(2) && !payload.rol.Contains(3) && !payload.rol.Contains(6)) || (payload.aud!=document.UserFK))
             {
                 return new { result = false, info = "Não autorizado." };
             }
