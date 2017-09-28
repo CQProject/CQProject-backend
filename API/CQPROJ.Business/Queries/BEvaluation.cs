@@ -61,7 +61,7 @@ namespace CQPROJ.Business.Queries
                     List<TblEvaluationStudents> grades = new List<TblEvaluationStudents>();
                     availableStudents.ForEach(studentID =>
                     {
-                        var grade = db.TblEvaluationStudents.Where(x => x.EvaluationFK == evaluationID && x.StudentFK== studentID).FirstOrDefault();
+                        var grade = db.TblEvaluationStudents.Where(x => x.EvaluationFK == evaluationID && x.StudentFK == studentID).FirstOrDefault();
                         if (grade != null)
                         {
                             grades.Add(grade);
@@ -116,13 +116,52 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return false; }
         }
 
+        public static int CreateGrade(TblEvaluationStudents grade)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    if(db.TblUserRoles.Any(x=>x.UserFK==grade.StudentFK && x.RoleFK == 1))
+                    {
+                        if(db.TblClassUsers.Any(x=>x.ClassFK== db.TblClasses.Find(db.TblEvaluations.Find(grade.EvaluationFK).ClassFK).ID && x.UserFK == grade.StudentFK))
+                        {
+                            db.TblEvaluationStudents.Add(grade);
+                            db.SaveChanges();
+                            return 3;
+                        }
+                        return 2;
+                    }
+                    return 1;
+                }
+            }
+            catch (Exception) { return 0; }
+        }
+
+        public static Boolean EditGrade(TblEvaluationStudents grade)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    db.Entry(grade).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception) { return false; }
+        }
+
         public static bool VerifyTeacher(int evaluationID, int teacherID)
         {
-            using (var db = new DBContextModel())
+            try
             {
-                var classFK = db.TblEvaluations.Find(evaluationID).ClassFK;
-                return BClass.GetTeachersByClass(classFK ?? default(int)).Any(x => x == teacherID);
+                using (var db = new DBContextModel())
+                {
+                    return db.TblEvaluations.Any(x=> x.TeacherFK == teacherID && x.ID==evaluationID);
+                }
             }
+            catch (Exception) { return false; }
         }
     }
 }

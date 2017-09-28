@@ -121,12 +121,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 }
                 else
                 {
-                    if (payload.rol.Contains(2))
+                    if (payload.rol.Contains(2) && !BEvaluation.VerifyTeacher(evaluationid, payload.aud))
                     {
-                        if (!BEvaluation.VerifyTeacher(evaluationid, payload.aud))
-                        {
-                            return new { result = false, info = "Não foi encontrada avaliação." };
-                        }
+                        return new { result = false, info = "Não foi encontrada avaliação." };
                     }
                     var grades = BEvaluation.GetGradesToTeacher(evaluationid);
                     if (grades == null)
@@ -143,7 +140,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         /// <summary>
         /// Cria uma avaliação  ||
         /// Autenticação: Sim
-        /// [   teacher
+        /// [   teacher (se pertencer à turma)
         /// ]
         /// </summary>
         /// <param name="evaluation"></param>
@@ -154,7 +151,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null || !payload.rol.Contains(2))
+            if (payload == null || !payload.rol.Contains(2) || !BClass.HasUser(evaluation.ClassFK, payload.aud))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -181,7 +178,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null || !payload.rol.Contains(2) || (payload.rol.Contains(2) && evaluation.TeacherFK!=payload.aud))
+            if (payload == null || !payload.rol.Contains(2) || (payload.rol.Contains(2) && evaluation.TeacherFK != payload.aud))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -190,6 +187,60 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = true };
             }
             return new { result = false, info = "Não foi possível alterar a avaliação" };
+        }
+
+        /// <summary>
+        /// Atribui nota a um aluno  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     teacher (se for uma avaliação criada pelo próprio), 
+        /// ]
+        /// </summary>
+        /// <param name="grade"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("grade")]
+        public Object PostGrade([FromBody]TblEvaluationStudents grade)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || !payload.rol.Contains(2) || !BEvaluation.VerifyTeacher(grade.EvaluationFK, payload.aud))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            switch (BEvaluation.CreateGrade(grade)){
+                case 3: return new { result = true };
+                case 0: return new { result = false, info = "Não foi possível atribuir a nota." };
+                case 1: return new { result = false, info = "O utilizador associado à avaliação não é uma aluno." };
+                case 2: return new { result = false, info = "O aluno associado à avaliação não pertence à turma." };
+                default: return new { result = false, info = "Não foi possível atribuir a nota." };
+            }
+        }
+
+        /// <summary>
+        /// Edita a nota de um aluno  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     teacher (se for uma avaliação criada pelo próprio), 
+        /// ]
+        /// </summary>
+        /// <param name="grade"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("grade")]
+        public Object PutGrade([FromBody]TblEvaluationStudents grade)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || !payload.rol.Contains(2) || !BEvaluation.VerifyTeacher(grade.EvaluationFK, payload.aud))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            if (BEvaluation.EditGrade(grade))
+            {
+                return new { result = true };
+            }
+            return new { result = false, info = "Não foi possível alterar a nota da avaliação" };
         }
     }
 }

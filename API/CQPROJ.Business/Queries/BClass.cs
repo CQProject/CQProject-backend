@@ -166,5 +166,17 @@ namespace CQPROJ.Business.Queries
             }
             catch { return false; }
         }
+
+        public static Boolean HasUser(int? classID, int userID)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    return db.TblClassUsers.Any(x => x.UserFK == userID && x.ClassFK == classID);
+                }
+            }
+            catch { return false; }
+        }
     }
 }

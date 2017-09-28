@@ -1224,7 +1224,7 @@
             <summary>
             Cria uma avaliação  ||
             Autenticação: Sim
-            [   teacher
+            [   teacher (se pertencer à turma)
             ]
             </summary>
             <param name="evaluation"></param>
@@ -1239,6 +1239,28 @@
             ]
             </summary>
             <param name="evaluation"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.EvaluationController.PostGrade(CQPROJ.Data.DB.Models.TblEvaluationStudents)">
+            <summary>
+            Atribui nota a um aluno  ||
+            Autenticação: Sim
+            [   
+                teacher (se for uma avaliação criada pelo próprio), 
+            ]
+            </summary>
+            <param name="grade"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.EvaluationController.PutGrade(CQPROJ.Data.DB.Models.TblEvaluationStudents)">
+            <summary>
+            Edita a nota de um aluno  ||
+            Autenticação: Sim
+            [   
+                teacher (se for uma avaliação criada pelo próprio), 
+            ]
+            </summary>
+            <param name="grade"></param>
             <returns></returns>
         </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ParentingController.GetGuardians(System.Int32)">
