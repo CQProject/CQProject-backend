@@ -147,6 +147,32 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = schedule };
         }
 
+        /// <summary>
+        /// Apresenta a lista de disciplinas do sistema  ||
+        /// Autenticação: Sim
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("subject/list")]
+        public Object GetSubjectList()
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null)
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var subject = BSchedule.GetSubjectList();
+
+            if (subject == null)
+            {
+                return new { result = false, info = "Lista de disciplinas não encontrada." };
+            }
+
+            return new { result = true, data = subject };
+        }
+
         // GET subject/:subjectid
         /// <summary>
         /// Mostra o horário de uma disciplina  ||
@@ -229,6 +255,60 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = true };
             }
             return new { result = false, info = "Não foi possível alterar dados da aula." };
+        }
+
+        /// <summary>
+        /// Cria uma hora de aula  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary
+        /// ]
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("subject")]
+        public Object PostSubject([FromBody]TblSubjects subject)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            if (BSchedule.CreateSubject(subject))
+            {
+                return new { result = true };
+            }
+            return new { result = false, info = "Não foi possível registar a hora aula." };
+        }
+
+        /// <summary>
+        /// Altera uma hora de aula  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary
+        /// ]
+        /// </summary>
+        /// <param name="subject"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("subject")]
+        public Object PutSubject([FromBody]TblSubjects subject)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            if (BSchedule.EditSubject(subject))
+            {
+                return new { result = true };
+            }
+            return new { result = false, info = "Não foi possível alterar a hora de aula." };
         }
     }
 }

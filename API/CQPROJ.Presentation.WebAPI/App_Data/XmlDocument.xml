@@ -1521,6 +1521,13 @@
             <param name="scheduleid"></param>
             <returns></returns>
         </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.GetSubjectList">
+            <summary>
+            Apresenta a lista de disciplinas do sistema  ||
+            Autenticação: Sim
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.GetSubjectById(System.Int32)">
             <summary>
             Mostra o horário de uma disciplina  ||
@@ -1551,6 +1558,30 @@
             ]
             </summary>
             <param name="schedule"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.PostSubject(CQPROJ.Data.DB.Models.TblSubjects)">
+            <summary>
+            Cria uma hora de aula  ||
+            Autenticação: Sim
+            [   
+                admin, 
+                secretary
+            ]
+            </summary>
+            <param name="subject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.PutSubject(CQPROJ.Data.DB.Models.TblSubjects)">
+            <summary>
+            Altera uma hora de aula  ||
+            Autenticação: Sim
+            [   
+                admin, 
+                secretary
+            ]
+            </summary>
+            <param name="subject"></param>
             <returns></returns>
         </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SchoolController.Get">

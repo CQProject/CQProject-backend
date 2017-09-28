@@ -101,5 +101,45 @@ namespace CQPROJ.Business.Queries
             }
             catch (Exception) { return null; }
         }
+
+        public static bool CreateSubject(TblSubjects subject)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    db.TblSubjects.Add(subject);
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception) { return false; }
+        }
+
+        public static bool EditSubject(TblSubjects subject)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    db.Entry(subject).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception) { return false; }
+        }
+
+        public static object GetSubjectList()
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    return db.TblSubjects.ToList();
+                }
+            }
+            catch (Exception) { return null; }
+        }
     }
 }
