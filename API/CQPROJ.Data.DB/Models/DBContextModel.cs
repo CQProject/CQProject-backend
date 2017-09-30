@@ -1,10 +1,7 @@
+using System.Data.Entity;
+
 namespace CQPROJ.Data.DB.Models
 {
-    using System;
-    using System.Data.Entity;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
-
     public partial class DBContextModel : DbContext
     {
         public DBContextModel()
@@ -38,8 +35,6 @@ namespace CQPROJ.Data.DB.Models
         public virtual DbSet<TblUsers> TblUsers { get; set; }
         public virtual DbSet<TblValidations> TblValidations { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) { }
     }
 }

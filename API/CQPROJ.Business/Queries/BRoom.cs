@@ -1,10 +1,8 @@
-﻿using System;
+﻿using CQPROJ.Data.DB.Models;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CQPROJ.Data.DB.Models;
 using System.Data.Entity;
+using System.Linq;
 
 namespace CQPROJ.Business.Queries
 {

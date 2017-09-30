@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using CQPROJ.Data.DB.Models;
 using System;
-using CQPROJ.Data.DB.Models;
 using System.Data.Entity;
+using System.Linq;
 
 namespace CQPROJ.Business.Queries
 {

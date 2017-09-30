@@ -1,4 +1,5 @@
 ﻿using CQPROJ.Business.Entities.IAccount;
+using CQPROJ.Data.AD;
 using CQPROJ.Data.DB.Models;
 using Microsoft.AspNet.Identity;
 using System;
@@ -88,6 +89,8 @@ namespace CQPROJ.Business.Queries
                     TblUserRoles userRoles = new TblUserRoles { UserFK = user.ID, RoleFK = newUser.RoleID };
                     db.TblUserRoles.Add(userRoles);
                     db.SaveChanges();
+
+                    ActiveDirectory.CreateUser(user.Email, user.Password);
 
                     return new { result = true, data = user.ID };
                 }

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Diagnostics;
 using System.Linq;
 
 namespace CQPROJ.Business.Queries
@@ -65,7 +64,7 @@ namespace CQPROJ.Business.Queries
                     List<TblLessonStudents> students = new List<TblLessonStudents>();
                     availableStudents.ForEach(studentID =>
                     {
-                        var aux=db.TblLessonStudents.Where(x=> x.LessonFK==lessonID && x.StudentFK == studentID).FirstOrDefault();
+                        var aux = db.TblLessonStudents.Where(x => x.LessonFK == lessonID && x.StudentFK == studentID).FirstOrDefault();
                         if (aux != null)
                         {
                             students.Add(aux);

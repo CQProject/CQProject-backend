@@ -1,6 +1,5 @@
 ﻿using CQPROJ.Business.Entities.IAccount;
 using CQPROJ.Business.Queries;
-using CQPROJ.Data.AD;
 using System;
 using System.Linq;
 using System.Web.Http;
@@ -168,7 +167,6 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            CQPROJ_NET.CreateUser(user.Email, user.Password);
             return BUser.CreateUser(user);
         }
 

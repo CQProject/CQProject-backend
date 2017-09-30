@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CQPROJ.Data.AD
 {
-    public class CQPROJ_NET
+    public class ActiveDirectory
     {
         public static Principal GetUser(string SamAccountName)
         {
