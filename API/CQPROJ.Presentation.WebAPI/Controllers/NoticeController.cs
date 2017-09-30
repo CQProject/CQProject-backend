@@ -73,7 +73,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (BNotice.CreateNotice(newnotice))
+            if (BNotice.CreateNotice(newnotice, payload.aud))
             {
                 return new { result = true };
             }
@@ -101,11 +101,39 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (BNotice.EditNotice(editednotice))
+            if (BNotice.EditNotice(editednotice, payload.aud))
             {
                 return new { result = true };
             }
             return new { result = false, info = "Não foi possível alterar dados do anuncio." };
+        }
+
+        // DELETE notice/:noticeid
+        /// <summary>
+        /// Elimina um anuncio ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary 
+        /// ]
+        /// </summary>
+        /// <param name="noticeid"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("notice/{noticeid}")]
+        public Object DeleteNotice(int noticeid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            if (BNotice.DeleteNotice(noticeid, payload.aud))
+            {
+                return new { result = true };
+            }
+            return new { result = false, info = "Não foi possível eliminar anuncio." };
         }
     }
 }

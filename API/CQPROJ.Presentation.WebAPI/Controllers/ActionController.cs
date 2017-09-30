@@ -30,14 +30,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var actions = BAction.GetPagesByUser(userid);
-
-            if (actions == null)
-            {
-                return new { result = false, info = "Impossível carregar página." };
-            }
-
-            return new { result = true, data = actions };
+            return BAction.GetPagesByUser(userid);
         }
 
         // GET action/page/:userid/:pageid
@@ -63,14 +56,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var actions = BAction.GetActionsbyUser(userid, pageid);
-
-            if (actions == null)
-            {
-                return new { result = false, info = "Impossível carregar página." };
-            }
-
-            return new { result = true, data = new { page = pageid, info = actions } };
+            return BAction.GetActionsbyUser(userid, pageid);
         }
     }
 }

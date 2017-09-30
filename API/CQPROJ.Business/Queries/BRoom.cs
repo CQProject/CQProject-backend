@@ -80,5 +80,10 @@ namespace CQPROJ.Business.Queries
             }
             catch (Exception) { return false; }
         }
+
+        public static bool DeleteRoom(int roomid)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

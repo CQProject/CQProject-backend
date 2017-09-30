@@ -167,7 +167,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            return BUser.CreateUser(user);
+            return BUser.CreateUser(user,payload.aud);
         }
 
         //POST role
@@ -193,7 +193,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if(!BUser.AddRole(role.UserID, role.RoleID))
+            if(!BUser.AddRole(role.UserID, role.RoleID,payload.aud))
             {
                 return new { result = false, info = "Não foi possível atribuir as permissões ao utilizador." };
             }
@@ -223,7 +223,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (!BUser.RemoveRole(role.UserID, role.RoleID))
+            if (!BUser.RemoveRole(role.UserID, role.RoleID,payload.aud))
             {
                 return new { result = false, info = "Não foi possível remover as permissões do utilizador." };
             }
@@ -264,7 +264,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                     }
                 }
             }
-            if (BUser.EditUser(user))
+            if (BUser.EditUser(user,payload.aud))
             {
                 return new { result = true };
             }
@@ -284,7 +284,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         /// <returns></returns>
         [HttpPut]
         [Route("user/activate/{userid}")]
-        public Object Activate(int userid)
+        public Object SwitchActivity(int userid)
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
@@ -295,7 +295,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
             
-            if (BUser.ActivateUser(userid))
+            if (BUser.SwitchActivity(userid,payload.aud))
             {
                 return new { result = true };
             }

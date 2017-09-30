@@ -571,7 +571,7 @@
         </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FloorController.FloorBySchool(System.Int32)">
             <summary>
-            Mostra todos os andares de uma escola ||
+            Mostra todos os pisos de uma escola ||
             Autenticação: Sim [
             admin,
             assistant
@@ -582,7 +582,7 @@
         </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FloorController.Single(System.Int32)">
             <summary>
-            Mostra os detalhes de um andar selecionado ||
+            Mostra os detalhes de um piso ||
             Autenticação: Sim [
             admin,
             assistant
@@ -593,7 +593,7 @@
         </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FloorController.Post(CQPROJ.Data.DB.Models.TblFloors)">
             <summary>
-            Cria um novo andar ||
+            Cria um novo piso ||
             Autenticação: Sim [
             admin
             ]
@@ -603,12 +603,22 @@
         </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FloorController.Put(CQPROJ.Data.DB.Models.TblFloors)">
             <summary>
-            Altera um andar ||
+            Altera um piso ||
             Autenticação: Sim [
             admin
             ]
             </summary>
             <param name="floor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.FloorController.Delete(System.Int32)">
+            <summary>
+            Elimina um piso ||
+            Autenticação: Sim [
+            admin
+            ]
+            </summary>
+            <param name="floorid"></param>
             <returns></returns>
         </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.NoticeController.GetNews">
@@ -649,6 +659,18 @@
             ]
             </summary>
             <param name="editednotice"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.NoticeController.DeleteNotice(System.Int32)">
+            <summary>
+            Elimina um anuncio ||
+            Autenticação: Sim
+            [   
+                admin, 
+                secretary 
+            ]
+            </summary>
+            <param name="noticeid"></param>
             <returns></returns>
         </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.RoomController.RoomBySchool(System.Int32)">
@@ -703,6 +725,17 @@
             ]
             </summary>
             <param name="room"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.RoomController.Delete(System.Int32)">
+            <summary>
+            Elimina uma sala ||
+            Autenticação: Sim
+            [   
+                admin
+            ]
+            </summary>
+            <param name="roomid"></param>
             <returns></returns>
         </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SensorController.SensorByFloor(System.Int32)">
@@ -785,6 +818,54 @@
             <param name="sensorid"></param>
             <returns></returns>
         </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SubjectController.GetSubjectList">
+            <summary>
+            Apresenta a lista de disciplinas do sistema  ||
+            Autenticação: Sim
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SubjectController.GetSubjectById(System.Int32)">
+            <summary>
+            Apresenta uma disciplina  ||
+            Autenticação: Sim
+            </summary>
+            <param name="subjectid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SubjectController.PostSubject(CQPROJ.Data.DB.Models.TblSubjects)">
+            <summary>
+            Cria uma disciplina  ||
+            Autenticação: Sim
+            [   
+                admin
+            ]
+            </summary>
+            <param name="subject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SubjectController.PutSubject(CQPROJ.Data.DB.Models.TblSubjects)">
+            <summary>
+            Altera uma disciplina  ||
+            Autenticação: Sim
+            [   
+                admin
+            ]
+            </summary>
+            <param name="subject"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SubjectController.DeleteSubject(System.Int32)">
+            <summary>
+            Elimina uma disciplina  ||
+            Autenticação: Sim
+            [   
+                admin
+            ]
+            </summary>
+            <param name="subjectid"></param>
+            <returns></returns>
+        </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TaskController.GetSentNotifs">
             <summary>
             Mostra as tarefas de um utilizador a realizar no presente dia ||
@@ -832,7 +913,7 @@
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TaskController.Done(System.Int32)">
             <summary>
             Marca uma tarefa como feita ||
-            Autenticação: Sim
+            Autenticação: Sim [ apenas o próprio associado à tarefa ]
             </summary>
             <param name="taskid"></param>
             <returns></returns>
@@ -849,9 +930,21 @@
             <param name="task"></param>
             <returns></returns>
         </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TaskController.Delete(System.Int32)">
+            <summary>
+            Altera uma tarefa ||
+            Autenticação: Sim
+            [   
+                admin,
+                secretary
+            ]
+            </summary>
+            <param name="taskid"></param>
+            <returns></returns>
+        </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TimeController.TimeByPrimary(System.Int32)">
             <summary>
-            Mostra o horário de uma escola primária ||
+            Mostra as horas de aulas de uma escola primária ||
             Autenticação: Sim
             </summary>
             <param name="schoolid"></param>
@@ -859,7 +952,7 @@
         </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TimeController.TimeByKindergarten(System.Int32)">
             <summary>
-            Mostra o horário de um jardim escola ||
+            Mostra as horas de aulas de um jardim escola ||
             Autenticação: Sim
             </summary>
             <param name="schoolid"></param>
@@ -867,8 +960,32 @@
         </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TimeController.SingleTime(System.Int32)">
             <summary>
-            Retorna o tempo com o ID selecionado ||
+            Retorna o horário de uma hora de aulas ||
             Autenticação: Sim
+            </summary>
+            <param name="timeid"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TimeController.Post(CQPROJ.Data.DB.Models.TblTimes)">
+            <summary>
+            Cria uma nova hora de aulas ||
+            Autenticação: Sim [ admin ]
+            </summary>
+            <param name="time"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TimeController.Put(CQPROJ.Data.DB.Models.TblTimes)">
+            <summary>
+            Edita uma hora de aulas ||
+            Autenticação: Sim [ admin ]
+            </summary>
+            <param name="time"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.TimeController.Delete(System.Int32)">
+            <summary>
+            Elimina uma hora de aulas ||
+            Autenticação: Sim [ admin ]
             </summary>
             <param name="timeid"></param>
             <returns></returns>
@@ -973,7 +1090,7 @@
             <param name="user"></param>
             <returns></returns>
         </member>
-        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.UserController.Activate(System.Int32)">
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.UserController.SwitchActivity(System.Int32)">
             <summary>
             Ativa um utilizador ||
             Autenticação: Sim
@@ -1093,6 +1210,30 @@
             <param name="newclass"></param>
             <returns></returns>
         </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.PutProfile(CQPROJ.Data.DB.Models.TblClasses)">
+            <summary>
+            Altera os dados de uma turma  ||
+            Autenticação: Sim
+            [   
+                admin, 
+                secretary 
+            ]
+            </summary>
+            <param name="editedclass"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.SwitchActivity(System.Int32)">
+            <summary>
+            Altera o estado de actividade de uma turma  ||
+            Autenticação: Sim
+            [   
+                admin, 
+                secretary 
+            ]
+            </summary>
+            <param name="classid"></param>
+            <returns></returns>
+        </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.AddUser(CQPROJ.Business.Entities.IAccount.ClassUser)">
             <summary>
             Adiciona um utilizador a uma turma  ||
@@ -1115,18 +1256,6 @@
             ]
             </summary>
             <param name="classuser"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ClassController.PutProfile(CQPROJ.Data.DB.Models.TblClasses)">
-            <summary>
-            Altera os dados de uma turma  ||
-            Autenticação: Sim
-            [   
-                admin, 
-                secretary 
-            ]
-            </summary>
-            <param name="editedclass"></param>
             <returns></returns>
         </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.DocumentController.DocumentsbyUser(System.Int32)">
@@ -1178,6 +1307,18 @@
             ]
             </summary>
             <param name="document"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.DocumentController.Delete(System.Int32)">
+            <summary>
+            Elimina um documento ||
+            Autenticação: Sim
+            [   admin (se o tiver inserido), 
+                secretary (se o tiver inserido),  
+                teacher (se o tiver inserido)
+            ]
+            </summary>
+            <param name="documentid"></param>
             <returns></returns>
         </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.EvaluationController.GetbyClass(System.Int32)">
@@ -1521,24 +1662,9 @@
             <param name="scheduleid"></param>
             <returns></returns>
         </member>
-        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.GetSubjectList">
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.PostSchedule(CQPROJ.Data.DB.Models.TblSchedules)">
             <summary>
-            Apresenta a lista de disciplinas do sistema  ||
-            Autenticação: Sim
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.GetSubjectById(System.Int32)">
-            <summary>
-            Mostra o horário de uma disciplina  ||
-            Autenticação: Sim
-            </summary>
-            <param name="subjectid"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.Post(CQPROJ.Data.DB.Models.TblSchedules)">
-            <summary>
-            Cria um novo horário  ||
+            Cria uma aula  ||
             Autenticação: Sim
             [   
                 admin, 
@@ -1548,9 +1674,9 @@
             <param name="schedule"></param>
             <returns></returns>
         </member>
-        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.PutProfile(CQPROJ.Data.DB.Models.TblSchedules)">
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.PutSchedule(CQPROJ.Data.DB.Models.TblSchedules)">
             <summary>
-            Altera um horário  ||
+            Altera uma aula  ||
             Autenticação: Sim
             [   
                 admin, 
@@ -1560,28 +1686,16 @@
             <param name="schedule"></param>
             <returns></returns>
         </member>
-        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.PostSubject(CQPROJ.Data.DB.Models.TblSubjects)">
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.DeleteSchedule(System.Int32)">
             <summary>
-            Cria uma hora de aula  ||
+            Elimina uma aula  ||
             Autenticação: Sim
             [   
                 admin, 
                 secretary
             ]
             </summary>
-            <param name="subject"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ScheduleController.PutSubject(CQPROJ.Data.DB.Models.TblSubjects)">
-            <summary>
-            Altera uma hora de aula  ||
-            Autenticação: Sim
-            [   
-                admin, 
-                secretary
-            ]
-            </summary>
-            <param name="subject"></param>
+            <param name="scheduleid"></param>
             <returns></returns>
         </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SchoolController.Get">
@@ -1620,6 +1734,17 @@
             ]
             </summary>
             <param name="school"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.SchoolController.Delete(System.Int32)">
+            <summary>
+            Elimina uma escola ||
+            Autenticação: Sim
+            [   
+                admin
+            ]
+            </summary>
+            <param name="schoolid"></param>
             <returns></returns>
         </member>
     </members>

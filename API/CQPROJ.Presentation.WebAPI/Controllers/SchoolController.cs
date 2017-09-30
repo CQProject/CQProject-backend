@@ -92,5 +92,33 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
             return new { result = true };
         }
+
+        // DELETE school/:schoolid
+        /// <summary>
+        /// Elimina uma escola ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin
+        /// ]
+        /// </summary>
+        /// <param name="schoolid"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("school({schoolid}")]
+        public Object Delete(int schoolid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || !payload.rol.Contains(6))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            if (!BSchool.DeleteSchool(schoolid))
+            {
+                return new { result = false, info = "Não foi possível eliminar escola" };
+            }
+            return new { result = true };
+        }
     }
 }

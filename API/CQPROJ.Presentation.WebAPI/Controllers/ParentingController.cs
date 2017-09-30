@@ -62,7 +62,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            return BParenting.CreateGuardian(guardian);
+            return BParenting.CreateGuardian(guardian, payload.aud);
         }
 
         //POST parenting/
@@ -86,7 +86,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (!BParenting.AddParenting(parenting.GuardianID, parenting.StudentID))
+            if (!BParenting.AddParenting(parenting.GuardianID, parenting.StudentID,payload.aud))
             {
                 return new { result = false, info = "Não foi possível adicionar o Enc.Educação ao Estudante." };
             }
@@ -114,7 +114,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (!BParenting.RemoveParenting(parenting.GuardianID, parenting.StudentID))
+            if (!BParenting.RemoveParenting(parenting.GuardianID, parenting.StudentID,payload.aud))
             {
                 return new { result = false, info = "Não foi possível remover o Enc.Educação do Estudante." };
             }

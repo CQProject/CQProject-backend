@@ -32,13 +32,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var classes = BClass.GetClassesByUser(teacherid);
-
-            if (classes == null)
-            {
-                return new { result = false, info = "Sem turma atribuída." };
-            }
-            return new { result = true, data = classes };
+            return BClass.GetClassesByUser(teacherid);
         }
 
         // GET class/student/:studentid
@@ -67,13 +61,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var classes = BClass.GetClassesByUser(studentid);
-
-            if (classes == null)
-            {
-                return new { result = false, info = "Sem turma atribuída." };
-            }
-            return new { result = true, data = classes };
+            return BClass.GetClassesByUser(studentid);
         }
 
         // GET class/primary/:schoolid
@@ -98,13 +86,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var classes = BClass.GetClassesPrimaryBySchool(schoolid);
-
-            if (classes == null)
-            {
-                return new { result = false, info = "Escola 1º ciclo sem turmas." };
-            }
-            return new { result = true, data = classes };
+            return BClass.GetClassesPrimaryBySchool(schoolid);
         }
 
         // GET class/kindergarten/:schoolid
@@ -129,13 +111,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var classes = BClass.GetClassesKindergartenBySchool(schoolid);
-
-            if (classes == null)
-            {
-                return new { result = false, info = "Jardim de infância sem turmas." };
-            }
-            return new { result = true, data = classes };
+            return BClass.GetClassesKindergartenBySchool(schoolid);
         }
 
         // GET student/class/:classid
@@ -163,14 +139,12 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-
             var students = BClass.GetStudentsByClass(classid);
-
-            if (students == null)
+            if (students != null)
             {
-                return new { result = false, info = "Turma sem alunos." };
+                return new { result = true, data = students };
             }
-            return new { result = true, data = students };
+            return new { result = false, info = "Não foi possível encontrar alunos da turma." };
         }
 
         // GET teacher/class/:classid
@@ -199,13 +173,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var teachers = BClass.GetTeachersByClass(classid);
-
-            if (teachers == null)
-            {
-                return new { result = false, info = "Turma sem professores." };
-            }
-            return new { result = true, data = teachers };
+            return BClass.GetTeachersByClass(classid);
         }
 
         // GET class/profile/:classid
@@ -234,13 +202,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var classs = BClass.GetClassProfile(classid);
-
-            if (classs == null)
-            {
-                return new { result = false, info = "Turma inexistente." };
-            }
-            return new { result = true, data = classs };
+            return BClass.GetClassProfile(classid);
         }
 
         //POST class/profile
@@ -264,67 +226,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (BClass.CreateClass(newclass))
-            {
-                return new { result = true };
-            }
-            return new { result = false, info="Não foi possível registar a turma." };
-        }
-
-        // POST class/user/
-        /// <summary>
-        /// Adiciona um utilizador a uma turma  ||
-        /// Autenticação: Sim
-        /// [   
-        ///     admin, 
-        ///     secretary 
-        /// ]
-        /// </summary>
-        /// <param name="classuser"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("class/user")]
-        public Object AddUser([FromBody]ClassUser classuser)
-        {
-            Payload payload = BAccount.ConfirmToken(this.Request);
-
-            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-            if (!BClass.AddUser(classuser.ClassID, classuser.UserID))
-            {
-                return new { result = false, info = "Não foi possível adicionar o utilizador à turma." };
-            }
-            return new { result = true };
-        }
-
-        // DELETE class/user/
-        /// <summary>
-        /// Remove um utilizador de uma turma  ||
-        /// Autenticação: Sim
-        /// [   
-        ///     admin, 
-        ///     secretary 
-        /// ]
-        /// </summary>
-        /// <param name="classuser"></param>
-        /// <returns></returns>
-        [HttpDelete]
-        [Route("class/user")]
-        public Object RemoveUser([FromBody]ClassUser classuser)
-        {
-            Payload payload = BAccount.ConfirmToken(this.Request);
-
-            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-            if (!BClass.RemoveUser(classuser.ClassID, classuser.UserID))
-            {
-                return new { result = false, info = "Não foi possível remover o utilizador à turma." };
-            }
-            return new { result = true };
+            return BClass.CreateClass(newclass, payload.aud);
         }
 
         // PUT class/profile/
@@ -348,11 +250,79 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (BClass.EditClass(editedclass))
+            return BClass.EditClass(editedclass, payload.aud);
+        }
+
+        // PUT class/activate/:classid
+        /// <summary>
+        /// Altera o estado de actividade de uma turma  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary 
+        /// ]
+        /// </summary>
+        /// <param name="classid"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("class/activate/{classid}")]
+        public Object SwitchActivity(int classid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
-                return new { result = true };
+                return new { result = false, info = "Não autorizado." };
             }
-            return new { result = false, info = "Não foi possível alterar dados da turma." };
+            return BClass.SwitchActivity(classid, payload.aud);
+        }
+
+        // POST class/user/
+        /// <summary>
+        /// Adiciona um utilizador a uma turma  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary 
+        /// ]
+        /// </summary>
+        /// <param name="classuser"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("class/user")]
+        public Object AddUser([FromBody]ClassUser classuser)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            return BClass.AddUser(classuser.ClassID, classuser.UserID, payload.aud);
+        }
+
+        // DELETE class/user/
+        /// <summary>
+        /// Remove um utilizador de uma turma  ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin, 
+        ///     secretary 
+        /// ]
+        /// </summary>
+        /// <param name="classuser"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("class/user")]
+        public Object RemoveUser([FromBody]ClassUser classuser)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            return BClass.RemoveUser(classuser.ClassID, classuser.UserID, payload.aud);
         }
     }
 }

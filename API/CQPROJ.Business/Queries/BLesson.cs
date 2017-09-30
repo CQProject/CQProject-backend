@@ -77,7 +77,7 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return null; }
         }
 
-        public static Boolean CreateLesson(TblLessons lesson)
+        public static Boolean CreateLesson(TblLessons lesson,int userID)
         {
             try
             {
@@ -85,6 +85,10 @@ namespace CQPROJ.Business.Queries
                 {
                     db.TblLessons.Add(lesson);
                     db.SaveChanges();
+                    
+                        var schedule = db.TblSchedules.Find(lesson.ScheduleFK);
+                    var clas = db.TblClasses.Find(schedule.ClassFK);
+                    BAction.SetActionToUser(String.Format("Adicionou uma lição à disciplina '{0}' da turma '{1}' da escola '{2}'", db.TblSubjects.Find(schedule.SubjectFK).Name, clas.Year +clas.ClassDesc ,db.TblSchools.Find(clas.SchoolFK).Name), userID);
                     return true;
                 }
             }
@@ -99,13 +103,15 @@ namespace CQPROJ.Business.Queries
                 {
                     db.TblLessonStudents.Add(lesson);
                     db.SaveChanges();
+
+                    
                     return true;
                 }
             }
             catch (Exception) { return false; }
         }
 
-        public static Boolean EditLesson(TblLessons lesson)
+        public static Boolean EditLesson(TblLessons lesson, int userID)
         {
             try
             {
@@ -113,6 +119,10 @@ namespace CQPROJ.Business.Queries
                 {
                     db.Entry(lesson).State = EntityState.Modified;
                     db.SaveChanges();
+
+                    var schedule = db.TblSchedules.Find(lesson.ScheduleFK);
+                    var clas = db.TblClasses.Find(schedule.ClassFK);
+                    BAction.SetActionToUser(String.Format("Editou a lição à disciplina '{0}' da turma '{1}' da escola '{2}'", db.TblSubjects.Find(schedule.SubjectFK).Name, clas.Year + clas.ClassDesc, db.TblSchools.Find(clas.SchoolFK).Name), userID);
                     return true;
                 }
             }

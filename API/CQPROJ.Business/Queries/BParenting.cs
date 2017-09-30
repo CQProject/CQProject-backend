@@ -37,7 +37,7 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return null; }
         }
 
-        public static Object CreateGuardian(Guardian guardian)
+        public static Object CreateGuardian(Guardian guardian, int userID)
         {
             try
             {
@@ -66,15 +66,15 @@ namespace CQPROJ.Business.Queries
                     db.TblUserRoles.Add(userRoles);
                     db.SaveChanges();
 
-                    if (!AddParenting(user.ID, guardian.ChildrenID)) { return new { result = false, info = "Não foi possível relacionar Enc.Educação com o Estudante." }; }
-
+                    if (!AddParenting(user.ID, guardian.ChildrenID,userID)) { return new { result = false, info = "Não foi possível relacionar Enc.Educação com o Estudante." }; }
+                    
                     return new { result = true };
                 }
             }
             catch (Exception) { return new { result = false, info = "Não foi possível registar utilizador." }; }
         }
 
-        public static Boolean AddParenting(int guardianID, int studentID)
+        public static Boolean AddParenting(int guardianID, int studentID, int userID)
         {
             try
             {
@@ -82,13 +82,15 @@ namespace CQPROJ.Business.Queries
                 {
                     db.TblParenting.Add(new TblParenting { GuardianFK = guardianID, StudentFK = studentID });
                     db.SaveChanges();
+
+                    BAction.SetActionToUser(String.Format("Associou o encarreagdo de educação '{0}' ao aluno '{1}'", db.TblUsers.Find(guardianID).Name, db.TblUsers.Find(studentID).Name), userID);
                     return true;
                 }
             }
             catch (Exception) { return false; }
         }
 
-        public static Boolean RemoveParenting(int guardianID, int studentID)
+        public static Boolean RemoveParenting(int guardianID, int studentID, int userID)
         {
             try
             {
@@ -96,6 +98,8 @@ namespace CQPROJ.Business.Queries
                 {
                     db.TblParenting.Remove(db.TblParenting.Find(studentID, guardianID));
                     db.SaveChanges();
+
+                    BAction.SetActionToUser(String.Format("removeu a associação do encarreagdo de educação '{0}' ao aluno '{1}'", db.TblUsers.Find(guardianID).Name, db.TblUsers.Find(studentID).Name), userID);
                     return true;
                 }
             }

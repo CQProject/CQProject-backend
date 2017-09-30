@@ -154,7 +154,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            return new { result = BLesson.CreateLesson(lesson) };
+            return new { result = BLesson.CreateLesson(lesson, payload.aud) };
         }
 
         //POST lesson/faults/
@@ -201,7 +201,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            return new { result = BLesson.EditLesson(lesson) };
+            return new { result = BLesson.EditLesson(lesson, payload.aud) };
         }
 
         // PUT lesson/

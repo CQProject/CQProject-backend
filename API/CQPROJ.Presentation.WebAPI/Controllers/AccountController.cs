@@ -19,17 +19,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("account/login")]
         public Object Login([FromBody]Login userRequest)
         {
-            Uri client = this.Request.RequestUri;
-            var info = BAccount.Login(userRequest,client);
-
-            if ( info == null)
-            {
-                return new { result = false };
-            }
-            else
-            {
-                return new { result = true, data = info };
-            }
+            return BAccount.Login(userRequest, Request.RequestUri);
         }
 
         // GET account/verifytoken/
@@ -42,13 +32,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         [Route("account/verifytoken")]
         public Object VerifyToken()
         {
-            Uri client = this.Request.RequestUri;
-
-            if (BAccount.ConfirmToken(this.Request) == null)
+            if (BAccount.ConfirmToken(Request) != null)
             {
-                return new { result = true, data = false };
+                return new { result = true, data = true };
             }
-            return new { result = true, data = true };
+            return new { result = true, data = false };
         }
     }
 }

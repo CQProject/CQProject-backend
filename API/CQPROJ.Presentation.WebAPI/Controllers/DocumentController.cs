@@ -34,13 +34,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
             
-            var docs = BDocument.GetDocumentsbyUser(userid);
-
-            if (docs == null)
-            {
-                return new { result = true, info="Não foram encontrados documentos do utilizador." };
-            }
-            return new { result = true, data = docs };
+            return BDocument.GetDocumentsbyUser(userid);
         }
 
         // GET document/user/:id
@@ -69,21 +63,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
             if(payload.rol.Contains(1) || payload.rol.Contains(5))
             {
-                var docs = BDocument.GetDocumentsbyClassStudent(classid);
-                if (docs == null)
-                {
-                    return new { result = false, info = "Não foram encontrados documentos desta turma." };
-                }
-                return new { result = true, data = docs };
+                return BDocument.GetDocumentsbyClassStudent(classid);
             }
             else
             {
-                var docs = BDocument.GetDocumentsbyClass(classid);
-                if (docs == null)
-                {
-                    return new { result = false, info = "Não foram encontrados documentos desta turma." };
-                }
-                return new { result = true, data = docs };
+                return BDocument.GetDocumentsbyClass(classid);
             }
         }
 
@@ -108,11 +92,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (BDocument.CreateDocument(document))
-            {
-                return new { result = true };
-            }
-            return new { result = false, info = "Não foi possível inserir o documento" };
+            return BDocument.CreateDocument(document, payload.aud);
         }
 
         // PUT document/
@@ -136,11 +116,31 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (BDocument.EditDocument(document))
+            return BDocument.EditDocument(document, payload.aud);
+        }
+
+        // DELETE document/:documentid
+        /// <summary>
+        /// Elimina um documento ||
+        /// Autenticação: Sim
+        /// [   admin (se o tiver inserido), 
+        ///     secretary (se o tiver inserido),  
+        ///     teacher (se o tiver inserido)
+        /// ]
+        /// </summary>
+        /// <param name="documentid"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("document/{documentid}")]
+        public Object Delete(int documentid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(2) && !payload.rol.Contains(3) && !payload.rol.Contains(6)))
             {
-                return new { result = true };
+                return new { result = false, info = "Não autorizado." };
             }
-            return new { result = false, info = "Não foi possível alterar o documento" };
+            return BDocument.DeleteDocument(documentid, payload.aud);
         }
     }
 }

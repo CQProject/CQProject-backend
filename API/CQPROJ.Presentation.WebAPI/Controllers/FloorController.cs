@@ -14,7 +14,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
     {
         // GET room/school/:schoolid
         /// <summary>
-        /// Mostra todos os andares de uma escola ||
+        /// Mostra todos os pisos de uma escola ||
         /// Autenticação: Sim [
         /// admin,
         /// assistant
@@ -42,7 +42,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // GET floor/single/:floorid
         /// <summary>
-        /// Mostra os detalhes de um andar selecionado ||
+        /// Mostra os detalhes de um piso ||
         /// Autenticação: Sim [
         /// admin,
         /// assistant
@@ -70,7 +70,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // POST floor/
         /// <summary>
-        /// Cria um novo andar ||
+        /// Cria um novo piso ||
         /// Autenticação: Sim [
         /// admin
         /// ]
@@ -96,7 +96,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // PUT floor/
         /// <summary>
-        /// Altera um andar ||
+        /// Altera um piso ||
         /// Autenticação: Sim [
         /// admin
         /// ]
@@ -116,6 +116,32 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             if (!BFloor.EditFloor(floor))
             {
                 return new { result = false, info = "Não foi possível editar o piso." };
+            }
+            return new { result = true };
+        }
+
+        // DELETE floor/:floorid
+        /// <summary>
+        /// Elimina um piso ||
+        /// Autenticação: Sim [
+        /// admin
+        /// ]
+        /// </summary>
+        /// <param name="floorid"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("floor/{floorid}")]
+        public Object Delete(int floorid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || !payload.rol.Contains(6))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            if (!BFloor.DeleteFloor(floorid))
+            {
+                return new { result = false, info = "Não foi possível eliminar o piso." };
             }
             return new { result = true };
         }

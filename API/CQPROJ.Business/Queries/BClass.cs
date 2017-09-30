@@ -8,34 +8,40 @@ namespace CQPROJ.Business.Queries
 {
     public class BClass
     {
-        public static List<int> GetClassesByUser(int userID)
+        public static Object GetClassesByUser(int userID)
         {
             try
             {
                 using (var db = new DBContextModel())
                 {
                     var classes = db.TblClassUsers.Where(x => x.UserFK == userID).Select(x => x.ClassFK).ToList();
-                    if (classes.Count() == 0) { return null; }
-                    return classes;
+                    if (classes.Count() == 0)
+                    {
+                        return new { result = false, info = "Sem turma atribuída." };
+                    }
+                    return new { result = true, data = classes };
                 }
             }
-            catch (Exception) { return null; }
+            catch (Exception) { return new { result = false, info = "Não foi possível encontrar turmas do utilizador." }; }
         }
 
-        public static List<int> GetTeachersByClass(int classID)
+        public static Object GetTeachersByClass(int classID)
         {
             try
             {
                 using (var db = new DBContextModel())
                 {
-                    var classes = db.TblClassUsers
-                    .Where(x => x.ClassFK == classID && db.TblUserRoles.Any(y => y.UserFK == x.UserFK && y.RoleFK == 2))
-                    .Select(x => x.UserFK).ToList();
-                    if (classes.Count() == 0) { return null; }
-                    return classes;
+                    var teachers = db.TblClassUsers
+                        .Where(x => x.ClassFK == classID && db.TblUserRoles.Any(y => y.UserFK == x.UserFK && y.RoleFK == 2))
+                        .Select(x => x.UserFK).ToList();
+                    if (teachers.Count() == 0)
+                    {
+                        return new { result = false, info = "Turma sem professores." };
+                    }
+                    return new { result = true, data = teachers };
                 }
             }
-            catch (Exception) { return null; }
+            catch (Exception) { return new { result = false, info = "Não foi possível encontrar professores da turma." }; }
         }
 
         public static List<int> GetStudentsByClass(int classID)
@@ -45,11 +51,12 @@ namespace CQPROJ.Business.Queries
                 using (var db = new DBContextModel())
                 {
                     var students = db.TblClassUsers
-                    .Where(x => x.ClassFK == classID && db.TblUserRoles.Any(y => y.UserFK == x.UserFK && y.RoleFK == 1))
-                    .Select(x => x.UserFK)
-                    .ToList();
-                    if (students.Count() == 0) { return null; }
-                    return students;
+                        .Where(x => x.ClassFK == classID && db.TblUserRoles.Any(y => y.UserFK == x.UserFK && y.RoleFK == 1))
+                        .Select(x => x.UserFK).ToList();
+                    if (students.Count() == 0) {
+                        return null;
+                    }
+                    return  students;
                 }
             }
             catch (Exception) { return null; }
@@ -61,12 +68,14 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var classes = db.TblClasses.Where(x => x.SchoolFK == schoolID && x.Year!=null).ToList();
-                    if (classes.Count() == 0) { return null; }
-                    return classes;
+                    var classes = db.TblClasses.Where(x => x.SchoolFK == schoolID && x.Year != null).ToList();
+                    if (classes.Count() == 0) {
+                        return new { result = false, info = "Escola 1º ciclo sem turmas." };
+                    }
+                    return new { result = true, data = classes };
                 }
             }
-            catch (Exception) { return null; }
+            catch (Exception) { return new { result = false, info = "Não foi possível encontrar turmas da escola de 1º ciclo." }; }
         }
 
         public static Object GetClassesKindergartenBySchool(int schoolID)
@@ -75,12 +84,14 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    var classes = db.TblClasses.Where(x => x.SchoolFK == schoolID && x.Year==null).ToList();
-                    if (classes.Count() == 0) { return null; }
-                    return classes;
+                    var classes = db.TblClasses.Where(x => x.SchoolFK == schoolID && x.Year == null).ToList();
+                    if (classes.Count() == 0) {
+                        return new { result = false, info = "Jardim de infância sem turmas." };
+                    }
+                    return new { result = true, data = classes };
                 }
             }
-            catch (Exception) { return null; }
+            catch (Exception) { return new { result = false, info = "Não foi possível encontrar turmas do Jardim de infância." }; }
         }
 
         public static Object GetClassProfile(int classID)
@@ -89,13 +100,13 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    return db.TblClasses.Find(classID);
+                    return new { result = true, data = db.TblClasses.Find(classID) };
                 }
             }
-            catch (Exception) { return null; }
+            catch (Exception) { return new { result = false, info = "Turma inexistente." }; }
         }
 
-        public static Boolean CreateClass(TblClasses newClass)
+        public static Object CreateClass(TblClasses newClass, int userID)
         {
             try
             {
@@ -103,13 +114,15 @@ namespace CQPROJ.Business.Queries
                 {
                     db.TblClasses.Add(newClass);
                     db.SaveChanges();
-                    return true;
+
+                    BAction.SetActionToUser(String.Format("Criou a turma '{0}' da escola '{1}'", newClass.Year+newClass.ClassDesc, db.TblSchools.Find(newClass.SchoolFK).Name), userID);
+                    return new { result = true };
                 }
             }
-            catch (Exception) { return false; }
+            catch (Exception) { return new { result = false, info = "Não foi possível criar a turma." }; }
         }
 
-        public static Boolean EditClass(TblClasses alteredClass)
+        public static Object EditClass(TblClasses alteredClass, int userID)
         {
             try
             {
@@ -117,38 +130,66 @@ namespace CQPROJ.Business.Queries
                 {
                     db.Entry(alteredClass).State = EntityState.Modified;
                     db.SaveChanges();
-                    return true;
+
+                    BAction.SetActionToUser(String.Format("Editou a turma '{0}' da escola '{1}'", alteredClass.Year + alteredClass.ClassDesc, db.TblSchools.Find(alteredClass.SchoolFK).Name), userID);
+                    return new { result = true };
                 }
             }
-            catch (Exception) { return false; }
+            catch (Exception) { return new { result = false, info = "Não foi possível editar a turma." }; }
         }
 
-        public static Boolean AddUser(int classID, int userID)
+        public static Object SwitchActivity(int classID, int userID)
         {
             try
             {
                 using (var db = new DBContextModel())
                 {
-                    db.TblClassUsers.Add(new TblClassUsers { ClassFK = classID, UserFK = userID });
+                    var cla = db.TblClasses.Find(classID);
+                    cla.IsActive = cla.IsActive ? false : true;
+                    db.Entry(cla).State = EntityState.Modified;
                     db.SaveChanges();
-                    return true;
+
+                    BAction.SetActionToUser(String.Format("Alterou o estado de actividade da turma '{0}' da escola '{1}' para '{2}'", cla.Year + cla.ClassDesc, db.TblSchools.Find(cla.SchoolFK).Name, (cla.IsActive?"ACTIVO":"INACTIVO")), userID);
+                    return new { result = true };
                 }
             }
-            catch { return false; }
+            catch (Exception) { return new { result = false, info = "Não foi possível alterar estado de atividade da turma." }; }
         }
 
-        public static Boolean RemoveUser(int classID, int userID)
+        public static Object AddUser(int classID, int userID, int currentUser)
         {
             try
             {
                 using (var db = new DBContextModel())
                 {
-                    db.TblClassUsers.Remove(db.TblClassUsers.Find(classID, userID));
+                    var classUser = new TblClassUsers { ClassFK = classID, UserFK = userID };
+                    db.TblClassUsers.Add(classUser);
                     db.SaveChanges();
-                    return true;
+
+                    var cla = db.TblClasses.Find(classUser.ClassFK);
+                    BAction.SetActionToUser(String.Format("Adicionou o utilizador '{0}' à turma '{1}' da escola {2}", db.TblUsers.Find(classUser.UserFK).Name ,cla.Year + cla.ClassDesc, db.TblSchools.Find(cla.SchoolFK).Name), currentUser);
+                    return new { result = true };
                 }
             }
-            catch { return false; }
+            catch (Exception) { return new { result = false, info = "Não foi possível adicionar o utilizador à turma." }; }
+        }
+
+        public static Object RemoveUser(int classID, int userID, int currentUser)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    var classUser = db.TblClassUsers.Where(x => x.ClassFK == classID && x.UserFK == userID).FirstOrDefault();
+                    db.TblClassUsers.Remove(classUser);
+                    db.SaveChanges();
+
+                    var cla = db.TblClasses.Find(classUser.ClassFK);
+                    BAction.SetActionToUser(String.Format("Removeu o utilizador '{0}' à turma '{1}' da escola {2}", db.TblUsers.Find(classUser.UserFK).Name, cla.Year + cla.ClassDesc, db.TblSchools.Find(cla.SchoolFK).Name), currentUser);
+                    return new { result = true };
+                }
+            }
+            catch (Exception) { return new { result = false, info = "Não foi possível remover o utilizador à turma." }; }
         }
 
         public static Boolean HasUser(int classID, int userID)
@@ -173,6 +214,18 @@ namespace CQPROJ.Business.Queries
                 }
             }
             catch { return false; }
+        }
+
+        public static Boolean GetActivity(int classID)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    return db.TblClasses.Find(classID).IsActive;
+                }
+            }
+            catch { return false; };
         }
     }
 }

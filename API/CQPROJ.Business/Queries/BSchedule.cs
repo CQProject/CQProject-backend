@@ -70,13 +70,14 @@ namespace CQPROJ.Business.Queries
                 {
                     db.TblSchedules.Add(schedule);
                     db.SaveChanges();
+                   
                     return true;
                 }
             }
             catch (Exception) { return false; }
         }
 
-        public static Boolean EditSchedule(TblSchedules schedule)
+        public static Boolean EditSchedule(TblSchedules schedule,int userID)
         {
             try
             {
@@ -84,62 +85,31 @@ namespace CQPROJ.Business.Queries
                 {
                     db.Entry(schedule).State = EntityState.Modified;
                     db.SaveChanges();
+
+                    var clas = db.TblClasses.Find(schedule.ClassFK);
+                    BAction.SetActionToUser(String.Format("Editou o horário de uma aula da turma '{0}'", clas.Year+clas.ClassDesc), userID);
                     return true;
                 }
             }
             catch (Exception) { return false; }
         }
 
-        public static Object GetSubject(int subjectID)
+        public static bool DeleteSchedule(int scheduleid, int userID)
         {
             try
             {
                 using (var db = new DBContextModel())
                 {
-                    return db.TblSubjects.Find(subjectID);
-                }
-            }
-            catch (Exception) { return null; }
-        }
-
-        public static bool CreateSubject(TblSubjects subject)
-        {
-            try
-            {
-                using (var db = new DBContextModel())
-                {
-                    db.TblSubjects.Add(subject);
+                    var schedule = db.TblSchedules.Find(scheduleid);
+                    db.TblSchedules.Remove(schedule);
                     db.SaveChanges();
+
+                    var clas = db.TblClasses.Find(schedule.ClassFK);
+                    BAction.SetActionToUser(String.Format("Removeu o horário de uma aula da turma '{0}'", clas.Year + clas.ClassDesc), userID);
                     return true;
                 }
             }
             catch (Exception) { return false; }
-        }
-
-        public static bool EditSubject(TblSubjects subject)
-        {
-            try
-            {
-                using (var db = new DBContextModel())
-                {
-                    db.Entry(subject).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return true;
-                }
-            }
-            catch (Exception) { return false; }
-        }
-
-        public static object GetSubjectList()
-        {
-            try
-            {
-                using (var db = new DBContextModel())
-                {
-                    return db.TblSubjects.ToList();
-                }
-            }
-            catch (Exception) { return null; }
         }
     }
 }

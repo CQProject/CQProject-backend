@@ -5,55 +5,39 @@ using System.Linq;
 
 namespace CQPROJ.Business.Queries
 {
-    public class BTime
+    public class BSubject
     {
-        public static Object GetTimeBySchool(int schoolID, bool isKindergarten)
+        public static Object GetSubject(int subjectID)
         {
             try
             {
                 using (var db = new DBContextModel())
                 {
-                    var time = db.TblTimes.Where(x => x.SchoolFK == schoolID && x.IsKindergarten== isKindergarten).ToList();
-                    if (time.Count() == 0) { return null; }
-                    return time;
+                    return db.TblSubjects.Find(subjectID);
                 }
             }
             catch (Exception) { return null; }
         }
 
-        public static Object GetTime(int timeID)
+        public static object GetSubjectList()
         {
             try
             {
                 using (var db = new DBContextModel())
                 {
-                    return db.TblTimes.Find(timeID);                }
+                    return db.TblSubjects.ToList();
+                }
             }
             catch (Exception) { return null; }
         }
 
-        public static bool CreateTime(TblTimes time)
+        public static bool CreateSubject(TblSubjects subject)
         {
             try
             {
                 using (var db = new DBContextModel())
                 {
-                    db.TblTimes.Add(time);
-                    db.SaveChanges();
-                    
-                    return true;
-                }
-            }
-            catch (Exception) { return false; }
-        }
-
-        public static bool EditTime(TblTimes time)
-        {
-            try
-            {
-                using (var db = new DBContextModel())
-                {
-                    db.Entry(time).State = EntityState.Modified;
+                    db.TblSubjects.Add(subject);
                     db.SaveChanges();
                     return true;
                 }
@@ -61,16 +45,29 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return false; }
         }
 
-        public static bool DeleteTime(int timeid)
+        public static bool EditSubject(TblSubjects subject)
         {
             try
             {
                 using (var db = new DBContextModel())
                 {
-                    var time = db.TblTimes.Find(timeid);
-                    db.TblTimes.Remove(time);
+                    db.Entry(subject).State = EntityState.Modified;
                     db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception) { return false; }
+        }
 
+        public static bool DeleteSubject(int subjectid)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    var subject = db.TblSubjects.Find(subjectid);
+                    db.TblSubjects.Remove(subject);
+                    db.SaveChanges();
                     return true;
                 }
             }

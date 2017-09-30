@@ -153,7 +153,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            var result = BNotification.SendNotificationToUser(notification);
+            var result = BNotification.SendNotificationToUser(notification,payload.aud);
             if (!result)
             {
                 return new { result = false, info = "Não foi possivel enviar a notificação." };
@@ -177,7 +177,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            var result = BNotification.SendNotificationToClass(notification);
+            var result = BNotification.SendNotificationToClass(notification,payload.aud);
             if (!result)
             {
                 return new { result = false, info = "Não foi possivel enviar a notificação." };

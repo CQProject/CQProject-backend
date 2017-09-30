@@ -43,7 +43,7 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return null; }
         }
 
-        public static bool CreateNotice(TblNotices notice)
+        public static bool CreateNotice(TblNotices notice, int userID)
         {
             try
             {
@@ -52,13 +52,14 @@ namespace CQPROJ.Business.Queries
                     db.TblNotices.Add(notice);
                     db.SaveChanges();
 
+                    BAction.SetActionToUser(String.Format("Criou o anuncio '{0}' de escola '{1}'", notice.Title, db.TblSchools.Find(notice.SchoolFK).Name), userID);
                     return true;
                 }
             }
             catch (Exception) { return false; }
         }
 
-        public static bool EditNotice(TblNotices notice)
+        public static bool EditNotice(TblNotices notice, int userID)
         {
             try
             {
@@ -66,6 +67,25 @@ namespace CQPROJ.Business.Queries
                 {
                     db.Entry(notice).State = EntityState.Modified;
                     db.SaveChanges();
+
+                    BAction.SetActionToUser(String.Format("Editou o anuncio '{0}' de escola '{1}'", notice.Title, db.TblSchools.Find(notice.SchoolFK).Name), userID);
+                    return true;
+                }
+            }
+            catch (Exception) { return false; }
+        }
+
+        public static bool DeleteNotice(int noticeid, int userID)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    var notice = db.TblNotices.Find(noticeid);
+                    db.TblNotices.Remove(notice);
+                    db.SaveChanges();
+                    
+                    BAction.SetActionToUser(String.Format("Removou o anuncio '{0}' de escola '{1}'", notice.Title, db.TblSchools.Find(notice.SchoolFK).Name), userID);
                     return true;
                 }
             }

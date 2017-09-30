@@ -201,6 +201,7 @@
     <Compile Include="Controllers\NoticeController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\SensorController.cs" />
+    <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Controllers\TimeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -238,6 +239,7 @@
     <Folder Include="Files\doc\" />
     <Folder Include="Files\img\" />
     <Folder Include="Files\public\" />
+    <Folder Include="Views\Subject\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -317,6 +319,7 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
   </ItemGroup>
   <PropertyGroup>

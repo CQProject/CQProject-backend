@@ -50,7 +50,7 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return null; }
         }
 
-        public static Boolean CreateTask(TblTasks task)
+        public static Boolean CreateTask(TblTasks task, int userID)
         {
             try
             {
@@ -58,13 +58,15 @@ namespace CQPROJ.Business.Queries
                 {
                     db.TblTasks.Add(task);
                     db.SaveChanges();
+
+                    BAction.SetActionToUser(String.Format("Criou a tarefa '{0}' ao utilizador '{1}'", task.Description, db.TblUsers.Find(task.UserFK).Name), userID);
                     return true;
                 }
             }
             catch (Exception) { return false; }
         }
 
-        public static Boolean EditTask(TblTasks task)
+        public static Boolean EditTask(TblTasks task, int userID)
         {
             try
             {
@@ -72,6 +74,8 @@ namespace CQPROJ.Business.Queries
                 {
                     db.Entry(task).State = EntityState.Modified;
                     db.SaveChanges();
+
+                    BAction.SetActionToUser(String.Format("Editou a tarefa '{0}' ao utilizador '{1}'", task.Description, db.TblUsers.Find(task.UserFK).Name), userID);
                     return true;
                 }
             }
@@ -90,10 +94,17 @@ namespace CQPROJ.Business.Queries
                         db.SaveChanges();
                         return new { result = false, info = "Não autorizado." };
                     }
+
+                    BAction.SetActionToUser(String.Format("Realizou a tarefa '{0}'", db.TblTasks.Find(taskID).Description), userID);
                     return new { result = true };
                 }
             }
             catch (Exception) { return new { result = false, info = "Não foi possivel registar a realização." }; }
+        }
+
+        public static bool DeleteTask(int taskid)
+        {
+            throw new NotImplementedException();
         }
     }
 }

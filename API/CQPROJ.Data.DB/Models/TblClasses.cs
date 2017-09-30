@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace CQPROJ.Data.DB.Models
 {
     public partial class TblClasses
@@ -11,5 +13,8 @@ namespace CQPROJ.Data.DB.Models
         public string ClassDesc { get; set; }
 
         public int? SchoolFK { get; set; }
+
+        [DefaultValue(true)]
+        public bool IsActive { get; set; }
     }
 }

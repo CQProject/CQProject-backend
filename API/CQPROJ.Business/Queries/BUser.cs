@@ -58,7 +58,7 @@ namespace CQPROJ.Business.Queries
 
         }
 
-        public static Object CreateUser(User newUser)
+        public static Object CreateUser(User newUser, int userID)
         {
             try
             {
@@ -92,13 +92,14 @@ namespace CQPROJ.Business.Queries
 
                     ActiveDirectory.CreateUser(user.Email, user.Password);
 
+                    BAction.SetActionToUser(String.Format("Registou o utilizador '{0}'", newUser.Name), userID);
                     return new { result = true, data = user.ID };
                 }
             }
             catch (Exception) { return new { result = false, info = "Não foi possível registar utilizador." }; }
         }
 
-        public static Boolean EditUser(User editedUser)
+        public static Boolean EditUser(User editedUser, int userID)
         {
             try
             {
@@ -120,13 +121,15 @@ namespace CQPROJ.Business.Queries
                     db.Entry(user).State = EntityState.Modified;
                     db.SaveChanges();
 
+
+                    BAction.SetActionToUser(String.Format("Editou os dados do utilizador '{0}'", editedUser.Name), userID);
                     return true;
                 }
             }
             catch (Exception) { return false; }
         }
 
-        public static Boolean ActivateUser(int userID)
+        public static Boolean SwitchActivity(int userID, int currentUser)
         {
             try
             {
@@ -136,13 +139,15 @@ namespace CQPROJ.Business.Queries
                     user.IsActive = (bool)user.IsActive ? false : true;
                     db.Entry(user).State = EntityState.Modified;
                     db.SaveChanges();
+
+                    BAction.SetActionToUser(String.Format("Alterou o estado de atividade do utilizador '{0}'", user.Name), currentUser);
                     return true;
                 }
             }
             catch (Exception) { return false; }
         }
 
-        public static Boolean AddRole(int userID, int roleID)
+        public static Boolean AddRole(int userID, int roleID, int currentUser)
         {
             try
             {
@@ -150,13 +155,15 @@ namespace CQPROJ.Business.Queries
                 {
                     db.TblUserRoles.Add(new TblUserRoles { UserFK = userID, RoleFK = roleID });
                     db.SaveChanges();
+
+                    BAction.SetActionToUser(String.Format("Atribuiu ao utilizador '{0}' a função de '{1}'", db.TblUsers.Find(userID).Name, db.TblRoles.Find(roleID).Name), currentUser);
                     return true;
                 }
             }
             catch (Exception) { return false; }
         }
 
-        public static Boolean RemoveRole(int userID, int roleID)
+        public static Boolean RemoveRole(int userID, int roleID,int currentUser)
         {
             try
             {
@@ -164,6 +171,8 @@ namespace CQPROJ.Business.Queries
                 {
                     db.TblUserRoles.Remove(db.TblUserRoles.Find(userID, roleID));
                     db.SaveChanges();
+
+                    BAction.SetActionToUser(String.Format("Removeu ao utilizador '{0}' a função de '{1}'", db.TblUsers.Find(userID).Name, db.TblRoles.Find(roleID).Name), currentUser);
                     return true;
                 }
             }

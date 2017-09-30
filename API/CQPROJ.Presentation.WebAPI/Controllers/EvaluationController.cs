@@ -37,12 +37,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var evaluations = BEvaluation.GetEvaluationsbyClass(id);
-            if (evaluations == null)
-            {
-                return new { result = false, info = "Não foram encontradas avaliações para esta turma." };
-            }
-            return new { result = true, data = evaluations };
+            return BEvaluation.GetEvaluationsbyClass(id);
         }
 
         // GET evaluations/teacher/:id
@@ -68,12 +63,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Não autorizado." };
             }
 
-            var evaluations = BEvaluation.GetEvaluationsbyTeacher(id);
-            if (evaluations == null)
-            {
-                return new { result = false, info = "Não foram encontradas avaliações para esta disciplina." };
-            }
-            return new { result = true, data = evaluations };
+            return BEvaluation.GetEvaluationsbyTeacher(id);
         }
 
         // GET grades/evaluation/:evaluationid
@@ -101,23 +91,13 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
             if (payload.rol.Contains(1))
             {
-                var grade = BEvaluation.GetGradeToStudent(evaluationid, payload.aud);
-                if (grade == null)
-                {
-                    return new { result = false, info = "Não foi encontrada avaliação." };
-                }
-                return new { result = true, data = grade };
+                return BEvaluation.GetGradeToStudent(evaluationid, payload.aud);
             }
             else
             {
                 if (payload.rol.Contains(5))
                 {
-                    var grades = BEvaluation.GetGradesToGuardian(evaluationid, payload.aud);
-                    if (grades == null)
-                    {
-                        return new { result = false, info = "Não foi encontrada avaliação." };
-                    }
-                    return new { result = true, data = grades };
+                    return BEvaluation.GetGradesToGuardian(evaluationid, payload.aud);
                 }
                 else
                 {
@@ -125,12 +105,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                     {
                         return new { result = false, info = "Não foi encontrada avaliação." };
                     }
-                    var grades = BEvaluation.GetGradesToTeacher(evaluationid);
-                    if (grades == null)
-                    {
-                        return new { result = false, info = "Não foi encontrada avaliação." };
-                    }
-                    return new { result = true, data = grades };
+                    return BEvaluation.GetGradesToTeacher(evaluationid);
                 }
             }
         }
@@ -155,11 +130,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (BEvaluation.CreateEvaluation(evaluation))
-            {
-                return new { result = true };
-            }
-            return new { result = false, info = "Não foi possível registar a avaliação" };
+            return BEvaluation.CreateEvaluation(evaluation, payload.aud);
         }
 
         // PUT evaluation/
@@ -182,11 +153,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (BEvaluation.EditEvaluation(evaluation))
-            {
-                return new { result = true };
-            }
-            return new { result = false, info = "Não foi possível alterar a avaliação" };
+            return BEvaluation.EditEvaluation(evaluation, payload.aud);
         }
 
         /// <summary>
@@ -208,13 +175,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            switch (BEvaluation.CreateGrade(grade)){
-                case 3: return new { result = true };
-                case 0: return new { result = false, info = "Não foi possível atribuir a nota." };
-                case 1: return new { result = false, info = "O utilizador associado à avaliação não é uma aluno." };
-                case 2: return new { result = false, info = "O aluno associado à avaliação não pertence à turma." };
-                default: return new { result = false, info = "Não foi possível atribuir a nota." };
-            }
+            return BEvaluation.CreateGrade(grade);
         }
 
         /// <summary>
@@ -236,11 +197,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (BEvaluation.EditGrade(grade))
-            {
-                return new { result = true };
-            }
-            return new { result = false, info = "Não foi possível alterar a nota da avaliação" };
+            return BEvaluation.EditGrade(grade);
         }
     }
 }

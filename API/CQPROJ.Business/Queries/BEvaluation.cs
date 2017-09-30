@@ -15,11 +15,13 @@ namespace CQPROJ.Business.Queries
                 using (var db = new DBContextModel())
                 {
                     var eval = db.TblEvaluations.Where(x => x.ClassFK == classID).ToList();
-                    if (eval.Count() == 0) { return null; }
-                    return eval;
+                    if (eval.Count() == 0) {
+                        return new { result = false, info = "Não existem avaliações para esta turma." };
+                    }
+                    return new { result = true, data = eval };
                 }
             }
-            catch (ArgumentException) { return null; }
+            catch (ArgumentException) { return new { result = false, info = "Não foram encontradas avaliações para esta turma." }; }
         }
 
         public static Object GetEvaluationsbyTeacher(int teacherID)
@@ -29,11 +31,13 @@ namespace CQPROJ.Business.Queries
                 using (var db = new DBContextModel())
                 {
                     var eval = db.TblEvaluations.Where(x => x.TeacherFK == teacherID).ToList();
-                    if (eval.Count() == 0) { return null; }
-                    return eval;
+                    if (eval.Count() == 0) {
+                        return new { result = false, info = "Não existem avaliações do professor." };
+                    }
+                    return new { result = true, data = eval };
                 }
             }
-            catch (ArgumentException) { return null; }
+            catch (ArgumentException) { return new { result = false, info = "Não foram encontradas avaliações do professor." }; }
         }
 
         public static object GetGradeToStudent(int evaluationID, int studentID)
@@ -42,10 +46,10 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    return db.TblEvaluationStudents.Where(x => x.EvaluationFK == evaluationID && x.StudentFK == studentID).FirstOrDefault();
+                    return new { result = true, data = db.TblEvaluationStudents.Where(x => x.EvaluationFK == evaluationID && x.StudentFK == studentID).FirstOrDefault() };
                 }
             }
-            catch (ArgumentException) { return null; }
+            catch (ArgumentException) { return new { result = false, info = "Não foi encontrada avaliação." }; }
         }
 
         public static object GetGradesToGuardian(int evaluationID, int guardianID)
@@ -64,11 +68,13 @@ namespace CQPROJ.Business.Queries
                             grades.Add(grade);
                         }
                     });
-                    if (grades.Count() == 0) { return null; }
-                    return grades;
+                    if (grades.Count() == 0) {
+                        return new { result = false, info = "Não existe avaliação." };
+                    }
+                    return new { result = true, data = grades };
                 }
             }
-            catch (ArgumentException) { return null; }
+            catch (ArgumentException) { return new { result = false, info = "Não foi encontrada avaliação." }; }
         }
 
         public static object GetGradesToTeacher(int evaluationID)
@@ -78,14 +84,16 @@ namespace CQPROJ.Business.Queries
                 using (var db = new DBContextModel())
                 {
                     var grades = db.TblEvaluationStudents.Where(x => x.EvaluationFK == evaluationID).ToList();
-                    if (grades.Count() == 0) { return null; }
-                    return grades;
+                    if (grades.Count() == 0) {
+                        return new { result = false, info = "Não existe avaliação." };
+                    }
+                    return new { result = true, data = grades };
                 }
             }
-            catch (ArgumentException) { return null; }
+            catch (ArgumentException) { return new { result = false, info = "Não foi encontrada avaliação." }; }
         }
 
-        public static Boolean CreateEvaluation(TblEvaluations evaluation)
+        public static Object CreateEvaluation(TblEvaluations evaluation, int userID)
         {
             try
             {
@@ -93,13 +101,16 @@ namespace CQPROJ.Business.Queries
                 {
                     db.TblEvaluations.Add(evaluation);
                     db.SaveChanges();
-                    return true;
+
+                    var cla = db.TblClasses.Find(evaluation.ClassFK);
+                    BAction.SetActionToUser(String.Format("Adicionou uma avaliação na turma '{0}' da escola '{1}'", cla.Year + cla.ClassDesc, db.TblSchools.Find(cla.SchoolFK).Name), userID);
+                    return new { result = true };
                 }
             }
-            catch (Exception) { return false; }
+            catch (Exception) { return new { result = false, info = "Não foi possível registar a avaliação" }; }
         }
 
-        public static Boolean EditEvaluation(TblEvaluations evaluation)
+        public static Object EditEvaluation(TblEvaluations evaluation, int userID)
         {
             try
             {
@@ -107,13 +118,16 @@ namespace CQPROJ.Business.Queries
                 {
                     db.Entry(evaluation).State = EntityState.Modified;
                     db.SaveChanges();
-                    return true;
+
+                    var cla = db.TblClasses.Find(evaluation.ClassFK);
+                    BAction.SetActionToUser(String.Format("Editou uma avaliação na turma '{0}' da escola '{1}'", cla.Year + cla.ClassDesc, db.TblSchools.Find(cla.SchoolFK).Name), userID);
+                    return new { result = true };
                 }
             }
-            catch (Exception) { return false; }
+            catch (Exception) { return new { result = false, info = "Não foi possível alterar a avaliação" }; }
         }
 
-        public static int CreateGrade(TblEvaluationStudents grade)
+        public static Object CreateGrade(TblEvaluationStudents grade)
         {
             try
             {
@@ -125,17 +139,17 @@ namespace CQPROJ.Business.Queries
                         {
                             db.TblEvaluationStudents.Add(grade);
                             db.SaveChanges();
-                            return 3;
+                            return new { result = true };
                         }
-                        return 2;
+                        return new { result = false, info = "O aluno associado à avaliação não pertence à turma." };
                     }
-                    return 1;
+                    return new { result = false, info = "O utilizador associado à avaliação não é uma aluno." };
                 }
             }
-            catch (Exception) { return 0; }
+            catch (Exception) { return new { result = false, info = "Não foi possível atribuir a nota." }; }
         }
 
-        public static Boolean EditGrade(TblEvaluationStudents grade)
+        public static Object EditGrade(TblEvaluationStudents grade)
         {
             try
             {
@@ -143,10 +157,10 @@ namespace CQPROJ.Business.Queries
                 {
                     db.Entry(grade).State = EntityState.Modified;
                     db.SaveChanges();
-                    return true;
+                    return new { result = true };
                 }
             }
-            catch (Exception) { return false; }
+            catch (Exception) { return new { result = false, info = "Não foi possível alterar a nota da avaliação" }; }
         }
 
         public static bool VerifyTeacher(int evaluationID, int teacherID)

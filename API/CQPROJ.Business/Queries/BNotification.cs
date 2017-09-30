@@ -84,7 +84,7 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return null; }
         }
 
-        public static Boolean SendNotificationToUser(NotificationUser notification)
+        public static Boolean SendNotificationToUser(NotificationUser notification, int userID)
         {
             try
             {
@@ -111,13 +111,14 @@ namespace CQPROJ.Business.Queries
                     db.TblValidations.Add(valid);
                     db.SaveChanges();
 
+                    BAction.SetActionToUser(String.Format("enviou uma notificação ao utilizador '{0}'", db.TblUsers.Find(notification.ReceiverFK).Name), userID);
                     return true;
                 }
             }
             catch (Exception) { return false; }
         }
 
-        public static Boolean SendNotificationToClass(NotificationClass notification)
+        public static Boolean SendNotificationToClass(NotificationClass notification,int userID)
         {
             try
             {
@@ -148,6 +149,9 @@ namespace CQPROJ.Business.Queries
                         db.TblValidations.Add(valid);
                         db.SaveChanges();
                     }
+
+                    var cla = db.TblClasses.Find(notification.ClassFK);
+                    BAction.SetActionToUser(String.Format("enviou uma notificação a turma '{0}'", cla.Year+cla.ClassDesc), userID);
                     return true;
                 }
             }

@@ -64,6 +64,7 @@
     <Compile Include="Queries\BParenting.cs" />
     <Compile Include="Queries\BRoom.cs" />
     <Compile Include="Queries\BSensor.cs" />
+    <Compile Include="Queries\BSubject.cs" />
     <Compile Include="Queries\BTask.cs" />
     <Compile Include="Queries\BTime.cs" />
     <Compile Include="Queries\BUser.cs" />

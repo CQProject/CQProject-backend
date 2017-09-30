@@ -147,63 +147,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = schedule };
         }
 
-        /// <summary>
-        /// Apresenta a lista de disciplinas do sistema  ||
-        /// Autenticação: Sim
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("subject/list")]
-        public Object GetSubjectList()
-        {
-            Payload payload = BAccount.ConfirmToken(this.Request);
-
-            if (payload == null)
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-
-            var subject = BSchedule.GetSubjectList();
-
-            if (subject == null)
-            {
-                return new { result = false, info = "Lista de disciplinas não encontrada." };
-            }
-
-            return new { result = true, data = subject };
-        }
-
-        // GET subject/:subjectid
-        /// <summary>
-        /// Mostra o horário de uma disciplina  ||
-        /// Autenticação: Sim
-        /// </summary>
-        /// <param name="subjectid"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("subject/{subjectid}")]
-        public Object GetSubjectById(int subjectid)
-        {
-            Payload payload = BAccount.ConfirmToken(this.Request);
-
-            if (payload == null)
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-
-            var subject = BSchedule.GetSubject(subjectid);
-
-            if (subject == null)
-            {
-                return new { result = false, info = "Disciplina não encontrada." };
-            }
-
-            return new { result = true, data = subject };
-        }
-
         //POST schedule
         /// <summary>
-        /// Cria um novo horário  ||
+        /// Cria uma aula  ||
         /// Autenticação: Sim
         /// [   
         ///     admin, 
@@ -214,7 +160,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("schedule")]
-        public Object Post([FromBody]TblSchedules schedule)
+        public Object PostSchedule([FromBody]TblSchedules schedule)
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
@@ -231,7 +177,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
 
         // PUT schedule
         /// <summary>
-        /// Altera um horário  ||
+        /// Altera uma aula  ||
         /// Autenticação: Sim
         /// [   
         ///     admin, 
@@ -242,7 +188,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         /// <returns></returns>
         [HttpPut]
         [Route("schedule")]
-        public Object PutProfile([FromBody]TblSchedules schedule)
+        public Object PutSchedule([FromBody]TblSchedules schedule)
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
@@ -250,26 +196,27 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (BSchedule.EditSchedule(schedule))
+            if (BSchedule.EditSchedule(schedule, payload.aud))
             {
                 return new { result = true };
             }
             return new { result = false, info = "Não foi possível alterar dados da aula." };
         }
 
+        // DELETE schedule/:scheduleid
         /// <summary>
-        /// Cria uma hora de aula  ||
+        /// Elimina uma aula  ||
         /// Autenticação: Sim
         /// [   
         ///     admin, 
         ///     secretary
         /// ]
         /// </summary>
-        /// <param name="subject"></param>
+        /// <param name="scheduleid"></param>
         /// <returns></returns>
-        [HttpPost]
-        [Route("subject")]
-        public Object PostSubject([FromBody]TblSubjects subject)
+        [HttpDelete]
+        [Route("schedule/{scheduleid}")]
+        public Object DeleteSchedule(int scheduleid)
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
@@ -277,38 +224,11 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (BSchedule.CreateSubject(subject))
+            if (BSchedule.DeleteSchedule(scheduleid,payload.aud))
             {
                 return new { result = true };
             }
-            return new { result = false, info = "Não foi possível registar a hora aula." };
-        }
-
-        /// <summary>
-        /// Altera uma hora de aula  ||
-        /// Autenticação: Sim
-        /// [   
-        ///     admin, 
-        ///     secretary
-        /// ]
-        /// </summary>
-        /// <param name="subject"></param>
-        /// <returns></returns>
-        [HttpPut]
-        [Route("subject")]
-        public Object PutSubject([FromBody]TblSubjects subject)
-        {
-            Payload payload = BAccount.ConfirmToken(this.Request);
-
-            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-            if (BSchedule.EditSubject(subject))
-            {
-                return new { result = true };
-            }
-            return new { result = false, info = "Não foi possível alterar a hora de aula." };
+            return new { result = false, info = "Não foi possível eliminar aula." };
         }
     }
 }

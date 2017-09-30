@@ -58,5 +58,20 @@ namespace CQPROJ.Business.Queries
             }
             catch (Exception) { return false; }
         }
+
+        public static bool DeleteSchool(int schoolid)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    var school = db.TblSchools.Find(schoolid);
+                    db.TblSchools.Remove(school);
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception) { return false; }
+        }
     }
 }

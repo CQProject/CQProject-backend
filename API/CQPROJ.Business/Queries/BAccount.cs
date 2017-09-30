@@ -14,7 +14,7 @@ namespace CQPROJ.Business.Queries
     public class BAccount
     {
 
-        public static Object Login(Login requestUser,Uri client)
+        public static Object Login(Login requestUser, Uri client)
         {
             try
             {
@@ -24,13 +24,13 @@ namespace CQPROJ.Business.Queries
 
                     if (user == null || (bool)!user.IsActive)
                     {
-                        return null;
+                        return new { result = false, info = "O utilizador não existe ou encontra-se inactivo." };
                     }
 
                     var password = new PasswordHasher();
                     if (password.VerifyHashedPassword(user.Password, requestUser.Password).ToString() != "Success")
                     {
-                        return null;
+                        return new { result = false, info = "O email e a palavra-passe não coincidem." };
                     }
 
                     byte[] secretKey = Encoding.ASCII.GetBytes("vMDUMFlFl6jUANQZezAu4bAmwBD9IyYl");
@@ -50,26 +50,37 @@ namespace CQPROJ.Business.Queries
                     }
 
                     Dictionary<string, object> payload = new Dictionary<string, object>(){
-                    {"iss",client.Authority },
-                    {"aud",user.ID },
-                    {"iat",_ToUnixTime(issued).ToString() },
-                    {"exp",_ToUnixTime(expire).ToString() },
-                    {"rol",roles },
-                    {"cla",classes }
-                };
+                        {"iss",client.Authority },
+                        {"aud",user.ID },
+                        {"iat",_ToUnixTime(issued).ToString() },
+                        {"exp",_ToUnixTime(expire).ToString() },
+                        {"rol",roles },
+                        {"cla",classes }
+                    };
 
                     var token = JWT.Encode(payload, secretKey, JwsAlgorithm.HS256);
 
-                    return new { token = token, userID = user.ID, roles = roles, name = user.Name, photo = user.Photo, classes= classes };
+                    return new
+                    {
+                        result = true,
+                        data = new
+                        {
+                            token = token,
+                            userID = user.ID,
+                            roles = roles,
+                            name = user.Name,
+                            photo = user.Photo,
+                            classes = classes
+                        }
+                    };
                 }
             }
-            catch (Exception) { return null; }
+            catch (Exception) { return new { result = false, info = "Não foi possível autenticar o utilizador." }; }
         }
 
 
         public static Payload ConfirmToken(HttpRequestMessage request)
         {
-
             Payload payload;
             try
             {

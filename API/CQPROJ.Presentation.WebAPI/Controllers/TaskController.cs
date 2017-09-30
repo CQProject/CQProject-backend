@@ -116,18 +116,22 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            return new { result = BTask.CreateTask(task) };
+            if (!BTask.CreateTask(task, payload.aud))
+            {
+                return new { result = false, info = "Não foi possível adicionar a tarefa" };
+            }
+            return new { result = true };
         }
 
         //POST done
         /// <summary>
         /// Marca uma tarefa como feita ||
-        /// Autenticação: Sim
+        /// Autenticação: Sim [ apenas o próprio associado à tarefa ]
         /// </summary>
         /// <param name="taskid"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("done")]
+        [Route("done/{taskid}")]
         public Object Done(int taskid)
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
@@ -160,7 +164,39 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            return new { result = BTask.EditTask(task) };
+            if (!BTask.EditTask(task,payload.aud))
+            {
+                return new { result = false, info = "Não foi possível alterar a tarefa" };
+            }
+            return new { result = true };
+        }
+
+        // DELETE tesk/:taskid
+        /// <summary>
+        /// Altera uma tarefa ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     secretary
+        /// ]
+        /// </summary>
+        /// <param name="taskid"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("task/{taskid}")]
+        public Object Delete(int taskid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            if (!BTask.DeleteTask(taskid))
+            {
+                return new { result = false, info = "Não foi possível eliminar a tarefa" };
+            }
+            return new { result = true };
         }
     }
 }

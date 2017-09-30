@@ -60,5 +60,20 @@ namespace CQPROJ.Business.Queries
             }
             catch (Exception) { return false; }
         }
+
+        public static bool DeleteFloor(int floorid)
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    var floor = db.TblFloors.Find(floorid);
+                    db.TblFloors.Remove(floor);
+                    db.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception) { return false; }
+        }
     }
 }

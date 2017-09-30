@@ -148,5 +148,32 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
             return new { result = true};
         }
+
+        // DELETE room/:roomid
+        /// <summary>
+        /// Elimina uma sala ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin
+        /// ]
+        /// </summary>
+        /// <param name="roomid"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("roomid/{roomid}")]
+        public Object Delete(int roomid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || !payload.rol.Contains(6))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            if (!BRoom.DeleteRoom(roomid))
+            {
+                return new { result = false, info = "Não foi possível eliminar sala." };
+            }
+            return new { result = true };
+        }
     }
 }
