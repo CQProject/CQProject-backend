@@ -78,6 +78,10 @@ namespace CQPROJ.Business.Queries
                 {
                     db.TblSensors.Add(sensor);
                     db.SaveChanges();
+                    var room = db.TblRooms.Find(sensor.RoomFK);
+                    room.HasSensor = true;
+                    db.Entry(room).State = EntityState.Modified;
+                    db.SaveChanges();
                     return true;
                 }
             }
@@ -90,6 +94,21 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
+                    var old= db.TblSensors.Find(sensor.ID);
+                    if (old.RoomFK != sensor.RoomFK)
+                    {
+                        var oldroom = db.TblRooms.Find(old.RoomFK);
+                        if(db.TblSensors.Where(x=>x.RoomFK== oldroom.ID).Count() <= 1)
+                        {
+                            oldroom.HasSensor = false;
+                            db.Entry(oldroom).State = EntityState.Modified;
+                            db.SaveChanges();
+                        }
+                        var room = db.TblRooms.Find(sensor.RoomFK);
+                        room.HasSensor = true;
+                        db.Entry(room).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
                     db.Entry(sensor).State = EntityState.Modified;
                     db.SaveChanges();
                     return true;
@@ -104,7 +123,15 @@ namespace CQPROJ.Business.Queries
             {
                 using (var db = new DBContextModel())
                 {
-                    db.TblSensors.Remove(db.TblSensors.Find(sensorID));
+                    var sensor = db.TblSensors.Find(sensorID);
+                    var room = db.TblRooms.Find(sensor.RoomFK);
+                    if (db.TblSensors.Where(x => x.RoomFK == room.ID).Count() <= 1)
+                    {
+                        room.HasSensor = false;
+                        db.Entry(room).State = EntityState.Modified;
+                        db.SaveChanges();
+                    }
+                    db.TblSensors.Remove(sensor);
                     db.SaveChanges();
                     return true;
                 }
