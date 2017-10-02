@@ -15,8 +15,7 @@ namespace CQPROJ.Presentation.WebAPI
         {
             Database.SetInitializer(new CreateDatabaseIfNotExists<DBContextModel>());
             DBContextModel context = new DBContextModel();
-
-
+            
             TblUsers admin = new TblUsers
             {
                 Email = "admin@a.a",

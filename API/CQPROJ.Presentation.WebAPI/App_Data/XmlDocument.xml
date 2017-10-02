@@ -1417,18 +1417,6 @@
             <param name="studentid"></param>
             <returns></returns>
         </member>
-        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ParentingController.Create(CQPROJ.Business.Entities.IAccount.Guardian)">
-            <summary>
-            Cria um novo encarregado de educação ||
-            Autenticação: Sim
-            [
-                admin,
-                secretary
-            ]
-            </summary>
-            <param name="guardian"></param>
-            <returns></returns>
-        </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ParentingController.Add(CQPROJ.Business.Entities.IAccount.Parenting)">
             <summary>
             Cria uma relação entre o encarregado de educação e o estudante ||

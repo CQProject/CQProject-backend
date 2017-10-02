@@ -57,12 +57,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            
-            if (!BSchool.CreateSchool(school))
-            {
-                return new { result = false, info = "Não foi possível registar escola" };
-            }
-            return new { result = true };
+
+            return BSchool.CreateSchool(school);
         }
 
         // PUT school/

@@ -41,30 +41,6 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = guardians};
         }
 
-        //POST guardian/
-        /// <summary>
-        /// Cria um novo encarregado de educação ||
-        /// Autenticação: Sim
-        /// [
-        ///     admin,
-        ///     secretary
-        /// ]
-        /// </summary>
-        /// <param name="guardian"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("guardian")]
-        public Object Create([FromBody]Guardian guardian)
-        {
-            Payload payload = BAccount.ConfirmToken(this.Request);
-
-            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
-            {
-                return new { result = false, info = "Não autorizado." };
-            }
-            return BParenting.CreateGuardian(guardian, payload.aud);
-        }
-
         //POST parenting/
         /// <summary>
         /// Cria uma relação entre o encarregado de educação e o estudante ||

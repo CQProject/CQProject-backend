@@ -31,7 +31,7 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return new { result = false, info = "Escola não encontrada." }; }
         }
 
-        public static Boolean CreateSchool(TblSchools school)
+        public static Object CreateSchool(TblSchools school)
         {
             try
             {
@@ -39,10 +39,10 @@ namespace CQPROJ.Business.Queries
                 {
                     db.TblSchools.Add(school);
                     db.SaveChanges();
-                    return true;
+                    return new { result = true, data=school.ID };
                 }
             }
-            catch (Exception) { return false; }
+            catch (Exception) { return new { result = false, info = "Não foi possível registar escola" }; }
         }
 
         public static Boolean EditSchool(TblSchools school)
