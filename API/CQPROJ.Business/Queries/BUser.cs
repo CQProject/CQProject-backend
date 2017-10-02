@@ -91,6 +91,7 @@ namespace CQPROJ.Business.Queries
                     db.SaveChanges();
 
                     ActiveDirectory.CreateUser(user.Email, user.Password);
+                    ActiveDirectory.AddRole(user.Email, userRoles.RoleFK);
 
                     BAction.SetActionToUser(String.Format("Registou o utilizador '{0}'", newUser.Name), userID);
                     return new { result = true, data = user.ID };
@@ -140,6 +141,8 @@ namespace CQPROJ.Business.Queries
                     db.Entry(user).State = EntityState.Modified;
                     db.SaveChanges();
 
+                    ActiveDirectory.DisableOrEnableUser(user.Email);
+
                     BAction.SetActionToUser(String.Format("Alterou o estado de atividade do utilizador '{0}'", user.Name), currentUser);
                     return true;
                 }
@@ -156,6 +159,9 @@ namespace CQPROJ.Business.Queries
                     db.TblUserRoles.Add(new TblUserRoles { UserFK = userID, RoleFK = roleID });
                     db.SaveChanges();
 
+                    var user = db.TblUsers.Find(userID);
+                    ActiveDirectory.AddRole(user.Email, roleID);
+
                     BAction.SetActionToUser(String.Format("Atribuiu ao utilizador '{0}' a função de '{1}'", db.TblUsers.Find(userID).Name, db.TblRoles.Find(roleID).Name), currentUser);
                     return true;
                 }
@@ -171,6 +177,9 @@ namespace CQPROJ.Business.Queries
                 {
                     db.TblUserRoles.Remove(db.TblUserRoles.Find(userID, roleID));
                     db.SaveChanges();
+
+                    var user = db.TblUsers.Find(userID);
+                    ActiveDirectory.RemoveRole(user.Email, roleID);
 
                     BAction.SetActionToUser(String.Format("Removeu ao utilizador '{0}' a função de '{1}'", db.TblUsers.Find(userID).Name, db.TblRoles.Find(roleID).Name), currentUser);
                     return true;
