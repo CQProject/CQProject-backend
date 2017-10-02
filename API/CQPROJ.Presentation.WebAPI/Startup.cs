@@ -30,7 +30,7 @@ namespace CQPROJ.Presentation.WebAPI
                 context.SaveChanges();
             }
 
-            String[] roles = { "admin", "student", "teacher", "secretary", "assistant", "guardian" };
+            String[] roles = { "student", "teacher", "secretary", "assistant", "guardian", "admin" };
             Array.ForEach(roles, role =>
             {
                 if (!context.TblRoles.Any(x => x.Name == role))
