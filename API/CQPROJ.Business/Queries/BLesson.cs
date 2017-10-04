@@ -77,7 +77,7 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return null; }
         }
 
-        public static Boolean CreateLesson(TblLessons lesson,int userID)
+        public static Object CreateLesson(TblLessons lesson,int userID)
         {
             try
             {
@@ -89,10 +89,10 @@ namespace CQPROJ.Business.Queries
                         var schedule = db.TblSchedules.Find(lesson.ScheduleFK);
                     var clas = db.TblClasses.Find(schedule.ClassFK);
                     BAction.SetActionToUser(String.Format("Adicionou uma lição à disciplina '{0}' da turma '{1}' da escola '{2}'", db.TblSubjects.Find(schedule.SubjectFK).Name, clas.Year +clas.ClassDesc ,db.TblSchools.Find(clas.SchoolFK).Name), userID);
-                    return true;
+                    return new { result = true, data = lesson.ID };
                 }
             }
-            catch (Exception) { return false; }
+            catch (Exception) { return new { result = false, info = "Não foi possível criar uma lição." }; }
         }
 
         public static Boolean RegisterFaults(TblLessonStudents lesson)

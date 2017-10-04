@@ -94,7 +94,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
                 return new { result = false, info = "Nenhuma lição encontrada." };
             }
             if (payload == null || 
-                payload.cla.Contains(1) || payload.rol.Contains(4) || payload.rol.Contains(5) || 
+                payload.rol.Contains(1) || payload.rol.Contains(4) || payload.rol.Contains(5) || 
                 (payload.rol.Contains(2) && !BLesson.VerifyTeacher(lesson.First(), payload.aud)))
             {
                 return new { result = false, info = "Não autorizado." };
@@ -154,7 +154,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            return new { result = BLesson.CreateLesson(lesson, payload.aud) };
+            return BLesson.CreateLesson(lesson, payload.aud);
         }
 
         //POST lesson/faults/
