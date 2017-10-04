@@ -36,7 +36,7 @@ namespace CQPROJ.Business.Queries
                     byte[] secretKey = Encoding.ASCII.GetBytes("vMDUMFlFl6jUANQZezAu4bAmwBD9IyYl");
 
                     DateTime issued = DateTime.Now;
-                    DateTime expire = DateTime.Now.AddHours(10);
+                    DateTime expire = DateTime.Now.AddHours(8);
                     var roles = db.TblUserRoles.Where(x => x.UserFK == user.ID).Select(x => x.RoleFK).ToList();
 
                     List<int> classes = new List<int>();
