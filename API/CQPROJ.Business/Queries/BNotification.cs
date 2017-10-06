@@ -104,6 +104,7 @@ namespace CQPROJ.Business.Queries
 
                     TblValidations valid = new TblValidations
                     {
+                        NotificationFK = notif.ID,
                         ReceiverFK = notification.ReceiverFK,
                         Accepted = false,
                         Read = false
