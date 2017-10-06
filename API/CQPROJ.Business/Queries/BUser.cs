@@ -58,6 +58,24 @@ namespace CQPROJ.Business.Queries
 
         }
 
+        public static object GetStudentsWithoutClass()
+        {
+            try
+            {
+                using (var db = new DBContextModel())
+                {
+                    string year;
+                    if (DateTime.Now.Month < 13 && DateTime.Now.Month > 7) year = (DateTime.Now.Year + 1).ToString();
+                    else year = DateTime.Now.Year.ToString();
+
+                    var students = db.TblUsers.Where(x => db.TblClassUsers.Any(y => x.ID == y.UserFK)).ToList();
+                    if (students.Count() == 0) { return null; }
+                    return students;
+                }
+            }
+            catch (Exception) { return null; }
+        }
+
         public static Object CreateUser(User newUser, int userID)
         {
             try
@@ -93,7 +111,7 @@ namespace CQPROJ.Business.Queries
                     ActiveDirectory.CreateUser(user.Email, user.Password);
                     ActiveDirectory.AddRole(user.Email, userRoles.RoleFK);
 
-                    BAction.SetActionToUser(String.Format("Registou o utilizador '{0}'", newUser.Name), userID);
+                    //BAction.SetActionToUser(String.Format("Registou o utilizador '{0}'", newUser.Name), userID);
                     return new { result = true, data = user.ID };
                 }
             }
@@ -141,7 +159,7 @@ namespace CQPROJ.Business.Queries
                     db.Entry(user).State = EntityState.Modified;
                     db.SaveChanges();
 
-                    ActiveDirectory.DisableOrEnableUser(user.Email);
+                    //ActiveDirectory.DisableOrEnableUser(user.Email);
 
                     BAction.SetActionToUser(String.Format("Alterou o estado de atividade do utilizador '{0}'", user.Name), currentUser);
                     return true;
@@ -160,7 +178,8 @@ namespace CQPROJ.Business.Queries
                     db.SaveChanges();
 
                     var user = db.TblUsers.Find(userID);
-                    ActiveDirectory.AddRole(user.Email, roleID);
+
+                    //ActiveDirectory.AddRole(user.Email, roleID);
 
                     BAction.SetActionToUser(String.Format("Atribuiu ao utilizador '{0}' a função de '{1}'", db.TblUsers.Find(userID).Name, db.TblRoles.Find(roleID).Name), currentUser);
                     return true;
@@ -169,7 +188,7 @@ namespace CQPROJ.Business.Queries
             catch (Exception) { return false; }
         }
 
-        public static Boolean RemoveRole(int userID, int roleID,int currentUser)
+        public static Boolean RemoveRole(int userID, int roleID, int currentUser)
         {
             try
             {
@@ -179,7 +198,8 @@ namespace CQPROJ.Business.Queries
                     db.SaveChanges();
 
                     var user = db.TblUsers.Find(userID);
-                    ActiveDirectory.RemoveRole(user.Email, roleID);
+
+                    //ActiveDirectory.RemoveRole(user.Email, roleID);
 
                     BAction.SetActionToUser(String.Format("Removeu ao utilizador '{0}' a função de '{1}'", db.TblUsers.Find(userID).Name, db.TblRoles.Find(roleID).Name), currentUser);
                     return true;

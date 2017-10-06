@@ -144,6 +144,36 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = user };
         }
 
+        /// <summary>
+        /// Lista de alunos sem turma atribuída ||
+        /// Autenticação: Sim
+        /// [   
+        ///     admin,
+        ///     secretary
+        /// ]
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("user/student-without-class")]
+        public Object StudentsWithoutClass()
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null || (!payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+
+            var user = BUser.GetStudentsWithoutClass();
+
+            if (user == null)
+            {
+                return new { result = false, info = "Não foram encontrados alunos sem turma." };
+            }
+            return new { result = true, data = user };
+        }
+
+
         //POST user/
         /// <summary>
         /// Cria um novo utilizador ||

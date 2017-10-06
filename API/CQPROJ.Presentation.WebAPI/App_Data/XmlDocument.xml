@@ -1039,6 +1039,17 @@
             <param name="userid"></param>
             <returns></returns>
         </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.UserController.StudentsWithoutClass">
+            <summary>
+            Lista de alunos sem turma atribuída ||
+            Autenticação: Sim
+            [   
+                admin,
+                secretary
+            ]
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.UserController.Post(CQPROJ.Business.Entities.IAccount.User)">
             <summary>
             Cria um novo utilizador ||
