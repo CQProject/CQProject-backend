@@ -68,9 +68,11 @@ namespace CQPROJ.Business.Queries
                     if (DateTime.Now.Month < 13 && DateTime.Now.Month > 7) year = (DateTime.Now.Year + 1).ToString();
                     else year = DateTime.Now.Year.ToString();
 
-                    var students = db.TblUsers.Where(x => db.TblClassUsers.Any(y => x.ID == y.UserFK)).ToList();
-                    if (students.Count() == 0) { return null; }
-                    return students;
+                    var students = db.TblUserRoles.Where(x => x.RoleFK == 1).ToList();
+                    var studentsWithoutClass = students.Where(x => !db.TblClassUsers.Any(y => x.UserFK == y.UserFK)).ToList();
+
+                    if (studentsWithoutClass.Count() == 0) { return null; }
+                    return studentsWithoutClass;
                 }
             }
             catch (Exception) { return null; }
@@ -108,8 +110,8 @@ namespace CQPROJ.Business.Queries
                     db.TblUserRoles.Add(userRoles);
                     db.SaveChanges();
 
-                    ActiveDirectory.CreateUser(user.Email, user.Password);
-                    ActiveDirectory.AddRole(user.Email, userRoles.RoleFK);
+                    /*ActiveDirectory.CreateUser(user.Email, user.Password);
+                    ActiveDirectory.AddRole(user.Email, userRoles.RoleFK);*/
 
                     //BAction.SetActionToUser(String.Format("Registou o utilizador '{0}'", newUser.Name), userID);
                     return new { result = true, data = user.ID };
