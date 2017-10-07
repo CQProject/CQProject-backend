@@ -68,8 +68,8 @@ namespace CQPROJ.Business.Queries
                     if (DateTime.Now.Month < 13 && DateTime.Now.Month > 7) year = (DateTime.Now.Year + 1).ToString();
                     else year = DateTime.Now.Year.ToString();
 
-                    var students = db.TblUserRoles.Where(x => x.RoleFK == 1).ToList();
-                    var studentsWithoutClass = students.Where(x => !db.TblClassUsers.Any(y => x.UserFK == y.UserFK)).ToList();
+                    var students = db.TblUsers.Where(x => db.TblUserRoles.Any(y => y.RoleFK == 1 && y.UserFK==x.ID)).ToList();
+                    var studentsWithoutClass = students.Where(x => !db.TblClassUsers.Any(y => x.ID == y.UserFK)).ToList();
 
                     if (studentsWithoutClass.Count() == 0) { return null; }
                     return studentsWithoutClass;
