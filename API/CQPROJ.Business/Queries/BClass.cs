@@ -116,7 +116,7 @@ namespace CQPROJ.Business.Queries
                     db.SaveChanges();
 
                     BAction.SetActionToUser(String.Format("Criou a turma '{0}' da escola '{1}'", newClass.Year+newClass.ClassDesc, db.TblSchools.Find(newClass.SchoolFK).Name), userID);
-                    return new { result = true };
+                    return new { result = true, data = newClass.ID };
                 }
             }
             catch (Exception) { return new { result = false, info = "Não foi possível criar a turma." }; }
