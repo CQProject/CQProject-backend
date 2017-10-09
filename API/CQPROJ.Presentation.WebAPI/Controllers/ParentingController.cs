@@ -41,6 +41,38 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             return new { result = true, data = guardians};
         }
 
+        /// <summary>
+        /// Mostra os encarregados de educação de um estudante ||
+        /// Autenticação: Sim
+        /// [
+        ///     admin,
+        ///     secretary,
+        ///     teacher,
+        ///     guardian (se for os seus próprios educandos)
+        /// ]
+        /// </summary>
+        /// <param name="guardianid"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("children/{guardianid}")]
+        public Object GetChildren(int guardianid)
+        {
+            Payload payload = BAccount.ConfirmToken(this.Request);
+
+            if (payload == null 
+                || (!payload.rol.Contains(2) && !payload.rol.Contains(3) && !payload.rol.Contains(6) && !payload.rol.Contains(5))
+                || ( payload.rol.Contains(5) && guardianid!=payload.aud))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            var children = BParenting.GetChildren(guardianid);
+            if (children == null)
+            {
+                return new { result = false, info = "Não foram encontrados educandos." };
+            }
+            return new { result = true, data = children };
+        }
+
         //POST parenting/
         /// <summary>
         /// Cria uma relação entre o encarregado de educação e o estudante ||

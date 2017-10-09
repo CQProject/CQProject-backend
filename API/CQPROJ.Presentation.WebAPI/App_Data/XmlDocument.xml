@@ -1428,6 +1428,20 @@
             <param name="studentid"></param>
             <returns></returns>
         </member>
+        <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ParentingController.GetChildren(System.Int32)">
+            <summary>
+            Mostra os encarregados de educação de um estudante ||
+            Autenticação: Sim
+            [
+                admin,
+                secretary,
+                teacher,
+                guardian (se for os seus próprios educandos)
+            ]
+            </summary>
+            <param name="guardianid"></param>
+            <returns></returns>
+        </member>
         <member name="M:CQPROJ.Presentation.WebAPI.Controllers.ParentingController.Add(CQPROJ.Business.Entities.IAccount.Parenting)">
             <summary>
             Cria uma relação entre o encarregado de educação e o estudante ||

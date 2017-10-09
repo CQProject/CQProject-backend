@@ -100,7 +100,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             }
             if (payload.aud != userid)
             {
-                if(!payload.rol.Contains(3) && payload.rol.Contains(6))
+                if(!payload.rol.Contains(3) && !payload.rol.Contains(6))
                 {
                     if(!payload.rol.Contains(5) || (payload.rol.Contains(5) && !BParenting.GetChildren(payload.aud).Contains(userid)))
                     {
