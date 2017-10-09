@@ -1422,7 +1422,9 @@
             [
                 admin,
                 secretary,
-                teacher  
+                teacher,
+                guardian, se for enc. educação do referido estudante
+                student, se for relaivo aos proprios enc. educação 
             ]
             </summary>
             <param name="studentid"></param>
@@ -1437,6 +1439,7 @@
                 secretary,
                 teacher,
                 guardian (se for os seus próprios educandos)
+                student, se for educando do referido enc. educação
             ]
             </summary>
             <param name="guardianid"></param>

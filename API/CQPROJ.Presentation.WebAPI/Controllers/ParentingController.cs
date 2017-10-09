@@ -18,7 +18,9 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         /// [
         ///     admin,
         ///     secretary,
-        ///     teacher  
+        ///     teacher,
+        ///     guardian, se for enc. educação do referido estudante
+        ///     student, se for relaivo aos proprios enc. educação 
         /// ]
         /// </summary>
         /// <param name="studentid"></param>
@@ -29,16 +31,21 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null || (!payload.rol.Contains(2) && !payload.rol.Contains(3) && !payload.rol.Contains(6)))
+            if (payload == null || payload.rol.Contains(4)
+                || (payload.rol.Contains(1) && payload.aud != studentid))
             {
                 return new { result = false, info = "Não autorizado." };
             }
             var guardians = BParenting.GetGuardians(studentid);
-            if (guardians==null)
+            if (guardians == null)
             {
                 return new { result = false, info = "Não foram encontrados Enc.Educação do Estudante." };
             }
-            return new { result = true, data = guardians};
+            if (payload.rol.Contains(5) && !guardians.Contains(payload.aud))
+            {
+                return new { result = false, info = "Não autorizado." };
+            }
+            return new { result = true, data = guardians };
         }
 
         /// <summary>
@@ -49,6 +56,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         ///     secretary,
         ///     teacher,
         ///     guardian (se for os seus próprios educandos)
+        ///     student, se for educando do referido enc. educação
         /// ]
         /// </summary>
         /// <param name="guardianid"></param>
@@ -59,9 +67,8 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
         {
             Payload payload = BAccount.ConfirmToken(this.Request);
 
-            if (payload == null 
-                || (!payload.rol.Contains(2) && !payload.rol.Contains(3) && !payload.rol.Contains(6) && !payload.rol.Contains(5))
-                || ( payload.rol.Contains(5) && guardianid!=payload.aud))
+            if (payload == null || payload.rol.Contains(4)
+                || (payload.rol.Contains(5) && guardianid != payload.aud))
             {
                 return new { result = false, info = "Não autorizado." };
             }
@@ -69,6 +76,10 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             if (children == null)
             {
                 return new { result = false, info = "Não foram encontrados educandos." };
+            }
+            if (payload.rol.Contains(1) && !children.Contains(payload.aud))
+            {
+                return new { result = false, info = "Não autorizado." };
             }
             return new { result = true, data = children };
         }
@@ -94,7 +105,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (!BParenting.AddParenting(parenting.GuardianID, parenting.StudentID,payload.aud))
+            if (!BParenting.AddParenting(parenting.GuardianID, parenting.StudentID, payload.aud))
             {
                 return new { result = false, info = "Não foi possível adicionar o Enc.Educação ao Estudante." };
             }
@@ -122,7 +133,7 @@ namespace CQPROJ.Presentation.WebAPI.Controllers
             {
                 return new { result = false, info = "Não autorizado." };
             }
-            if (!BParenting.RemoveParenting(parenting.GuardianID, parenting.StudentID,payload.aud))
+            if (!BParenting.RemoveParenting(parenting.GuardianID, parenting.StudentID, payload.aud))
             {
                 return new { result = false, info = "Não foi possível remover o Enc.Educação do Estudante." };
             }
