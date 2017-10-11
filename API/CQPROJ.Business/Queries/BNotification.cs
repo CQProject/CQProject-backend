@@ -107,7 +107,8 @@ namespace CQPROJ.Business.Queries
                         NotificationFK = notif.ID,
                         ReceiverFK = notification.ReceiverFK,
                         Accepted = false,
-                        Read = false
+                        Read = false,
+                        StudentFK=notification.StudentFK
                     };
                     db.TblValidations.Add(valid);
                     db.SaveChanges();
@@ -190,6 +191,5 @@ namespace CQPROJ.Business.Queries
             }
             catch (Exception) { return false; }
         }
-
     }
 }

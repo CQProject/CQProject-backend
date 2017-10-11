@@ -10,6 +10,7 @@ namespace CQPROJ.Business.Entities
         public Boolean Approval { get; set; }
         public int SenderFK { get; set; }
         public int ReceiverFK { get; set; }
+        public int StudentFK { get; set; }
     }
 
     public class NotificationClass
